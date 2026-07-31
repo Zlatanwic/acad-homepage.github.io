@@ -4,9 +4,11 @@
 
 <div itemscope itemtype="http://schema.org/Person" class="profile_box">
 
-  <div class="author__avatar">
-    <img src="{{ author.avatar }}" class="author__avatar" alt="{{ author.name }}">
-  </div>
+  {% if author.avatar %}
+    <div class="author__avatar">
+      <img src="{{ author.avatar | relative_url }}" class="author__avatar" alt="{{ author.name }}">
+    </div>
+  {% endif %}
 
   <div class="author__content">
     <h3 class="author__name">{{ author.name }}</h3>
@@ -16,9 +18,6 @@
   <div class="author__urls-wrapper">
     <!-- <button class="btn btn--inverse">More Info & Contact</button> -->
     <ul class="author__urls social-icons">
-      {% if site.description %}
-        <li><div style="white-space: normal; margin-bottom: 1em;">{{ site.description }}</div></li>
-      {% endif %}
       {% if author.location %}
         <li><i class="fa fa-fw fa-map-marker" aria-hidden="true"></i> {{ author.location }}</li>
       {% endif %}
@@ -30,6 +29,9 @@
       {% endif %}
       {% if author.email %}
         <li><a href="mailto:{{ author.email }}"><i class="fas fa-fw fa-envelope" aria-hidden="true"></i> Email</a></li>
+      {% endif %}
+      {% if author.cv %}
+        <li><a href="{{ author.cv | relative_url }}"><i class="fas fa-fw fa-file-pdf" aria-hidden="true"></i> CV</a></li>
       {% endif %}
       {% if author.keybase %}
         <li><a href="https://keybase.io/{{ author.keybase }}"><i class="fas fa-fw fa-key" aria-hidden="true"></i> Keybase</a></li>
@@ -125,6 +127,9 @@
       {% endif %}
       {% if author.email %}
         <a href="mailto:{{ author.email }}"><i class="fas fa-fw fa-envelope" aria-hidden="true"></i></a>
+      {% endif %}
+      {% if author.cv %}
+        <a href="{{ author.cv | relative_url }}"><i class="fas fa-fw fa-file-pdf" aria-hidden="true"></i></a>
       {% endif %}
       {% if author.keybase %}
         <a href="https://keybase.io/{{ author.keybase }}"><i class="fas fa-fw fa-key" aria-hidden="true"></i></a>

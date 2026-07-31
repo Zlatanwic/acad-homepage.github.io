@@ -8,6 +8,10 @@
     <div class="author__avatar">
       <img src="{{ author.avatar | relative_url }}" class="author__avatar" alt="{{ author.name }}">
     </div>
+  {% else %}
+    <div class="author__avatar author__avatar--monogram" aria-hidden="true">
+      <span>LK</span>
+    </div>
   {% endif %}
 
   <div class="author__content">

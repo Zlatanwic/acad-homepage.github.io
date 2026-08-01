@@ -10,314 +10,179 @@ redirect_from:
 
 <span class="anchor" id="about-me"></span>
 
-<section class="hero-panel" aria-labelledby="hero-title" data-reveal>
-  <div class="hero-panel__copy">
-    <p class="hero-eyebrow"><span></span> Undergraduate Researcher · Tongji University</p>
-    <h1 id="hero-title">让大模型系统更高效、可扩展，也更贴近真实工作负载。</h1>
-    <p class="hero-lead">
-      我是李阔，同济大学计算机科学与技术系数据科学与大数据技术专业本科生。
-      我的研究聚焦 <strong>MLSys / AI Infrastructure</strong>，覆盖高性能算子、编译运行时、
-      分布式训练与在线推理服务。
-    </p>
-    <p class="hero-current">
-      目前在上海交通大学先进网络研究所开展面向多请求 LLM Serving 的语义优先级调度与
-      KV Cache 存储管理研究，并持续参与异构 LLM 与 Agent Harness 系统开发。
-    </p>
-    <div class="hero-actions">
-      <a class="home-btn home-btn--primary" href="{{ '/files/Li_Kuo_CV.pdf' | relative_url }}" target="_blank" rel="noopener">
-        <i class="fas fa-file-pdf" aria-hidden="true"></i> 下载简历
-      </a>
-      <a class="home-btn home-btn--ghost" href="https://github.com/Zlatanwic" target="_blank" rel="noopener">
-        <i class="fab fa-github" aria-hidden="true"></i> GitHub
-      </a>
-      <a class="home-btn home-btn--ghost" href="mailto:2353113@tongji.edu.cn">
-        <i class="fas fa-envelope" aria-hidden="true"></i> 联系我
-      </a>
-    </div>
-  </div>
-  <div class="hero-panel__stats" aria-label="教育概览">
-    <div class="hero-stat">
-      <strong>4.56</strong>
-      <span>GPA / 5.0</span>
-    </div>
-    <div class="hero-stat">
-      <strong>2 / 40</strong>
-      <span>专业排名</span>
-    </div>
-    <div class="hero-stat">
-      <strong>2027</strong>
-      <span>预计毕业</span>
-    </div>
-  </div>
+<section class="academic-intro" aria-label="个人简介">
+  <p>
+    我是 <span class="accent-text">李阔</span>，同济大学计算机科学与技术系数据科学与大数据技术专业本科生。
+    我的研究兴趣集中在 <strong>MLSys / AI Infrastructure</strong>，关注大模型推理服务、异构计算、
+    分布式训练以及编译与运行时系统。
+  </p>
+  <p>
+    我目前在上海交通大学先进网络研究所开展面向多请求 LLM Serving 的研究，探索语义优先级调度与
+    KV Cache 存储管理；此前也参与过异构大模型运行时、RISC-V 端侧推理链路优化与图像融合等项目。
+    我希望把系统研究中的想法落实为可运行、可测量、可复现的原型。
+  </p>
+  <p class="intro-invitation">
+    欢迎通过邮件与我交流系统、机器学习基础设施或潜在合作。
+  </p>
 </section>
 
 <span class="anchor" id="research-interests"></span>
 
-<section class="home-section" aria-labelledby="research-title">
-  <header class="section-header" data-reveal>
-    <p class="section-kicker">Research Focus</p>
-    <h2 id="research-title">研究兴趣</h2>
-    <p>从底层算子到在线服务，关注系统各层之间真正影响吞吐、时延与可靠性的协同设计。</p>
-  </header>
+# <span class="heading-icon" aria-hidden="true">📃</span> 研究兴趣
 
-  <div class="interest-grid">
-    <article class="interest-card" data-reveal>
-      <div class="card-icon"><i class="fas fa-server" aria-hidden="true"></i></div>
-      <p class="card-index">01</p>
-      <h3>大模型推理与服务</h3>
-      <p>请求调度、KV Cache 管理与分层存储、Prefill–Decode 协同、故障容错及系统—模型协同设计。</p>
-      <div class="tag-list"><span>LLM Serving</span><span>KV Cache</span><span>SLO</span></div>
-    </article>
+<div class="highlight-blocks">
+  <article class="highlight-block floating-card" data-reveal>
+    <h3><i class="fas fa-server" aria-hidden="true"></i> LLM Serving</h3>
+    <ul>
+      <li><span class="primary-gradient-text">研究重点：</span>多请求在线推理、语义优先级调度、KV Cache 管理与服务质量保障。</li>
+      <li><span class="primary-gradient-text">技术关注：</span>高性能算子、Prefill / Decode 协同、分层存储与真实工作负载评测。</li>
+    </ul>
+  </article>
 
-    <article class="interest-card" data-reveal>
-      <div class="card-icon"><i class="fas fa-network-wired" aria-hidden="true"></i></div>
-      <p class="card-index">02</p>
-      <h3>分布式训练与通信</h3>
-      <p>数据、张量、流水线和专家并行，以及通信计算重叠、集合通信优化和大规模训练可靠性。</p>
-      <div class="tag-list"><span>Parallelism</span><span>NCCL</span><span>RDMA</span></div>
-    </article>
+  <article class="highlight-block floating-card" data-reveal>
+    <h3><i class="fas fa-network-wired" aria-hidden="true"></i> 分布式与异构系统</h3>
+    <ul>
+      <li><span class="primary-gradient-text">研究重点：</span>分布式训练与通信、异构 CPU / GPU 推理和系统—算法协同设计。</li>
+      <li><span class="primary-gradient-text">实践方向：</span>面向不同硬件与运行环境优化吞吐、时延和资源利用率。</li>
+    </ul>
+  </article>
 
-    <article class="interest-card" data-reveal>
-      <div class="card-icon"><i class="fas fa-microchip" aria-hidden="true"></i></div>
-      <p class="card-index">03</p>
-      <h3>GPU 算子与编译</h3>
-      <p>CUDA 高性能编程、算子融合、Megakernel、持久化执行、自动调优与高性能算子生成。</p>
-      <div class="tag-list"><span>CUDA</span><span>Triton</span><span>TileLang</span></div>
-    </article>
+  <article class="highlight-block floating-card" data-reveal>
+    <h3><i class="fas fa-code-branch" aria-hidden="true"></i> 编译与 Agent Infra</h3>
+    <ul>
+      <li><span class="primary-gradient-text">研究重点：</span>GPU / RISC-V 编译优化、运行时系统以及异构 LLM Agent 基础设施。</li>
+      <li><span class="primary-gradient-text">工程兴趣：</span>从中间表示、算子到端到端执行链路的系统化性能优化。</li>
+    </ul>
+  </article>
+</div>
 
-    <article class="interest-card" data-reveal>
-      <div class="card-icon"><i class="fas fa-robot" aria-hidden="true"></i></div>
-      <p class="card-index">04</p>
-      <h3>Agent 与异构基础设施</h3>
-      <p>Agent Harness 自动化、工具调用编排、技能编译与运行时优化，以及面向 RISC-V 的端侧推理。</p>
-      <div class="tag-list"><span>Agent Harness</span><span>Runtime</span><span>RISC-V</span></div>
-    </article>
-  </div>
-</section>
+<span class="anchor" id="news"></span>
+
+# <span class="heading-icon" aria-hidden="true">🔥</span> 动态
+
+<ul class="academic-list news-list" data-reveal>
+  <li><time datetime="2026-05">2026.05 — 至今</time> 在上海交通大学先进网络研究所开展多请求 LLM Serving 研究。</li>
+  <li><time datetime="2026-05">2026.05</time> 参与上海交通大学 IPADS 实验室异构 LLM 与 Agent Harness 系统开发。</li>
+  <li><time datetime="2026-05">2026.05</time> 参与南京大学 LANDS 实验室 RISC-V 端侧推理链路优化研究。</li>
+</ul>
 
 <span class="anchor" id="education"></span>
 
-<section class="home-section home-section--compact" aria-labelledby="education-title">
-  <header class="section-header" data-reveal>
-    <p class="section-kicker">Education</p>
-    <h2 id="education-title">教育背景</h2>
-  </header>
+# <span class="heading-icon" aria-hidden="true">🏫</span> 教育背景
 
-  <article class="education-card" data-reveal>
-    <div class="education-mark" aria-hidden="true">TJ</div>
-    <div class="education-main">
-      <div class="education-heading">
-        <div>
-          <h3>同济大学 · 计算机科学与技术系</h3>
-          <p>数据科学与大数据技术（本科）</p>
-        </div>
-        <span class="date-badge">2023 — 2027（预计）</span>
-      </div>
-      <div class="education-metrics">
-        <div><strong>90.51 / 100</strong><span>加权成绩</span></div>
-        <div><strong>2 / 40</strong><span>专业排名</span></div>
-        <div><strong>IELTS 7.0</strong><span>CET-6 571</span></div>
-      </div>
-    </div>
-  </article>
-</section>
+<ul class="academic-list education-list" data-reveal>
+  <li>
+    <time datetime="2023">2023 — 2027（预计）</time>
+    <strong>同济大学 · 计算机科学与技术系</strong>
+    <span>数据科学与大数据技术，本科</span>
+    <span>加权成绩：90.51 / 100；专业排名：2 / 40；IELTS 7.0（CET-6 571）</span>
+  </li>
+</ul>
 
 <span class="anchor" id="research-experience"></span>
 
-<section class="home-section" aria-labelledby="experience-title">
-  <header class="section-header" data-reveal>
-    <p class="section-kicker">Research Experience</p>
-    <h2 id="experience-title">科研经历</h2>
-    <p>围绕 LLM 系统、异构运行时与端侧推理，在不同研究环境中持续推进可落地的系统问题。</p>
-  </header>
+# <span class="heading-icon" aria-hidden="true">🔬</span> 科研经历
 
-  <div class="research-timeline">
-    <article class="timeline-item" data-reveal>
-      <span class="timeline-dot" aria-hidden="true"></span>
-      <div class="timeline-card">
-        <div class="timeline-heading">
-          <div><p class="timeline-date">2026.05 — 至今</p><h3>上海交通大学先进网络研究所</h3></div>
-          <span class="timeline-status">进行中</span>
-        </div>
-        <p class="timeline-meta"><i class="fas fa-user-graduate" aria-hidden="true"></i> 指导教师：陈博</p>
-        <p>面向多请求 LLM Serving 场景，研究语义优先级调度与 KV Cache 存储管理的协同设计。</p>
-      </div>
-    </article>
+<div class="experience-list">
+  <article class="experience-item" data-reveal>
+    <time>2026.05 — 至今</time>
+    <div>
+      <h3>上海交通大学先进网络研究所</h3>
+      <p>指导教师：陈傅。研究语义优先级调度与 KV Cache 存储管理在多请求 LLM Serving 中的协同设计。</p>
+    </div>
+  </article>
+  <article class="experience-item" data-reveal>
+    <time>2026.05 — 2026.07</time>
+    <div>
+      <h3>上海交通大学 IPADS 实验室</h3>
+      <p>指导教师：冯二虎。参与 SkVM 异构 LLM 与 Agent Harness 系统的后续开发和性能优化。</p>
+    </div>
+  </article>
+  <article class="experience-item" data-reveal>
+    <time>2026.05 — 2026.07</time>
+    <div>
+      <h3>南京大学 LANDS 实验室</h3>
+      <p>指导教师：匡成颖。面向 RISC-V 平台开展端侧推理链路与算子优化。</p>
+    </div>
+  </article>
+  <article class="experience-item" data-reveal>
+    <time>2025.09 — 2026.01</time>
+    <div>
+      <h3>同济大学图像融合实验室</h3>
+      <p>指导教师：唐伟。围绕多模态图像融合开展实验、模型复现和系统评测。</p>
+    </div>
+  </article>
+</div>
 
-    <article class="timeline-item" data-reveal>
-      <span class="timeline-dot" aria-hidden="true"></span>
-      <div class="timeline-card">
-        <div class="timeline-heading">
-          <div><p class="timeline-date">2026.05 — 2026.07</p><h3>上海交通大学 IPADS 实验室</h3></div>
-        </div>
-        <p class="timeline-meta"><i class="fas fa-user-graduate" aria-hidden="true"></i> 指导教师：冯二虎</p>
-        <p>参与 SkVM 异构 LLM 与 Agent Harness 系统的后续扩展，优化系统效果与性能。</p>
-      </div>
-    </article>
+<span class="anchor" id="publications"></span>
 
-    <article class="timeline-item" data-reveal>
-      <span class="timeline-dot" aria-hidden="true"></span>
-      <div class="timeline-card">
-        <div class="timeline-heading">
-          <div><p class="timeline-date">2026.05 — 2026.07</p><h3>南京大学 LANDS 实验室</h3></div>
-        </div>
-        <p class="timeline-meta"><i class="fas fa-user-graduate" aria-hidden="true"></i> 指导教师：匡成颖</p>
-        <p>基于 MNN 开展 RISC-V 端侧推理链路优化；相关论文正在撰写，计划投稿 HPCA 2027。</p>
-      </div>
-    </article>
+# <span class="heading-icon" aria-hidden="true">📃</span> 论文
 
-    <article class="timeline-item" data-reveal>
-      <span class="timeline-dot" aria-hidden="true"></span>
-      <div class="timeline-card">
-        <div class="timeline-heading">
-          <div><p class="timeline-date">2026.02 — 2026.04</p><h3>独立研究经历</h3></div>
-          <span class="timeline-status timeline-status--accent">Oral</span>
-        </div>
-        <p>以独立作者身份投稿 ICIC 2026 并被接收为 Oral Presentation；目前继续扩展与优化该工作。</p>
-      </div>
-    </article>
+<p class="section-note">论文信息将在后续由本人补充。</p>
 
-    <article class="timeline-item" data-reveal>
-      <span class="timeline-dot" aria-hidden="true"></span>
-      <div class="timeline-card">
-        <div class="timeline-heading">
-          <div><p class="timeline-date">2025.09 — 2026.01</p><h3>同济大学图像融合实验室</h3></div>
-        </div>
-        <p class="timeline-meta"><i class="fas fa-user-graduate" aria-hidden="true"></i> 指导教师：唐伟</p>
-        <p>以第一作者完成 ACM Multimedia 2026 投稿并进入 Rebuttal；Rebuttal 前评分为 4/4/3/2/2。</p>
-      </div>
-    </article>
+<article class="paper-box floating-card paper-placeholder" data-reveal>
+  <div class="paper-box-image" aria-hidden="true">
+    <div class="paper-preview-placeholder">
+      <i class="fas fa-file-alt"></i>
+      <span>Paper Preview</span>
+    </div>
   </div>
-</section>
-
-<span class="anchor" id="selected-projects"></span>
-
-<section class="home-section" aria-labelledby="projects-title">
-  <header class="section-header" data-reveal>
-    <p class="section-kicker">Selected Projects</p>
-    <h2 id="projects-title">代表性项目</h2>
-    <p>把研究问题落到可运行的系统原型，用真实工作负载验证调度、编译与运行时设计。</p>
-  </header>
-
-  <div class="featured-projects">
-    <article class="project-card project-card--blue" data-reveal>
-      <div class="project-topline"><span>01 · LLM Serving</span><span class="project-state">Research</span></div>
-      <div class="project-icon"><i class="fas fa-layer-group" aria-hidden="true"></i></div>
-      <h3>SemServe</h3>
-      <p class="project-subtitle">语义优先级与 KV Cache 存储精度的协同设计系统</p>
-      <ul>
-        <li>设计以 SLO 为目标的语义优先级自动调优方法，结合离线搜索与在线计算。</li>
-        <li>把优先级与 MLFQ 映射，并在 FP16、INT8 与 CPU Offload 间进行分层存储。</li>
-      </ul>
-      <div class="tag-list tag-list--dark"><span>PyTorch</span><span>Transformers</span><span>Qwen</span><span>Llama</span></div>
-    </article>
-
-    <article class="project-card project-card--cyan" data-reveal>
-      <div class="project-topline"><span>02 · Agent Runtime</span><span class="project-state">Iterating</span></div>
-      <div class="project-icon"><i class="fas fa-code-branch" aria-hidden="true"></i></div>
-      <h3>SkVM</h3>
-      <p class="project-subtitle">面向异构 LLM 与 Agent Harness 的技能编译与运行时系统</p>
-      <ul>
-        <li>为四类 Agent Adapter 实现面向 Terminal-Bench v2.1 的容器化执行模式。</li>
-        <li>在 AOT/JIT 阶段引入 DLP、ILP、TLP 并行分类与多角色智能体优化。</li>
-      </ul>
-      <div class="tag-list tag-list--dark"><span>TypeScript</span><span>Bun</span><span>Docker</span><span>LLM Agent</span></div>
-    </article>
+  <div class="paper-box-text">
+    <span class="paper-status">TO BE ADDED</span>
+    <h3>论文题目待添加</h3>
+    <p class="authors">作者信息待添加</p>
+    <p class="venue">会议 / 期刊信息待添加</p>
+    <div class="paper-links" aria-label="论文链接占位">
+      <span><i class="fas fa-link" aria-hidden="true"></i> Paper</span>
+      <span><i class="fab fa-github" aria-hidden="true"></i> Code</span>
+    </div>
   </div>
+</article>
 
-  <h3 class="subsection-title" data-reveal>其他系统项目</h3>
-  <div class="mini-project-grid">
-    <article class="mini-project" data-reveal>
-      <i class="fas fa-terminal" aria-hidden="true"></i>
-      <h4>Rust 操作系统内核</h4>
-      <p>面向 RISC-V 实现 Boot、Trap、系统调用、进程、虚拟内存与文件系统。</p>
-      <span>Rust · RISC-V · QEMU</span>
-    </article>
-    <article class="mini-project" data-reveal>
-      <i class="fas fa-database" aria-hidden="true"></i>
-      <h4>Mini-GFS 分布式文件系统</h4>
-      <p>实现 Master、ChunkServer 与 Client，以及副本、心跳和失效处理。</p>
-      <span>Go · RPC · Storage</span>
-    </article>
-    <article class="mini-project" data-reveal>
-      <i class="fas fa-project-diagram" aria-hidden="true"></i>
-      <h4>Chord 分布式哈希环</h4>
-      <p>支持节点动态加入退出、Finger Table 路由、迁移与 Stabilization。</p>
-      <span>Go · Distributed Systems</span>
-    </article>
-    <article class="mini-project" data-reveal>
-      <i class="fas fa-plug" aria-hidden="true"></i>
-      <h4>Rust MCP Server</h4>
-      <p>支持工具 Schema、请求解析、异步执行与错误处理，已被 Awesome-MCP-ZH 收录。</p>
-      <span>Rust · MCP · Async</span>
-    </article>
-  </div>
-</section>
+<span class="anchor" id="projects"></span>
 
-<span class="anchor" id="submissions"></span>
+# <span class="heading-icon" aria-hidden="true">💻</span> 代表性项目
 
-<section class="home-section" aria-labelledby="submissions-title">
-  <header class="section-header" data-reveal>
-    <p class="section-kicker">Research Output</p>
-    <h2 id="submissions-title">投稿经历</h2>
-  </header>
+<div class="project-grid">
+  <article class="project-card floating-card" data-reveal>
+    <div class="project-card__head">
+      <i class="fas fa-layer-group" aria-hidden="true"></i>
+      <span>LLM SERVING</span>
+    </div>
+    <h3>SemServe</h3>
+    <p>面向语义优先级与 KV Cache 存储精度协同设计的在线推理系统原型。</p>
+    <ul>
+      <li>围绕 SLO 的语义优先级自动调优。</li>
+      <li>FP16、INT8 与 CPU Offload 分层存储。</li>
+    </ul>
+    <div class="tag-row"><span>PyTorch</span><span>Transformers</span><span>Qwen</span></div>
+  </article>
 
-  <div class="submission-list">
-    <article class="submission-card" data-reveal>
-      <div class="submission-badge submission-badge--oral">ORAL</div>
-      <div><p class="submission-venue">ICIC 2026</p><h3>KV Cache Management</h3><p>独立作者 · 已接收为 Oral Presentation</p></div>
-      <span class="submission-year">2026</span>
-    </article>
-    <article class="submission-card" data-reveal>
-      <div class="submission-badge submission-badge--neutral">REBUTTAL</div>
-      <div><p class="submission-venue">ACM Multimedia 2026 · CCF-A</p><h3>图像处理方向</h3><p>第一作者 · 进入 Rebuttal，最终未接收</p></div>
-      <span class="submission-year">2026</span>
-    </article>
-    <article class="submission-card" data-reveal>
-      <div class="submission-badge submission-badge--prepare">IN PREP.</div>
-      <div><p class="submission-venue">HPCA 2027</p><h3>RISC-V 端侧推理优化</h3><p>第三作者 · 学生作者中排名第一，论文撰写中</p></div>
-      <span class="submission-year">2027</span>
-    </article>
-  </div>
-</section>
-
-<span class="anchor" id="skills"></span>
-
-<section class="home-section" aria-labelledby="skills-title">
-  <header class="section-header" data-reveal>
-    <p class="section-kicker">Toolkit</p>
-    <h2 id="skills-title">技能</h2>
-  </header>
-
-  <div class="skills-grid">
-    <article class="skill-group" data-reveal><p>Languages</p><div><span>Rust</span><span>C/C++</span><span>Python</span><span>Go</span></div></article>
-    <article class="skill-group" data-reveal><p>Systems</p><div><span>Linux</span><span>Distributed Systems</span><span>Concurrency</span><span>RISC-V</span></div></article>
-    <article class="skill-group" data-reveal><p>AI Infrastructure</p><div><span>CUDA C++</span><span>PyTorch</span><span>vLLM</span><span>NCCL</span><span>GPUDirect RDMA</span></div></article>
-    <article class="skill-group" data-reveal><p>Agent Engineering</p><div><span>Claude Code</span><span>Codex</span><span>Skill</span><span>MCP</span><span>Hook</span><span>Rules</span></div></article>
-  </div>
-</section>
+  <article class="project-card floating-card" data-reveal>
+    <div class="project-card__head">
+      <i class="fas fa-code-branch" aria-hidden="true"></i>
+      <span>AGENT RUNTIME</span>
+    </div>
+    <h3>SkVM</h3>
+    <p>面向异构 LLM 与 Agent Harness 的技能编译和运行时系统。</p>
+    <ul>
+      <li>实现面向 Terminal-Bench 的容器化执行模式。</li>
+      <li>在 AOT / JIT 阶段开展并行分类与多角色优化。</li>
+    </ul>
+    <div class="tag-row"><span>TypeScript</span><span>Bun</span><span>Docker</span></div>
+  </article>
+</div>
 
 <span class="anchor" id="honors"></span>
 
-<section class="home-section" aria-labelledby="honors-title">
-  <header class="section-header" data-reveal>
-    <p class="section-kicker">Honors</p>
-    <h2 id="honors-title">荣誉与竞赛</h2>
-  </header>
+# <span class="heading-icon" aria-hidden="true">🏆</span> 荣誉与竞赛
 
-  <div class="honor-grid">
-    <article class="honor-card" data-reveal>
-      <div class="honor-icon"><i class="fas fa-trophy" aria-hidden="true"></i></div>
-      <div><span>2025.12</span><h3>国家一等奖</h3><p>全球校园人工智能算法大赛算法挑战赛 · 队内第一顺位</p></div>
-    </article>
-    <article class="honor-card" data-reveal>
-      <div class="honor-icon honor-icon--silver"><i class="fas fa-medal" aria-hidden="true"></i></div>
-      <div><span>2025.10</span><h3>国际银奖</h3><p>国际基因工程机器大赛（iGEM）</p></div>
-    </article>
-  </div>
-</section>
+<ul class="academic-list honors-list" data-reveal>
+  <li><time>2025</time> 全国大学生数学建模竞赛上海赛区二等奖</li>
+  <li><time>2024</time> 同济大学优秀学生奖学金</li>
+  <li><time>2023</time> 同济大学新生院奖学金</li>
+</ul>
 
-<footer class="home-footer" data-reveal>
-  <span>Last updated · 2026.07</span>
-  <a href="#about-me">返回顶部 <i class="fas fa-arrow-up" aria-hidden="true"></i></a>
+<footer class="academic-footer">
+  <p>Last updated: August 2026 · <a href="mailto:2353113@tongji.edu.cn">2353113@tongji.edu.cn</a></p>
 </footer>

@@ -1,22 +1,22 @@
 # main links links
 main:
-  - title: "关于我"
-    url: "#about-me"
-
   - title: "研究兴趣"
     url: "#research-interests"
+
+  - title: "动态"
+    url: "#news"
+
+  - title: "教育背景"
+    url: "#education"
 
   - title: "科研经历"
     url: "#research-experience"
 
-  - title: "代表性项目"
-    url: "#selected-projects"
+  - title: "论文"
+    url: "#publications"
 
-  - title: "投稿经历"
-    url: "#submissions"
+  - title: "项目"
+    url: "#projects"
 
-  - title: "技能"
-    url: "#skills"
-
-  - title: "荣誉与竞赛"
+  - title: "荣誉"
     url: "#honors"

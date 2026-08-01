@@ -21,10 +21,6 @@
   if (!reduceMotion && "IntersectionObserver" in window) {
     root.classList.add("js-enhanced");
 
-    revealElements.forEach(function (element, index) {
-      element.style.setProperty("--reveal-order", index % 4);
-    });
-
     var revealObserver = new IntersectionObserver(
       function (entries) {
         entries.forEach(function (entry) {
@@ -34,7 +30,7 @@
           }
         });
       },
-      { threshold: 0.12, rootMargin: "0px 0px -48px" }
+      { threshold: 0.1, rootMargin: "0px 0px -50px 0px" }
     );
 
     revealElements.forEach(function (element) {

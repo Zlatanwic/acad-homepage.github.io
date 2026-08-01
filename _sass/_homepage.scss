@@ -397,8 +397,7 @@ a:focus-visible {
   border-radius: 12px;
   background: var(--academic-surface);
   box-shadow: var(--academic-shadow);
-  transition: transform 0.3s ease-out, box-shadow 0.3s ease-out,
-    border-color 0.3s ease-out;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .floating-card::before {
@@ -406,14 +405,20 @@ a:focus-visible {
   position: absolute;
   inset: 0 0 auto;
   height: 3px;
-  background: linear-gradient(90deg, var(--academic-coral), #ff9aaa, #a69bea);
-  opacity: 0.9;
+  background: linear-gradient(90deg, #27a9f5 0%, #68c9ff 50%, #a8e4ff 100%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
 }
 
 .floating-card:hover {
-  transform: translateY(-5px);
-  border-color: rgba(254, 102, 123, 0.22);
-  box-shadow: 0 12px 30px rgba(1, 47, 99, 0.12);
+  transform: translateY(-8px);
+  border-color: rgba(254, 102, 123, 0.2);
+  box-shadow: 0 12px 35px rgba(1, 47, 99, 0.15);
+}
+
+.floating-card:hover::before,
+.floating-card:focus-within::before {
+  opacity: 1;
 }
 
 .highlight-block {
@@ -732,16 +737,19 @@ a:focus-visible {
 
 .js-enhanced [data-reveal] {
   opacity: 0;
-  transform: translateY(18px);
-  transition: opacity 0.55s ease-out,
-    transform 0.55s ease-out;
-  transition-delay: calc(var(--reveal-order, 0) * 0.06s);
+  transform: translateY(30px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
   will-change: opacity, transform;
 }
 
 .js-enhanced [data-reveal].is-visible {
   opacity: 1;
   transform: translateY(0);
+}
+
+.js-enhanced [data-reveal].floating-card.is-visible:hover,
+.js-enhanced [data-reveal].floating-card.is-visible:focus-within {
+  transform: translateY(-8px);
 }
 
 @media (max-width: 1100px) {

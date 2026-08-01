@@ -83,7 +83,7 @@ redirect_from:
     <time datetime="2023">2023 — 2027（预计）</time>
     <strong>同济大学 · 计算机科学与技术系</strong>
     <span>数据科学与大数据技术，本科</span>
-    <span>加权成绩：90.51 / 100；专业排名：2 / 40；IELTS 7.0（CET-6 571）</span>
+    <span>专业排名：2 / 40</span>
   </li>
 </ul>
 

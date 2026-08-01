@@ -32,26 +32,34 @@ redirect_from:
 
 <div class="highlight-blocks">
   <article class="highlight-block floating-card" data-reveal>
-    <h3><i class="fas fa-server" aria-hidden="true"></i> LLM Serving</h3>
+    <h3><i class="fas fa-server" aria-hidden="true"></i> 大模型推理与服务</h3>
     <ul>
-      <li><span class="primary-gradient-text">研究重点：</span>多请求在线推理、语义优先级调度、KV Cache 管理与服务质量保障。</li>
-      <li><span class="primary-gradient-text">技术关注：</span>高性能算子、Prefill / Decode 协同、分层存储与真实工作负载评测。</li>
+      <li><span class="primary-gradient-text">研究重点：</span>请求调度、KV Cache 管理与分层存储、Prefill–Decode 协同。</li>
+      <li><span class="primary-gradient-text">系统方向：</span>故障容错及系统—模型协同设计。</li>
     </ul>
   </article>
 
   <article class="highlight-block floating-card" data-reveal>
-    <h3><i class="fas fa-network-wired" aria-hidden="true"></i> 分布式与异构系统</h3>
+    <h3><i class="fas fa-network-wired" aria-hidden="true"></i> 分布式训练与通信</h3>
     <ul>
-      <li><span class="primary-gradient-text">研究重点：</span>分布式训练与通信、异构 CPU / GPU 推理和系统—算法协同设计。</li>
-      <li><span class="primary-gradient-text">实践方向：</span>面向不同硬件与运行环境优化吞吐、时延和资源利用率。</li>
+      <li><span class="primary-gradient-text">并行策略：</span>数据、张量、流水线和专家并行。</li>
+      <li><span class="primary-gradient-text">系统方向：</span>通信计算重叠、集合通信优化和大规模训练可靠性。</li>
     </ul>
   </article>
 
   <article class="highlight-block floating-card" data-reveal>
-    <h3><i class="fas fa-code-branch" aria-hidden="true"></i> 编译与 Agent Infra</h3>
+    <h3><i class="fas fa-microchip" aria-hidden="true"></i> GPU 算子与编译</h3>
     <ul>
-      <li><span class="primary-gradient-text">研究重点：</span>GPU / RISC-V 编译优化、运行时系统以及异构 LLM Agent 基础设施。</li>
-      <li><span class="primary-gradient-text">工程兴趣：</span>从中间表示、算子到端到端执行链路的系统化性能优化。</li>
+      <li><span class="primary-gradient-text">技术关注：</span>CUDA 高性能编程、算子融合、Megakernel 与持久化执行。</li>
+      <li><span class="primary-gradient-text">编译方向：</span>自动调优与高性能算子生成。</li>
+    </ul>
+  </article>
+
+  <article class="highlight-block floating-card" data-reveal>
+    <h3><i class="fas fa-robot" aria-hidden="true"></i> Agent 与异构基础设施</h3>
+    <ul>
+      <li><span class="primary-gradient-text">Agent Infra：</span>Agent Harness 自动化、工具调用编排、技能编译与运行时优化。</li>
+      <li><span class="primary-gradient-text">异构方向：</span>面向 RISC-V 的端侧推理。</li>
     </ul>
   </article>
 </div>

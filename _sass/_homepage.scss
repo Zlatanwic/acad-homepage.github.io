@@ -385,7 +385,7 @@ a:focus-visible {
 
 .highlight-blocks {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 1.25rem;
   margin: 0 0 2.5rem;
 }
@@ -417,7 +417,7 @@ a:focus-visible {
 }
 
 .highlight-block {
-  min-height: 270px;
+  min-height: 225px;
   padding: 1.55rem 1.65rem;
 }
 

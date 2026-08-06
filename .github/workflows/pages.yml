@@ -1,8 +1,6 @@
-name: Deploy Jekyll site to Pages
+name: Manual artifact deployment to Pages
 
 on:
-  push:
-    branches: ["main"]
   workflow_dispatch:
 
 permissions:

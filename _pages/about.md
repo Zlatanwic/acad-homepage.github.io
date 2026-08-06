@@ -98,7 +98,7 @@ redirect_from:
     <time>May 2026 — Present</time>
     <div>
       <h3>Institute of Advanced Network, Shanghai Jiao Tong University</h3>
-      <p>Advisor: Fu Chen. Investigating the co-design of semantic-priority scheduling and KV cache management for multi-request LLM serving.</p>
+      <p>Advisor: <a href="https://bochen.info/" target="_blank" rel="noopener noreferrer">Bo Chen</a>. Investigating the co-design of semantic-priority scheduling and KV cache management for multi-request LLM serving.</p>
     </div>
   </article>
   <article class="experience-item" data-reveal>

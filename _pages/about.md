@@ -1,7 +1,7 @@
 ---
 permalink: /
 title: ""
-excerpt: "李阔，同济大学本科生，研究方向为 MLSys 与 AI Infrastructure。"
+excerpt: "Kuo Li is an undergraduate student at Tongji University working on MLSys and AI infrastructure."
 author_profile: true
 redirect_from:
   - /about/
@@ -10,123 +10,125 @@ redirect_from:
 
 <span class="anchor" id="about-me"></span>
 
-<section class="academic-intro" aria-label="个人简介">
+<section class="academic-intro" aria-label="Personal introduction">
   <p>
-    我是 <span class="accent-text">李阔</span>，同济大学计算机科学与技术系数据科学与大数据技术专业本科生。
-    我的研究兴趣集中在 <strong>MLSys / AI Infrastructure</strong>，关注大模型推理服务、异构计算、
-    分布式训练以及编译与运行时系统。
+    I am <span class="accent-text">Kuo Li</span>, an undergraduate student majoring in Data Science and Big Data Technology
+    in the Department of Computer Science and Technology at Tongji University. My research interests lie in
+    <strong>MLSys / AI Infrastructure</strong>, with a focus on LLM inference and serving, heterogeneous computing,
+    distributed training, and compiler and runtime systems.
   </p>
   <p>
-    我目前在上海交通大学先进网络研究所开展面向多请求 LLM Serving 的研究，探索语义优先级调度与
-    KV Cache 存储管理；此前也参与过异构大模型运行时、RISC-V 端侧推理链路优化与图像融合等项目。
-    我希望把系统研究中的想法落实为可运行、可测量、可复现的原型。
+    I am currently conducting research on multi-request LLM serving at the Institute of Advanced Network,
+    Shanghai Jiao Tong University, exploring semantic-priority scheduling and KV cache management. Previously,
+    I worked on heterogeneous LLM runtimes, RISC-V edge inference optimization, and multimodal image fusion.
+    I aim to turn systems research ideas into working, measurable, and reproducible prototypes.
   </p>
   <p class="intro-invitation">
-    欢迎通过邮件与我交流系统、机器学习基础设施或潜在合作。
+    Please feel free to contact me about systems, machine learning infrastructure, or potential collaborations.
   </p>
 </section>
 
 <span class="anchor" id="research-interests"></span>
 
-# <span class="heading-icon" aria-hidden="true">📃</span> 研究兴趣
+# <span class="heading-icon" aria-hidden="true">📃</span> Research Interests
 
 <div class="highlight-blocks">
   <article class="highlight-block floating-card" data-reveal>
-    <h3><i class="fas fa-server" aria-hidden="true"></i> 大模型推理与服务</h3>
+    <h3><i class="fas fa-server" aria-hidden="true"></i> LLM Inference and Serving</h3>
     <ul>
-      <li><span class="primary-gradient-text">研究重点：</span>请求调度、KV Cache 管理与分层存储、Prefill–Decode 协同。</li>
-      <li><span class="primary-gradient-text">系统方向：</span>故障容错及系统—模型协同设计。</li>
+      <li><span class="primary-gradient-text">Focus:</span> Request scheduling, KV cache management and tiered storage, and Prefill–Decode coordination.</li>
+      <li><span class="primary-gradient-text">Systems:</span> Fault tolerance and system–model co-design.</li>
     </ul>
   </article>
 
   <article class="highlight-block floating-card" data-reveal>
-    <h3><i class="fas fa-network-wired" aria-hidden="true"></i> 分布式训练与通信</h3>
+    <h3><i class="fas fa-network-wired" aria-hidden="true"></i> Distributed Training and Communication</h3>
     <ul>
-      <li><span class="primary-gradient-text">并行策略：</span>数据、张量、流水线和专家并行。</li>
-      <li><span class="primary-gradient-text">系统方向：</span>通信计算重叠、集合通信优化和大规模训练可靠性。</li>
+      <li><span class="primary-gradient-text">Parallelism:</span> Data, tensor, pipeline, and expert parallelism.</li>
+      <li><span class="primary-gradient-text">Systems:</span> Communication–computation overlap, collective communication optimization, and reliable large-scale training.</li>
     </ul>
   </article>
 
   <article class="highlight-block floating-card" data-reveal>
-    <h3><i class="fas fa-microchip" aria-hidden="true"></i> GPU 算子与编译</h3>
+    <h3><i class="fas fa-microchip" aria-hidden="true"></i> GPU Kernels and Compilation</h3>
     <ul>
-      <li><span class="primary-gradient-text">技术关注：</span>CUDA 高性能编程、算子融合、Megakernel 与持久化执行。</li>
-      <li><span class="primary-gradient-text">编译方向：</span>自动调优与高性能算子生成。</li>
+      <li><span class="primary-gradient-text">Focus:</span> High-performance CUDA programming, kernel fusion, megakernels, and persistent execution.</li>
+      <li><span class="primary-gradient-text">Compilers:</span> Autotuning and high-performance kernel generation.</li>
     </ul>
   </article>
 
   <article class="highlight-block floating-card" data-reveal>
-    <h3><i class="fas fa-robot" aria-hidden="true"></i> Agent 与异构基础设施</h3>
+    <h3><i class="fas fa-robot" aria-hidden="true"></i> Agents and Heterogeneous Infrastructure</h3>
     <ul>
-      <li><span class="primary-gradient-text">Agent Infra：</span>Agent Harness 自动化、工具调用编排、技能编译与运行时优化。</li>
-      <li><span class="primary-gradient-text">异构方向：</span>面向 RISC-V 的端侧推理。</li>
+      <li><span class="primary-gradient-text">Agent infrastructure:</span> Agent harness automation, tool-call orchestration, skill compilation, and runtime optimization.</li>
+      <li><span class="primary-gradient-text">Heterogeneous systems:</span> Edge inference on RISC-V.</li>
     </ul>
   </article>
 </div>
 
 <span class="anchor" id="news"></span>
 
-# <span class="heading-icon" aria-hidden="true">🔥</span> 动态
+# <span class="heading-icon" aria-hidden="true">🔥</span> News
 
 <ul class="academic-list news-list" data-reveal>
-  <li><time datetime="2026-05">2026.05 — 至今</time> 在上海交通大学先进网络研究所开展多请求 LLM Serving 研究。</li>
-  <li><time datetime="2026-05">2026.05</time> 参与上海交通大学 IPADS 实验室异构 LLM 与 Agent Harness 系统开发。</li>
-  <li><time datetime="2026-05">2026.05</time> 参与南京大学 LANDS 实验室 RISC-V 端侧推理链路优化研究。</li>
+  <li><time datetime="2026-05">May 2026 — Present</time> Conducting research on multi-request LLM serving at the Institute of Advanced Network, Shanghai Jiao Tong University.</li>
+  <li><time datetime="2026-05">May 2026</time> Contributed to heterogeneous LLM and agent harness systems at IPADS, Shanghai Jiao Tong University.</li>
+  <li><time datetime="2026-05">May 2026</time> Conducted research on optimizing the RISC-V edge inference stack at the LANDS Lab, Nanjing University.</li>
 </ul>
 
 <span class="anchor" id="education"></span>
 
-# <span class="heading-icon" aria-hidden="true">🏫</span> 教育背景
+# <span class="heading-icon" aria-hidden="true">🏫</span> Education
 
 <ul class="academic-list education-list" data-reveal>
   <li>
-    <time datetime="2023">2023 — 2027（预计）</time>
-    <strong>同济大学 · 计算机科学与技术系</strong>
-    <span>数据科学与大数据技术，本科</span>
-    <span>专业排名：2 / 40</span>
+    <time datetime="2023">2023 — 2027 (Expected)</time>
+    <strong>Tongji University · Department of Computer Science and Technology</strong>
+    <span>Undergraduate, Data Science and Big Data Technology</span>
+    <span>Major Rank: 2 / 40</span>
   </li>
 </ul>
 
 <span class="anchor" id="research-experience"></span>
 
-# <span class="heading-icon" aria-hidden="true">🔬</span> 科研经历
+# <span class="heading-icon" aria-hidden="true">🔬</span> Research Experience
 
 <div class="experience-list">
   <article class="experience-item" data-reveal>
-    <time>2026.05 — 至今</time>
+    <time>May 2026 — Present</time>
     <div>
-      <h3>上海交通大学先进网络研究所</h3>
-      <p>指导教师：陈傅。研究语义优先级调度与 KV Cache 存储管理在多请求 LLM Serving 中的协同设计。</p>
+      <h3>Institute of Advanced Network, Shanghai Jiao Tong University</h3>
+      <p>Advisor: Fu Chen. Investigating the co-design of semantic-priority scheduling and KV cache management for multi-request LLM serving.</p>
     </div>
   </article>
   <article class="experience-item" data-reveal>
-    <time>2026.05 — 2026.07</time>
+    <time>May 2026 — Jul. 2026</time>
     <div>
-      <h3>上海交通大学 IPADS 实验室</h3>
-      <p>指导教师：冯二虎。参与 SkVM 异构 LLM 与 Agent Harness 系统的后续开发和性能优化。</p>
+      <h3>IPADS, Shanghai Jiao Tong University</h3>
+      <p>Advisor: Erhu Feng. Contributed to the continued development and performance optimization of SkVM, a heterogeneous LLM and agent harness system.</p>
     </div>
   </article>
   <article class="experience-item" data-reveal>
-    <time>2026.05 — 2026.07</time>
+    <time>May 2026 — Jul. 2026</time>
     <div>
-      <h3>南京大学 LANDS 实验室</h3>
-      <p>指导教师：匡成颖。面向 RISC-V 平台开展端侧推理链路与算子优化。</p>
+      <h3>LANDS Lab, Nanjing University</h3>
+      <p>Advisor: Chengying Kuang. Optimized the edge inference stack and kernels for RISC-V platforms.</p>
     </div>
   </article>
   <article class="experience-item" data-reveal>
-    <time>2025.09 — 2026.01</time>
+    <time>Sep. 2025 — Jan. 2026</time>
     <div>
-      <h3>同济大学图像融合实验室</h3>
-      <p>指导教师：唐伟。围绕多模态图像融合开展实验、模型复现和系统评测。</p>
+      <h3>Multimodal Image Fusion Lab, Tongji University</h3>
+      <p>Advisor: Wei Tang. Conducted experiments, reproduced models, and evaluated systems for multimodal image fusion.</p>
     </div>
   </article>
 </div>
 
 <span class="anchor" id="publications"></span>
 
-# <span class="heading-icon" aria-hidden="true">📃</span> 论文
+# <span class="heading-icon" aria-hidden="true">📃</span> Publications
 
-<p class="section-note">论文信息将在后续由本人补充。</p>
+<p class="section-note">Publication details will be added later.</p>
 
 <article class="paper-box floating-card paper-placeholder" data-reveal>
   <div class="paper-box-image" aria-hidden="true">
@@ -137,10 +139,10 @@ redirect_from:
   </div>
   <div class="paper-box-text">
     <span class="paper-status">TO BE ADDED</span>
-    <h3>论文题目待添加</h3>
-    <p class="authors">作者信息待添加</p>
-    <p class="venue">会议 / 期刊信息待添加</p>
-    <div class="paper-links" aria-label="论文链接占位">
+    <h3>Publication title to be added</h3>
+    <p class="authors">Author list to be added</p>
+    <p class="venue">Venue information to be added</p>
+    <div class="paper-links" aria-label="Publication link placeholders">
       <span><i class="fas fa-link" aria-hidden="true"></i> Paper</span>
       <span><i class="fab fa-github" aria-hidden="true"></i> Code</span>
     </div>
@@ -149,7 +151,7 @@ redirect_from:
 
 <span class="anchor" id="projects"></span>
 
-# <span class="heading-icon" aria-hidden="true">💻</span> 代表性项目
+# <span class="heading-icon" aria-hidden="true">💻</span> Selected Projects
 
 <div class="project-grid">
   <article class="project-card floating-card" data-reveal>
@@ -158,10 +160,10 @@ redirect_from:
       <span>LLM SERVING</span>
     </div>
     <h3>SemServe</h3>
-    <p>面向语义优先级与 KV Cache 存储精度协同设计的在线推理系统原型。</p>
+    <p>An online inference system prototype that co-designs semantic priority and KV cache storage precision.</p>
     <ul>
-      <li>围绕 SLO 的语义优先级自动调优。</li>
-      <li>FP16、INT8 与 CPU Offload 分层存储。</li>
+      <li>Automatic SLO-aware tuning of semantic priorities.</li>
+      <li>Tiered storage across FP16, INT8, and CPU offload.</li>
     </ul>
     <div class="tag-row"><span>PyTorch</span><span>Transformers</span><span>Qwen</span></div>
   </article>
@@ -172,10 +174,10 @@ redirect_from:
       <span>AGENT RUNTIME</span>
     </div>
     <h3>SkVM</h3>
-    <p>面向异构 LLM 与 Agent Harness 的技能编译和运行时系统。</p>
+    <p>A skill compilation and runtime system for heterogeneous LLMs and agent harnesses.</p>
     <ul>
-      <li>实现面向 Terminal-Bench 的容器化执行模式。</li>
-      <li>在 AOT / JIT 阶段开展并行分类与多角色优化。</li>
+      <li>Containerized execution for Terminal-Bench.</li>
+      <li>Parallelism classification and multi-role optimization across AOT and JIT stages.</li>
     </ul>
     <div class="tag-row"><span>TypeScript</span><span>Bun</span><span>Docker</span></div>
   </article>
@@ -183,12 +185,12 @@ redirect_from:
 
 <span class="anchor" id="honors"></span>
 
-# <span class="heading-icon" aria-hidden="true">🏆</span> 荣誉与竞赛
+# <span class="heading-icon" aria-hidden="true">🏆</span> Honors and Awards
 
 <ul class="academic-list honors-list" data-reveal>
-  <li><time>2025</time> 全国大学生数学建模竞赛上海赛区二等奖</li>
-  <li><time>2024</time> 同济大学优秀学生奖学金</li>
-  <li><time>2023</time> 同济大学新生院奖学金</li>
+  <li><time>2025</time> Second Prize, Shanghai Division, China Undergraduate Mathematical Contest in Modeling</li>
+  <li><time>2024</time> Outstanding Student Scholarship, Tongji University</li>
+  <li><time>2023</time> Freshman Scholarship, Tongji University</li>
 </ul>
 
 <footer class="academic-footer">

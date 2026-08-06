@@ -6,8 +6,9 @@
 # `jekyll serve`. If you change this file, please restart the server process.
 
 # Site Settings
-title                    : "李阔 | Academic Homepage"
-description              : "李阔，同济大学本科生，研究方向为 MLSys 与 AI Infrastructure。"
+title                    : "Kuo Li | Academic Homepage"
+description              : "Kuo Li is an undergraduate student at Tongji University working on MLSys and AI infrastructure."
+locale                   : "en-US"
 repository               : "Zlatanwic/acad-homepage.github.io"
 google_scholar_stats_use_cdn : true
 
@@ -21,11 +22,11 @@ baidu_site_verification  :  # get baidu_site_verification from https://ziyuan.ba
 
 # Site Author
 author:
-  name             : "李阔"
+  name             : "Kuo Li"
   avatar           :
   bio              : "MLSys / AI Infrastructure"
-  location         : "上海，中国"
-  employer         : "同济大学"
+  location         : "Shanghai, China"
+  employer         : "Tongji University"
   pubmed           : 
   googlescholar    :
   email            : "2353113@tongji.edu.cn"

@@ -161,6 +161,12 @@ redirect_from:
 </div>
 
 <footer class="academic-footer">
-  <div><p class="footer-title">Let's talk systems.</p><a href="mailto:{{ site.author.email }}">{{ site.author.email }} <span aria-hidden="true">↗</span></a></div>
+  <div>
+    <p class="footer-title">Let's talk systems.</p>
+    <div><a href="mailto:{{ site.author.email }}">{{ site.author.email }} <span aria-hidden="true">↗</span></a></div>
+    {% if site.author.email_secondary %}
+      <div><a href="mailto:{{ site.author.email_secondary }}">{{ site.author.email_secondary }} <span aria-hidden="true">↗</span></a></div>
+    {% endif %}
+  </div>
   <div class="footer-meta"><p>Last updated: September 2026</p><a href="#about-me">Back to top <span aria-hidden="true">↑</span></a></div>
 </footer>

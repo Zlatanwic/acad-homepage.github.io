@@ -114,20 +114,6 @@ redirect_from:
       <p>Advisor: Erhu Feng. Contributed to the continued development and performance optimization of SkVM, a heterogeneous LLM and agent harness system.</p>
     </div>
   </article>
-  <article class="experience-item" data-reveal>
-    <time>May 2026 — Jul. 2026</time>
-    <div>
-      <h3>LANDS Lab, Nanjing University</h3>
-      <p>Advisor: Chengying Kuang. Optimized the edge inference stack and kernels for RISC-V platforms.</p>
-    </div>
-  </article>
-  <article class="experience-item" data-reveal>
-    <time>Sep. 2025 — Jan. 2026</time>
-    <div>
-      <h3>Multimodal Image Fusion Lab, Tongji University</h3>
-      <p>Advisor: Wei Tang. Conducted experiments, reproduced models, and evaluated systems for multimodal image fusion.</p>
-    </div>
-  </article>
 </div>
 
 <h2 class="section-heading" id="publications"><span class="section-number" aria-hidden="true">05</span> Publications</h2>

@@ -18,10 +18,8 @@ redirect_from:
     distributed training, and compiler and runtime systems.
   </p>
   <p>
-    I am currently conducting research on multi-request LLM serving at the Institute of Advanced Network,
-    Shanghai Jiao Tong University, exploring semantic-priority scheduling and KV cache management. Previously,
-    I worked on heterogeneous LLM runtimes, RISC-V edge inference optimization, and multimodal image fusion.
-    I aim to turn systems research ideas into working, measurable, and reproducible prototypes.
+    I am an incoming Ph.D. student in the Department of Computer Science and Technology at Tsinghua University,
+    starting in 2027. I will be advised by Yongwei Wu and Mingxing Zhang.
   </p>
   <p class="intro-invitation">
     Please feel free to contact me about systems, machine learning infrastructure, or potential collaborations.

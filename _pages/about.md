@@ -84,6 +84,12 @@ redirect_from:
 
 <ul class="academic-list education-list" data-reveal>
   <li>
+    <time datetime="2027">Starting in 2027</time>
+    <strong>Tsinghua University · Department of Computer Science and Technology</strong>
+    <span>Incoming Ph.D. Student</span>
+    <span>Institute of High Performance Computing (IHPC)</span>
+  </li>
+  <li>
     <time datetime="2023">2023 — 2027 (Expected)</time>
     <strong>Tongji University · Department of Computer Science and Technology</strong>
     <span>Undergraduate, Data Science and Big Data Technology</span>

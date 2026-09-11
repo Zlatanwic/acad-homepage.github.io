@@ -23,7 +23,7 @@ baidu_site_verification  :  # get baidu_site_verification from https://ziyuan.ba
 # Site Author
 author:
   name             : "Kuo Li"
-  avatar           :
+  avatar           : "/images/kuo-li-profile.jpg"
   bio              : "MLSys / AI Infrastructure"
   location         : "Shanghai, China"
   employer         : "Tongji University"

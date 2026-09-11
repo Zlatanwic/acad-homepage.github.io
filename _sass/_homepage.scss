@@ -156,6 +156,9 @@ a:focus:not(:focus-visible), #main:focus { outline: none; }
   object-fit: cover;
   border: 0;
   border-radius: inherit;
+  // Frame the portrait around the face while preserving the original photo.
+  transform: scale(1.35);
+  transform-origin: 35% 88%;
 }
 .profile_box > .author__avatar--placeholder { flex-direction: column; gap: 17px; background: #f3f6f8; }
 .profile-monogram { font: 400 64px Georgia, serif; color: #8ca1b1; line-height: 1; }

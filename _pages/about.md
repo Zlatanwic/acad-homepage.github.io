@@ -8,9 +8,9 @@ redirect_from:
   - /about.html
 ---
 
-<span class="anchor" id="about-me"></span>
-
-<section class="academic-intro" aria-label="Personal introduction">
+<section class="academic-intro" id="about-me" aria-labelledby="intro-title">
+  <p class="intro-eyebrow"><span aria-hidden="true"></span> MLSys / AI Infrastructure</p>
+  <h1 id="intro-title">Machine learning,<br>from models to systems.</h1>
   <p>
     I am <span class="accent-text">Kuo Li</span>, an undergraduate student majoring in Data Science and Big Data Technology
     in the Department of Computer Science and Technology at Tongji University. My research interests lie in
@@ -26,14 +26,17 @@ redirect_from:
   <p class="intro-invitation">
     Please feel free to contact me about systems, machine learning infrastructure, or potential collaborations.
   </p>
+  <div class="intro-links">
+    <a class="intro-link--primary" href="{{ site.author.cv | relative_url }}" target="_blank" rel="noopener noreferrer"><i class="fas fa-file-alt" aria-hidden="true"></i> View CV <span aria-hidden="true">↗</span></a>
+    <a href="mailto:{{ site.author.email }}"><i class="fas fa-envelope" aria-hidden="true"></i> Get in touch</a>
+  </div>
 </section>
 
-<span class="anchor" id="research-interests"></span>
-
-# <span class="heading-icon" aria-hidden="true">📃</span> Research Interests
+<h2 class="section-heading" id="research-interests"><span class="section-number" aria-hidden="true">01</span> Research Interests</h2>
 
 <div class="highlight-blocks">
   <article class="highlight-block floating-card" data-reveal>
+    <span class="card-index" aria-hidden="true">01 / SERVING</span>
     <h3><i class="fas fa-server" aria-hidden="true"></i> LLM Inference and Serving</h3>
     <ul>
       <li><span class="primary-gradient-text">Focus:</span> Request scheduling, KV cache management and tiered storage, and Prefill–Decode coordination.</li>
@@ -42,6 +45,7 @@ redirect_from:
   </article>
 
   <article class="highlight-block floating-card" data-reveal>
+    <span class="card-index" aria-hidden="true">02 / SCALE</span>
     <h3><i class="fas fa-network-wired" aria-hidden="true"></i> Distributed Training and Communication</h3>
     <ul>
       <li><span class="primary-gradient-text">Parallelism:</span> Data, tensor, pipeline, and expert parallelism.</li>
@@ -50,6 +54,7 @@ redirect_from:
   </article>
 
   <article class="highlight-block floating-card" data-reveal>
+    <span class="card-index" aria-hidden="true">03 / COMPUTE</span>
     <h3><i class="fas fa-microchip" aria-hidden="true"></i> GPU Kernels and Compilation</h3>
     <ul>
       <li><span class="primary-gradient-text">Focus:</span> High-performance CUDA programming, kernel fusion, megakernels, and persistent execution.</li>
@@ -58,6 +63,7 @@ redirect_from:
   </article>
 
   <article class="highlight-block floating-card" data-reveal>
+    <span class="card-index" aria-hidden="true">04 / RUNTIME</span>
     <h3><i class="fas fa-robot" aria-hidden="true"></i> Agents and Heterogeneous Infrastructure</h3>
     <ul>
       <li><span class="primary-gradient-text">Agent infrastructure:</span> Agent harness automation, tool-call orchestration, skill compilation, and runtime optimization.</li>
@@ -66,32 +72,26 @@ redirect_from:
   </article>
 </div>
 
-<span class="anchor" id="news"></span>
-
-# <span class="heading-icon" aria-hidden="true">🔥</span> News
+<h2 class="section-heading" id="news"><span class="section-number" aria-hidden="true">02</span> News</h2>
 
 <ul class="academic-list news-list" data-reveal>
-  <li><time datetime="2026-05">May 2026 — Present</time> Conducting research on multi-request LLM serving at the Institute of Advanced Network, Shanghai Jiao Tong University.</li>
-  <li><time datetime="2026-05">May 2026</time> Contributed to heterogeneous LLM and agent harness systems at IPADS, Shanghai Jiao Tong University.</li>
-  <li><time datetime="2026-05">May 2026</time> Conducted research on optimizing the RISC-V edge inference stack at the LANDS Lab, Nanjing University.</li>
+  <li><time datetime="2026-05">May 2026 — Present</time><span>Conducting research on multi-request LLM serving at the Institute of Advanced Network, Shanghai Jiao Tong University.</span></li>
+  <li><time datetime="2026-05">May 2026</time><span>Contributed to heterogeneous LLM and agent harness systems at IPADS, Shanghai Jiao Tong University.</span></li>
+  <li><time datetime="2026-05">May 2026</time><span>Conducted research on optimizing the RISC-V edge inference stack at the LANDS Lab, Nanjing University.</span></li>
 </ul>
 
-<span class="anchor" id="education"></span>
-
-# <span class="heading-icon" aria-hidden="true">🏫</span> Education
+<h2 class="section-heading" id="education"><span class="section-number" aria-hidden="true">03</span> Education</h2>
 
 <ul class="academic-list education-list" data-reveal>
   <li>
     <time datetime="2023">2023 — 2027 (Expected)</time>
     <strong>Tongji University · Department of Computer Science and Technology</strong>
     <span>Undergraduate, Data Science and Big Data Technology</span>
-    <span>Major Rank: 2 / 40</span>
+    <span class="rank-label">Major Rank: <strong>2 / 40</strong></span>
   </li>
 </ul>
 
-<span class="anchor" id="research-experience"></span>
-
-# <span class="heading-icon" aria-hidden="true">🔬</span> Research Experience
+<h2 class="section-heading" id="research-experience"><span class="section-number" aria-hidden="true">04</span> Research Experience</h2>
 
 <div class="experience-list">
   <article class="experience-item" data-reveal>
@@ -124,34 +124,17 @@ redirect_from:
   </article>
 </div>
 
-<span class="anchor" id="publications"></span>
+<h2 class="section-heading" id="publications"><span class="section-number" aria-hidden="true">05</span> Publications</h2>
 
-# <span class="heading-icon" aria-hidden="true">📃</span> Publications
-
-<p class="section-note">Publication details will be added later.</p>
-
-<article class="paper-box floating-card paper-placeholder" data-reveal>
-  <div class="paper-box-image" aria-hidden="true">
-    <div class="paper-preview-placeholder">
-      <i class="fas fa-file-alt"></i>
-      <span>Paper Preview</span>
-    </div>
+<div class="paper-placeholder" data-reveal>
+  <i class="fas fa-file-alt" aria-hidden="true"></i>
+  <div>
+    <h3>Publication updates to come.</h3>
+    <p>In the meantime, explore my <a href="#projects">selected projects <span aria-hidden="true">↓</span></a>.</p>
   </div>
-  <div class="paper-box-text">
-    <span class="paper-status">TO BE ADDED</span>
-    <h3>Publication title to be added</h3>
-    <p class="authors">Author list to be added</p>
-    <p class="venue">Venue information to be added</p>
-    <div class="paper-links" aria-label="Publication link placeholders">
-      <span><i class="fas fa-link" aria-hidden="true"></i> Paper</span>
-      <span><i class="fab fa-github" aria-hidden="true"></i> Code</span>
-    </div>
-  </div>
-</article>
+</div>
 
-<span class="anchor" id="projects"></span>
-
-# <span class="heading-icon" aria-hidden="true">💻</span> Selected Projects
+<h2 class="section-heading" id="projects"><span class="section-number" aria-hidden="true">06</span> Selected Projects</h2>
 
 <div class="project-grid">
   <article class="project-card floating-card" data-reveal>
@@ -183,16 +166,15 @@ redirect_from:
   </article>
 </div>
 
-<span class="anchor" id="honors"></span>
-
-# <span class="heading-icon" aria-hidden="true">🏆</span> Honors and Awards
+<h2 class="section-heading" id="honors"><span class="section-number" aria-hidden="true">07</span> Honors and Awards</h2>
 
 <ul class="academic-list honors-list" data-reveal>
-  <li><time>2025</time> Second Prize, Shanghai Division, China Undergraduate Mathematical Contest in Modeling</li>
-  <li><time>2024</time> Outstanding Student Scholarship, Tongji University</li>
-  <li><time>2023</time> Freshman Scholarship, Tongji University</li>
+  <li><time>2025</time><span>Second Prize, Shanghai Division, China Undergraduate Mathematical Contest in Modeling</span></li>
+  <li><time>2024</time><span>Outstanding Student Scholarship, Tongji University</span></li>
+  <li><time>2023</time><span>Freshman Scholarship, Tongji University</span></li>
 </ul>
 
 <footer class="academic-footer">
-  <p>Last updated: August 2026 · <a href="mailto:2353113@tongji.edu.cn">2353113@tongji.edu.cn</a></p>
+  <div><p class="footer-title">Let's talk systems.</p><a href="mailto:{{ site.author.email }}">{{ site.author.email }} <span aria-hidden="true">↗</span></a></div>
+  <div class="footer-meta"><p>Last updated: September 2026</p><a href="#about-me">Back to top <span aria-hidden="true">↑</span></a></div>
 </footer>

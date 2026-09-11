@@ -19,7 +19,10 @@ redirect_from:
   </p>
   <p>
     I am an incoming Ph.D. student in the Department of Computer Science and Technology at Tsinghua University,
-    starting in 2027. I will be advised by Yongwei Wu and Mingxing Zhang.
+    starting in 2027. I will be advised by
+    <a href="https://madsys.cs.tsinghua.edu.cn/author/yongwei-wu/" target="_blank" rel="noopener noreferrer">Yongwei Wu</a> and
+    <a href="https://madsys.cs.tsinghua.edu.cn/author/mingxing-zhang/" target="_blank" rel="noopener noreferrer">Mingxing Zhang</a>
+    in the <a href="https://madsys.cs.tsinghua.edu.cn/" target="_blank" rel="noopener noreferrer">MADSys</a> lab.
   </p>
   <p class="intro-invitation">
     Please feel free to contact me about systems, machine learning infrastructure, or potential collaborations.

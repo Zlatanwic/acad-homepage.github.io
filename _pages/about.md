@@ -87,7 +87,7 @@ redirect_from:
     <time datetime="2023">2023 — 2027 (Expected)</time>
     <strong>Tongji University · Department of Computer Science and Technology</strong>
     <span>Undergraduate, Data Science and Big Data Technology</span>
-    <span class="rank-label">Major Rank: <strong>2 / 40</strong></span>
+    <span class="rank-label">Major Rank: <strong>4 / 40</strong></span>
   </li>
 </ul>
 

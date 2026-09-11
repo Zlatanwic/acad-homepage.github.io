@@ -158,14 +158,6 @@ redirect_from:
   </article>
 </div>
 
-<h2 class="section-heading" id="honors"><span class="section-number" aria-hidden="true">07</span> Honors and Awards</h2>
-
-<ul class="academic-list honors-list" data-reveal>
-  <li><time>2025</time><span>Second Prize, Shanghai Division, China Undergraduate Mathematical Contest in Modeling</span></li>
-  <li><time>2024</time><span>Outstanding Student Scholarship, Tongji University</span></li>
-  <li><time>2023</time><span>Freshman Scholarship, Tongji University</span></li>
-</ul>
-
 <footer class="academic-footer">
   <div><p class="footer-title">Let's talk systems.</p><a href="mailto:{{ site.author.email }}">{{ site.author.email }} <span aria-hidden="true">↗</span></a></div>
   <div class="footer-meta"><p>Last updated: September 2026</p><a href="#about-me">Back to top <span aria-hidden="true">↑</span></a></div>

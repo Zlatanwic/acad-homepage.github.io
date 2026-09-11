@@ -37,8 +37,9 @@ redirect_from:
 <div class="highlight-blocks">
   <article class="highlight-block floating-card" data-reveal>
     <span class="card-index" aria-hidden="true">01 / SERVING</span>
-    <h3><i class="fas fa-server" aria-hidden="true"></i> LLM Inference and Serving</h3>
+    <h3><i class="fas fa-server" aria-hidden="true"></i> LLM Inference and Serving Systems</h3>
     <ul>
+      <li><span class="primary-gradient-text">Workloads:</span> High-concurrency, long-context, and multi-tenant serving.</li>
       <li><span class="primary-gradient-text">Focus:</span> Request scheduling, KV cache management and tiered storage, and Prefill–Decode coordination.</li>
       <li><span class="primary-gradient-text">Systems:</span> Fault tolerance and system–model co-design.</li>
     </ul>
@@ -46,31 +47,33 @@ redirect_from:
 
   <article class="highlight-block floating-card" data-reveal>
     <span class="card-index" aria-hidden="true">02 / SCALE</span>
-    <h3><i class="fas fa-network-wired" aria-hidden="true"></i> Distributed Training and Communication</h3>
+    <h3><i class="fas fa-network-wired" aria-hidden="true"></i> Distributed Training and Communication Optimization</h3>
     <ul>
       <li><span class="primary-gradient-text">Parallelism:</span> Data, tensor, pipeline, and expert parallelism.</li>
-      <li><span class="primary-gradient-text">Systems:</span> Communication–computation overlap, collective communication optimization, and reliable large-scale training.</li>
+      <li><span class="primary-gradient-text">Systems:</span> Communication–computation overlap, collective communication optimization, and the scalability and reliability of large-scale training systems.</li>
     </ul>
   </article>
 
   <article class="highlight-block floating-card" data-reveal>
     <span class="card-index" aria-hidden="true">03 / COMPUTE</span>
-    <h3><i class="fas fa-microchip" aria-hidden="true"></i> GPU Kernels and Compilation</h3>
+    <h3><i class="fas fa-microchip" aria-hidden="true"></i> GPU Kernels and Deep Learning Compilation</h3>
     <ul>
       <li><span class="primary-gradient-text">Focus:</span> High-performance CUDA programming, kernel fusion, megakernels, and persistent execution.</li>
-      <li><span class="primary-gradient-text">Compilers:</span> Autotuning and high-performance kernel generation.</li>
+      <li><span class="primary-gradient-text">Compilers:</span> Autotuning and high-performance kernel generation, with exploration of programming and compilation frameworks such as Triton and TileLang.</li>
     </ul>
   </article>
 
   <article class="highlight-block floating-card" data-reveal>
     <span class="card-index" aria-hidden="true">04 / RUNTIME</span>
-    <h3><i class="fas fa-robot" aria-hidden="true"></i> Agents and Heterogeneous Infrastructure</h3>
+    <h3><i class="fas fa-robot" aria-hidden="true"></i> Agents and Heterogeneous AI Infrastructure</h3>
     <ul>
-      <li><span class="primary-gradient-text">Agent infrastructure:</span> Agent harness automation, tool-call orchestration, skill compilation, and runtime optimization.</li>
-      <li><span class="primary-gradient-text">Heterogeneous systems:</span> Edge inference on RISC-V.</li>
+      <li><span class="primary-gradient-text">Agent infrastructure:</span> Self-evolving agent harnesses, tool-call orchestration, skill compilation, and runtime optimization.</li>
+      <li><span class="primary-gradient-text">Heterogeneous systems:</span> On-device model inference systems for heterogeneous hardware, including RISC-V.</li>
     </ul>
   </article>
 </div>
+
+<p class="research-exploration" data-reveal><strong>Also exploring:</strong> Systems for multimodal AI, reinforcement learning, and embodied intelligence.</p>
 
 <h2 class="section-heading" id="news"><span class="section-number" aria-hidden="true">02</span> News</h2>
 

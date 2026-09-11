@@ -300,6 +300,7 @@ a:focus:not(:focus-visible), #main:focus { outline: none; }
   background: var(--academic-coral);
 }
 .primary-gradient-text { color: var(--academic-navy-soft); font-weight: 600; }
+.page__content .research-exploration { margin: 20px 0 0; color: var(--academic-muted); font-size: 14px; }
 .academic-list { margin: 0; padding: 0; list-style: none; }
 .page__content .academic-list > li { margin: 0; font-size: 14px; }
 .news-list > li, .honors-list > li {

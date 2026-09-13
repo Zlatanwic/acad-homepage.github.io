@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import { readFile } from 'node:fs/promises';
+import { readFile, stat } from 'node:fs/promises';
 import { test } from 'node:test';
 
 const readSource = (path) => readFile(new URL(`../../${path}`, import.meta.url), 'utf8');
@@ -14,8 +14,11 @@ const [about, navigation, configuration, stylesheet, mainStylesheet] = await Pro
 const section = about.match(/<section\b([^>]*\bid="personal-interests"[^>]*)>([\s\S]*?)<\/section>/);
 const text = (markup) => markup.replace(/<[^>]*>/g, ' ').replace(/&amp;/g, '&').replace(/&#39;|&rsquo;|’/g, "'").replace(/\s+/g, ' ').trim();
 const classNames = (attributes) => attributes.match(/\bclass="([^"]*)"/)?.[1].split(/\s+/) || [];
+const attribute = (attributes, name) => attributes.match(new RegExp(`\\b${name}="([^"]*)"`))?.[1];
+const interestImages = () => [...section[2].matchAll(/<img\b([^>]*)>/g)].map((match) => match[1]);
+const localAsset = (value) => value?.match(/^\{\{\s*'(\/images\/interests\/(?:football|games|albums)\/[a-z0-9-]+\.(?:jpg|webp))'\s*\|\s*relative_url\s*\}\}$/)?.[1];
 
-test('personal interests are a labelled chapter with three accessible motion cards', () => {
+test('personal interests are a labelled chapter with three accessible photo groups', () => {
   assert.ok(section, 'the personal interests section must exist');
   assert.ok(classNames(section[1]).includes('interests-chapter'));
   assert.ok(classNames(section[1]).includes('paper-chapter'));
@@ -24,14 +27,115 @@ test('personal interests are a labelled chapter with three accessible motion car
 
   const cards = [...section[2].matchAll(/<article\b([^>]*)>([\s\S]*?)<\/article>/g)];
   assert.equal(cards.length, 3);
-  for (const [, attributes, body] of cards) {
+  const galleries = ['football-gallery', 'gaming-gallery', 'album-gallery'];
+  for (const [index, [, attributes, body]] of cards.entries()) {
     assert.ok(classNames(attributes).includes('interest-card'));
     assert.ok(classNames(attributes).includes('floating-card'), 'use the existing tilt/lifecycle controller');
     assert.match(attributes, /\bdata-reveal(?:\s|=|$)/);
     assert.match(body, /<h3\b[^>]*>[^]*?<\/h3>/);
     const art = body.match(/<[^>]+\bclass="[^"]*\binterest-art\b[^"]*"[^>]*>/);
-    assert.ok(art, 'each interest has a decorative illustration');
-    assert.match(art[0], /aria-hidden="true"/);
+    assert.ok(art, 'each interest has a photo gallery');
+    assert.ok(classNames(art[0]).includes(galleries[index]));
+    assert.equal(attribute(art[0], 'role'), 'group');
+    assert.ok(attribute(art[0], 'aria-label')?.trim(), 'photo groups need an accessible name');
+    assert.doesNotMatch(art[0], /aria-hidden="true"/, 'meaningful photos must be exposed to assistive technology');
+  }
+});
+
+test('all eleven interest images are local, present, labelled, and lazy loaded with reserved dimensions', async () => {
+  assert.ok(section);
+  const images = interestImages();
+  assert.equal(images.length, 11);
+  const counts = { football: 0, games: 0, albums: 0 };
+  const paths = new Set();
+  let totalBytes = 0;
+  for (const attributes of images) {
+    const path = localAsset(attribute(attributes, 'src'));
+    assert.ok(path, 'photo URLs must use local assets and the Jekyll base URL');
+    assert.ok(!paths.has(path), `image should appear once: ${path}`);
+    paths.add(path);
+    counts[path.split('/')[3]] += 1;
+    assert.ok(attribute(attributes, 'alt')?.trim(), `${path} needs descriptive alternative text`);
+    assert.equal(attribute(attributes, 'loading'), 'lazy');
+    assert.equal(attribute(attributes, 'decoding'), 'async');
+    for (const dimension of ['width', 'height']) {
+      const value = Number(attribute(attributes, dimension));
+      assert.ok(Number.isInteger(value) && value > 0, `${path} needs a positive ${dimension}`);
+    }
+    const file = await stat(new URL(`../../${path.slice(1)}`, import.meta.url));
+    assert.ok(file.isFile() && file.size > 0, `${path} must exist and contain image data`);
+    totalBytes += file.size;
+  }
+  assert.deepEqual(counts, { football: 3, games: 2, albums: 6 });
+  assert.ok(totalBytes < 2_000_000, `gallery images must stay below 2 MB; found ${totalBytes} bytes`);
+});
+
+test('photos depict every requested footballer, game character, and album artist', () => {
+  const descriptions = interestImages().map((attributes) => text(attribute(attributes, 'alt') || ''));
+  for (const subject of [/Erling Haaland/, /Kevin De Bruyne/, /Rodri/, /Grace Ashcroft/, /Arthur Morgan/, /Oasis/, /Stereophonics/, /Blur/, /Queen/, /Guns\s*N'?\s*Roses/i, /Suede/]) {
+    assert.ok(descriptions.some((description) => subject.test(description)), `image missing: ${subject}`);
+  }
+  assert.ok(descriptions.some((description) => /Grace Ashcroft/.test(description) && /Resident Evil Requiem/.test(description)));
+  assert.ok(descriptions.some((description) => /Arthur Morgan/.test(description) && /Red Dead Redemption 2/.test(description)));
+});
+
+test('each photograph opens the same local asset safely and announces its new tab', () => {
+  const links = [...section[2].matchAll(/<a\b([^>]*)>([\s\S]*?)<\/a>/g)];
+  const photoLinks = links.filter(([, , body]) => /<img\b/.test(body));
+  assert.equal(photoLinks.length, 11);
+  for (const [, attributes, body] of photoLinks) {
+    const imageAttributes = body.match(/<img\b([^>]*)>/)[1];
+    assert.equal(attribute(attributes, 'href'), attribute(imageAttributes, 'src'));
+    assert.equal(attribute(attributes, 'target'), '_blank');
+    assert.match(attribute(attributes, 'aria-label') || '', /opens in a new tab/i);
+  }
+  for (const [, attributes] of links) {
+    if (attribute(attributes, 'target') !== '_blank') continue;
+    const rel = (attribute(attributes, 'rel') || '').split(/\s+/);
+    assert.ok(rel.includes('noopener') && rel.includes('noreferrer'), 'new-tab links must isolate the opener and referrer');
+  }
+});
+
+test('image credits are a native disclosure with verified attribution, source links, and complete source notes', async () => {
+  const disclosures = [...section[2].matchAll(/<details\b([^>]*)>([\s\S]*?)<\/details>/g)];
+  const credits = disclosures.filter(([, attributes]) => classNames(attributes).includes('interest-credits'));
+  assert.equal(credits.length, 1, 'one native image-credits disclosure must remain available');
+  const [, attributes, body] = credits[0];
+  assert.doesNotMatch(attributes, /\bhidden(?:\s|=|$)|aria-hidden="true"/);
+  const summary = body.match(/^\s*<summary\b([^>]*)>([\s\S]*?)<\/summary>/);
+  assert.ok(summary, 'the native summary is the first disclosure child');
+  assert.equal(text(summary[2]), 'Image credits & sources');
+  assert.doesNotMatch(summary[1], /tabindex="-1"|aria-hidden="true"/);
+
+  const hrefs = new Set([...body.matchAll(/<a\b([^>]*)>/g)].map(([, attributes]) => attribute(attributes, 'href')));
+  for (const url of [
+    'https://commons.wikimedia.org/wiki/File:Erling-Haaland-2023.jpg',
+    'https://commons.wikimedia.org/wiki/File:Yokohama_F._Marinos_-_Manchester_City_(3-5)_-_53075487835_(Rodri)_(cropped).jpg',
+    'https://commons.wikimedia.org/wiki/File:2021-12-07_Fu%C3%9Fball,_M%C3%A4nner,_UEFA_Champions_League,_RB_Leipzig_-_Manchester_City_FC_1DX_2723_by_Stepro_(cropped).jpg',
+    'https://creativecommons.org/licenses/by-sa/2.0/',
+    'https://creativecommons.org/licenses/by-sa/4.0/',
+    'https://www.capcom.co.jp/ir/english/data/oar/2025/re-requiem.html',
+    'https://store.rockstargames.com/game/buy-red-dead-redemption-2',
+    'https://oasisinet.com/music-category/albums/',
+    'https://www.stereophonics.com/',
+    'https://blur.lnk.to/Parklife',
+    'https://www.queenonline.com/music',
+    'https://shop.universalmusic.it/products/guns-n-roses-appetite-for-destruction-vinile',
+    'https://www.suede.co.uk/homepage/'
+  ]) {
+    assert.ok(hrefs.has(url), `credit source link missing: ${url}`);
+  }
+  const creditText = text(body);
+  for (const attribution of ['pantkiewicz', 'Patryk Antkiewicz', 'Steffen Prößdorf', 'CC BY-SA 2.0', 'CC BY-SA 4.0', 'NullReason', 'Guyrichtheman', 'PFHLai']) {
+    assert.ok(creditText.includes(attribution), `photograph attribution missing: ${attribution}`);
+  }
+  assert.match(creditText, /Files unchanged; card framing crops their display/);
+  assert.match(creditText, /No endorsement is implied/);
+
+  for (const category of ['football', 'games', 'albums']) {
+    const path = `images/interests/${category}/SOURCES.md`;
+    assert.ok(hrefs.has(`{{ '/${path}' | relative_url }}`), `public notes link missing: ${category}`);
+    assert.ok((await readSource(path)).trim().length > 0, `${path} must contain the full source notes`);
   }
 });
 
@@ -77,7 +181,7 @@ test('adding personal interests preserves academic content, CV, and both contact
   assert.equal((about.match(/class="research-panel floating-card"/g) || []).length, 4);
 });
 
-test('interest artwork animation only runs for opted-in, in-view cards without reduced motion', () => {
+test('interest photo animation only runs for opted-in, in-view cards without reduced motion', () => {
   assert.match(mainStylesheet, /@import\s+"interests";\s*$/);
   // Follow SCSS block ancestry rather than depending on a particular nesting style.
   // Motion-off / print reset declarations are allowed outside the opt-in blocks.
@@ -101,6 +205,6 @@ test('interest artwork animation only runs for opted-in, in-view cards without r
     }
     start = index + 1;
   }
-  assert.ok(animationCount >= 3, 'each of the three illustrations has an opt-in animation');
+  assert.equal(animationCount, 3, 'photos and record artwork use exactly three opt-in animation declarations');
   assert.match(stylesheet, /@media\s*\(max-width:/, 'interest cards include a narrow-screen layout');
 });

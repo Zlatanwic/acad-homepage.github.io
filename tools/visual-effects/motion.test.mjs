@@ -418,7 +418,7 @@ function setupHomepage({ reducedMotion = false, stored = 'on' } = {}) {
   const paper = new ElementStub();
   let nextFrame = 0;
   root.dataset.motion = stored;
-  root.scrollHeight = 5600;
+  root.scrollHeight = 6800;
   document.hidden = false;
   document.documentElement = root;
   window.scrollY = 0;
@@ -427,7 +427,7 @@ function setupHomepage({ reducedMotion = false, stored = 'on' } = {}) {
   window.matchMedia = (query) => query.includes('prefers-reduced-motion') ? reduced : new MediaStub(false);
   window.requestAnimationFrame = (callback) => { queuedFrames.set(++nextFrame, callback); return nextFrame; };
   window.cancelAnimationFrame = (id) => queuedFrames.delete(id);
-  const chapters = [0, 1000, 2600, 4000, 5100].map((offset, index) => {
+  const chapters = [0, 1000, 2600, 4000, 6300].map((offset, index) => {
     const section = new ElementStub();
     section.dataset.sceneChapter = String(index);
     section.id = ['about-me', 'research-interests', 'journey-chapter', 'projects', 'contact'][index];
@@ -435,11 +435,12 @@ function setupHomepage({ reducedMotion = false, stored = 'on' } = {}) {
     return section;
   });
   const sectionTargets = new Map(chapters.map((chapter) => [chapter.id, chapter]));
-  const anchorOffsets = { education: 2800, 'research-experience': 3300, news: 3650, publications: 4900 };
+  const anchorOffsets = { education: 2800, 'research-experience': 3300, news: 3650, publications: 4900, 'personal-interests': 5200 };
   for (const [id, offset] of Object.entries(anchorOffsets)) {
     const section = new ElementStub();
     section.id = id;
-    section.getBoundingClientRect = () => ({ top: offset - window.scrollY, height: 300 });
+    const height = id === 'personal-interests' ? 1100 : 300;
+    section.getBoundingClientRect = () => ({ top: offset - window.scrollY, bottom: offset + height - window.scrollY, height });
     sectionTargets.set(id, section);
   }
   const links = ['#about-me', ...configuredAnchors].map((hash) => {
@@ -451,7 +452,7 @@ function setupHomepage({ reducedMotion = false, stored = 'on' } = {}) {
   document.querySelectorAll = (selector) => {
     if (selector === '[data-scene-chapter]') return chapters;
     if (selector === '.floating-card') return cards;
-    if (selector === '.paper-chapter') return [paper];
+    if (selector === '.paper-chapter') return [paper, sectionTargets.get('personal-interests')];
     if (selector === "#site-nav a[href^='#']") return links;
     if (selector === '[data-reveal]' || selector.startsWith('.section-heading')) return reveals;
     return [];
@@ -490,8 +491,8 @@ test('native scrolling coordinates progress, hero parallax, chapters, and naviga
   assert.equal(run.queuedFrames.size, 1);
   run.frame();
   assert.equal(run.root.dataset.chapter, '1');
-  assert.equal(run.root.properties.get('--reading-progress'), 1300 / 4600);
-  assert.equal(run.root.properties.get('--scroll-progress'), 1300 / 4600);
+  assert.equal(run.root.properties.get('--reading-progress'), 1300 / 5800);
+  assert.equal(run.root.properties.get('--scroll-progress'), 1300 / 5800);
   assert.equal(run.root.properties.get('--hero-progress'), 1);
   assert.equal(run.events.at(-1).chapter, 1);
   assert.equal(run.links[1].attributes.get('aria-current'), 'location');
@@ -501,7 +502,7 @@ test('native scrolling coordinates progress, hero parallax, chapters, and naviga
   run.window.fire('scroll');
   run.frame();
   assert.equal(run.root.dataset.chapter, '2');
-  run.window.scrollY = 4600; // Short contact footer is still reachable as the last chapter.
+  run.window.scrollY = 5800; // Short contact footer is still reachable after the interests chapter.
   run.window.fire('scroll');
   run.frame();
   assert.equal(run.root.dataset.chapter, '4');
@@ -514,7 +515,7 @@ test('native scrolling coordinates progress, hero parallax, chapters, and naviga
 test('scene coverage is true only when an opaque panel fills the viewport below the header', () => {
   const run = setupHomepage();
   assert.equal(run.events.at(-1).sceneCovered, false);
-  for (const [scrollY, covered] of [[2500, false], [2524, true], [2800, true], [3000, true], [3001, false]]) {
+  for (const [scrollY, covered] of [[2500, false], [2524, true], [2800, true], [3000, true], [3001, false], [5123, false], [5124, true], [5300, true], [5301, false]]) {
     run.window.scrollY = scrollY;
     run.window.fire('scroll');
     run.frame();
@@ -621,7 +622,8 @@ test('configured navigation matches unique DOM targets and follows nested journe
     ['#research-experience', 3350],
     ['#news', 3700],
     ['#projects', 4050],
-    ['#publications', 4600]
+    ['#publications', 4950],
+    ['#personal-interests', 5250]
   ];
   for (const [hash, scrollY] of nested) {
     run.window.scrollY = scrollY;

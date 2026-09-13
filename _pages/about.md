@@ -132,8 +132,33 @@ redirect_from:
   <div class="publication-note" id="publications" data-reveal><h3 class="section-heading">Publications</h3><div><p>Publication updates to come.</p><span>In the meantime, explore the selected projects above.</span></div><span class="mono">TO BE CONTINUED ↗</span></div>
 </section>
 
+<section class="interests-chapter paper-chapter" id="personal-interests" aria-labelledby="interests-title">
+  <div class="chapter-meta mono"><span>05 / PERSONAL INTERESTS</span><span>Away from the keyboard. Sometimes.</span></div>
+  <div class="chapter-heading"><h2 id="interests-title" class="editorial-title section-heading" data-reveal>Beyond<br><em>research.</em></h2><p data-reveal>Football, virtual worlds,<br>and a good rock record.</p></div>
+  <div class="interests-grid">
+    <article class="interest-card floating-card" data-reveal>
+      <div class="interest-topline mono"><span>01 / FOOTBALL</span><span>THE SKY BLUES</span></div>
+      <div class="interest-art football-art" aria-hidden="true"><div class="football-pitch"><span></span></div><div class="football"><span></span></div><span class="football-shadow"></span></div>
+      <div class="interest-copy"><h3>Manchester City</h3><p>A devoted Manchester City supporter.</p><p class="interest-note">Come on, City!</p></div>
+      <div class="interest-footer mono">LOYAL TO THE SKY BLUE</div>
+    </article>
+    <article class="interest-card floating-card" data-reveal>
+      <div class="interest-topline mono"><span>02 / GAMING</span><span>AAA WORLDS</span></div>
+      <div class="interest-art gaming-art" aria-hidden="true"><div class="gamepad"><span class="gamepad-dpad"></span><span class="gamepad-buttons"></span><span class="gamepad-stick gamepad-stick--left"></span><span class="gamepad-stick gamepad-stick--right"></span><span class="gamepad-light"></span></div><span class="gamepad-orbit"></span></div>
+      <div class="interest-copy"><h3>AAA Games</h3><p>Some of my favorite worlds to get lost in:</p><ul class="interest-favorites"><li>Resident Evil series</li><li>Cyberpunk 2077</li><li>Grand Theft Auto (GTA) series</li><li>Hitman series</li></ul></div>
+      <div class="interest-footer mono">PRESS START / EXPLORE</div>
+    </article>
+    <article class="interest-card floating-card" data-reveal>
+      <div class="interest-topline mono"><span>03 / MUSIC</span><span>TURN IT UP</span></div>
+      <div class="interest-art music-art" aria-hidden="true"><div class="record-sleeve"><span>ROCK<br>&amp; ROLL.</span></div><div class="vinyl-record"><span class="record-label"></span></div><span class="record-needle"></span></div>
+      <div class="interest-copy"><h3>Rock Music</h3><p>A rock music enthusiast. Favorites include:</p><ul class="interest-favorites"><li>Oasis</li><li>Stereophonics</li><li>Blur</li><li>Queen</li><li>Guns N’ Roses</li><li>Suede</li></ul></div>
+      <div class="interest-footer mono">GUITARS / ANTHEMS / REPEAT</div>
+    </article>
+  </div>
+</section>
+
 <footer class="contact-chapter" id="contact" data-scene-chapter="4" aria-labelledby="contact-title">
-  <div class="chapter-meta mono"><span>05 / WHAT'S NEXT?</span><span>Always curious.</span></div>
+  <div class="chapter-meta mono"><span>06 / WHAT'S NEXT?</span><span>Always curious.</span></div>
   <h2 id="contact-title" data-reveal>Let's talk<br><em>systems.</em><span class="contact-arrow" aria-hidden="true">↗</span></h2>
   <div class="contact-links" data-reveal><a href="mailto:{{ site.author.email }}">{{ site.author.email }} <span aria-hidden="true">↗</span></a>{% if site.author.email_secondary %}<a href="mailto:{{ site.author.email_secondary }}">{{ site.author.email_secondary }} <span aria-hidden="true">↗</span></a>{% endif %}</div>
   <div class="footer-line mono"><span>© 2026 Kuo Li <span class="bottom-divider">/</span> Last updated: September 2026</span><a href="https://github.com/Zlatanwic" target="_blank" rel="noopener noreferrer">GitHub ↗</a><a href="#about-me">Back to top ↑</a></div>

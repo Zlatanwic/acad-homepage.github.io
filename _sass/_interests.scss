@@ -1,0 +1,88 @@
+// Personal interests reuse the existing reveal, tilt, pause and visibility lifecycle.
+.immersive-home {
+  .interests-chapter .chapter-heading > p { color: #49616f; }
+  .interests-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 22px; }
+  .interest-card { display: flex; flex-direction: column; min-width: 0; border: 1px solid #b3c6d0; border-radius: 2px; background: #f4f7f6; color: #112e40; box-shadow: none; padding: 25px; }
+  .interest-card::before { height: 2px; background: #79cafa; }
+  .interest-card > :not(.card-sheen) { position: relative; z-index: 1; }
+  .interest-topline { display: flex; justify-content: space-between; gap: 10px; color: #49616f; font-size: 8px; }
+  .interest-topline > span:last-child { text-align: right; }
+  .interest-art { width: 100%; height: 205px; margin: 8px 0 12px; perspective: 750px; pointer-events: none; }
+  .interest-copy h3 { font-size: clamp(23px, 2.1vw, 33px); line-height: 1.15; letter-spacing: -.04em; margin-bottom: 16px; }
+  .interest-copy p { color: #49616f; font-size: 13px; line-height: 1.8; margin: 0 0 15px; }
+  .interest-copy .interest-note { color: #226283; font: italic 24px/1.4 Georgia, serif; margin-top: 22px; }
+  .interest-favorites { display: flex; flex-wrap: wrap; gap: 7px; margin: 0 0 24px; padding: 0; list-style: none; }
+  .interest-favorites li { margin: 0; padding: 5px 8px; border: 1px solid #c5d4da; color: #345469; background: #ebf1f3; font: 10px/1.6 ui-monospace, Consolas, monospace; max-width: 100%; }
+  .interest-footer { margin-top: auto; padding-top: 19px; border-top: 1px solid #c2d1d7; color: #4c6879; font-size: 8px; }
+
+  .football-pitch { position: absolute; width: 180px; height: 130px; top: 57px; left: calc(50% - 90px); border: 1px solid #7698aa; background: repeating-linear-gradient(90deg, #d0e4ed 0, #d0e4ed 30px, #c2dce8 30px, #c2dce8 60px); transform: rotateX(57deg) rotateZ(-25deg); box-shadow: -5px 6px 0 #91b4c7; }
+  .football-pitch::before { content: ""; position: absolute; inset: 9px; border: 1px solid #6d95aa; }
+  .football-pitch::after { content: ""; position: absolute; top: 9px; bottom: 9px; left: 50%; width: 1px; background: #6d95aa; }
+  .football-pitch > span { position: absolute; width: 40px; height: 40px; border: 1px solid #6d95aa; border-radius: 50%; left: calc(50% - 20px); top: calc(50% - 20px); }
+  .football { position: absolute; z-index: 2; left: calc(50% - 43px); top: 35px; width: 86px; height: 86px; border-radius: 50%; background: radial-gradient(circle at 28% 22%, #fff 0%, #e8f5fb 28%, #99c3d8 68%, #386784 100%); box-shadow: inset -5px -6px 12px rgba(26, 73, 100, .28); overflow: hidden; }
+  .football span { position: absolute; width: 29px; height: 29px; left: 29px; top: 28px; background: #28516a; clip-path: polygon(50% 0, 100% 38%, 80% 100%, 20% 100%, 0 38%); }
+  .football::before, .football::after { content: ""; position: absolute; width: 72px; height: 82px; left: 7px; top: 2px; border: 1px solid #557f95; border-radius: 40%; transform: rotate(-32deg); }
+  .football::after { transform: rotate(47deg); }
+  .football-shadow { position: absolute; left: calc(50% - 37px); top: 139px; width: 74px; height: 14px; border-radius: 50%; background: rgba(35, 82, 108, .16); }
+
+  .gamepad { position: absolute; left: calc(50% - 91px); top: 51px; z-index: 2; width: 182px; height: 104px; border: 1px solid #7698aa; border-radius: 46% 46% 28% 28% / 55% 55% 50% 50%; background: linear-gradient(145deg, #e6f6ff 5%, #94bfd8 65%, #5d8da9); box-shadow: 0 8px 0 #49758d, 0 11px 0 #30576d; transform: rotateX(28deg) rotateY(-15deg) rotateZ(-13deg); }
+  .gamepad-dpad { position: absolute; left: 28px; top: 27px; width: 29px; height: 29px; background: #183c53; clip-path: polygon(34% 0, 66% 0, 66% 34%, 100% 34%, 100% 66%, 66% 66%, 66% 100%, 34% 100%, 34% 66%, 0 66%, 0 34%, 34% 34%); }
+  .gamepad-buttons { position: absolute; right: 38px; top: 25px; width: 10px; height: 10px; border-radius: 50%; background: #254d65; box-shadow: 12px 12px 0 #447c9e, 0 24px 0 #254d65, -12px 12px 0 #447c9e; }
+  .gamepad-stick { position: absolute; top: 64px; width: 22px; height: 22px; border: 4px solid #426d86; border-radius: 50%; background: #173c53; box-shadow: 0 3px 0 #315a71; }
+  .gamepad-stick--left { left: 55px; }
+  .gamepad-stick--right { right: 49px; }
+  .gamepad-light { position: absolute; left: calc(50% - 12px); top: 24px; width: 24px; height: 3px; background: #e3f7ff; box-shadow: 0 0 9px #ddf4ff; }
+  .gamepad-orbit { position: absolute; left: calc(50% - 110px); top: 28px; width: 220px; height: 149px; border: 1px solid #acc7d7; border-radius: 50%; transform: rotateX(40deg) rotateZ(-20deg); }
+
+  .record-sleeve { position: absolute; left: calc(50% - 102px); top: 35px; width: 128px; height: 136px; border: 1px solid #7197ad; background: linear-gradient(135deg, #bfddeb, #84b5cf); transform: rotate(-11deg); box-shadow: -5px 6px 0 #abc4d1; }
+  .record-sleeve span { position: absolute; bottom: 18px; left: 14px; color: #244f69; font: 600 23px/.95 Arial, sans-serif; letter-spacing: -.06em; }
+  .vinyl-record { position: absolute; z-index: 2; left: calc(50% - 35px); top: 38px; width: 132px; height: 132px; border: 3px solid #173b51; border-radius: 50%; background: repeating-radial-gradient(circle, #17394e 0px, #17394e 2px, #274c61 3px, #17394e 4px); box-shadow: 4px 5px 0 #83a3b5; }
+  .vinyl-record::before { content: ""; position: absolute; inset: 0; border-radius: 50%; background: conic-gradient(from 30deg, transparent 0deg, rgba(212, 240, 255, .27) 48deg, transparent 85deg, transparent 180deg, rgba(212, 240, 255, .2) 225deg, transparent 270deg); }
+  .record-label { position: absolute; inset: 40px; border: 1px solid #e3f4ff; border-radius: 50%; background: #8ed5fb; }
+  .record-label::before { content: ""; position: absolute; left: 11px; right: 11px; height: 1px; top: 9px; background: #417593; transform: rotate(-18deg); }
+  .record-label::after { content: ""; position: absolute; width: 7px; height: 7px; top: calc(50% - 3.5px); left: calc(50% - 3.5px); border-radius: 50%; background: #16394f; }
+  .record-needle { position: absolute; z-index: 3; width: 3px; height: 74px; top: 28px; left: calc(50% + 82px); background: #688ca2; transform: rotate(24deg); transform-origin: top; border-radius: 2px; box-shadow: 2px 1px 0 #c5dce8; }
+  .record-needle::after { content: ""; position: absolute; bottom: -2px; left: -3px; width: 9px; height: 17px; border-radius: 2px; background: #244b63; }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html[data-motion="on"] .immersive-home .interest-card.is-inview .football { animation: interest-ball-float 4s ease-in-out infinite alternate; }
+  html[data-motion="on"] .immersive-home .interest-card.is-inview .gamepad { animation: interest-gamepad-float 6s ease-in-out infinite alternate; }
+  html[data-motion="on"] .immersive-home .interest-card.is-inview .vinyl-record { animation: interest-record-spin 12s linear infinite; }
+}
+@keyframes interest-ball-float { to { transform: translateY(-12px) rotate(10deg); } }
+@keyframes interest-gamepad-float { to { transform: rotateX(37deg) rotateY(8deg) rotateZ(-5deg) translateY(-8px); } }
+@keyframes interest-record-spin { to { transform: rotate(360deg); } }
+
+@media (max-width: 1100px) {
+  .immersive-home .interests-grid { gap: 15px; }
+  .immersive-home .interest-card { padding: 22px 18px; }
+  .immersive-home .interest-topline { font-size: 7px; }
+}
+@media (max-width: 960px) {
+  .immersive-home .interests-grid { grid-template-columns: 1fr; gap: 22px; }
+  .immersive-home .interest-card { display: grid; grid-template-columns: minmax(190px, .85fr) minmax(0, 1.15fr); gap: 0 30px; padding: 26px; }
+  .immersive-home .interest-topline { grid-column: 1 / -1; font-size: 8px; }
+  .immersive-home .interest-art { grid-column: 1; grid-row: 2; align-self: center; margin: 10px 0; }
+  .immersive-home .interest-copy { grid-column: 2; grid-row: 2; padding: 27px 0 10px; }
+  .immersive-home .interest-copy h3 { font-size: 29px; }
+  .immersive-home .interest-footer { grid-column: 1 / -1; }
+}
+@media (max-width: 560px) {
+  .immersive-home .interest-card { display: flex; padding: 25px; }
+  .immersive-home .interest-copy { padding: 0; }
+  .immersive-home .interest-copy h3 { font-size: 30px; }
+  .immersive-home .interest-art { flex-shrink: 0; margin: 7px 0 12px; }
+  .immersive-home .interest-footer { margin-top: 12px; }
+}
+@media (max-width: 360px) {
+  .immersive-home .interest-card { padding: 22px 18px; }
+  .immersive-home .interest-topline { font-size: 7px; }
+  .immersive-home .interest-copy h3 { font-size: 27px; }
+}
+@media print {
+  .immersive-home .interests-grid { display: block; }
+  .immersive-home .interest-art, .immersive-home .interest-topline, .immersive-home .interest-footer { display: none; }
+  .immersive-home .interest-card { display: block; background: #fff; border: 1px solid #aaa; break-inside: avoid; padding: 16px; margin-bottom: 12px; }
+  .immersive-home .interest-copy { padding: 0; }
+}

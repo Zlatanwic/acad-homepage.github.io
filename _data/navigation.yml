@@ -3,17 +3,17 @@ main:
   - title: "Research Interests"
     url: "#research-interests"
 
-  - title: "News"
-    url: "#news"
-
   - title: "Education"
     url: "#education"
 
   - title: "Experience"
     url: "#research-experience"
 
-  - title: "Publications"
-    url: "#publications"
+  - title: "News"
+    url: "#news"
 
   - title: "Projects"
     url: "#projects"
+
+  - title: "Publications"
+    url: "#publications"

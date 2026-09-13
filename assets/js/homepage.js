@@ -8,6 +8,7 @@
   var menu = document.querySelector("#nav-links");
   var mobile = window.matchMedia("(max-width: 960px)");
   var motion = window.matchMedia("(prefers-reduced-motion: reduce)");
+  var pageActive = true;
 
   function closeMenu(restoreFocus) {
     if (!toggle || !menu) return;
@@ -73,9 +74,14 @@
     });
   });
   var revealElements = Array.prototype.slice.call(document.querySelectorAll("[data-reveal]"));
+  var animatedCards = Array.prototype.slice.call(document.querySelectorAll(".floating-card"));
+  var intersectingCards = [];
   var observer;
+  function reveal(element) {
+    element.classList.add("is-visible");
+  }
   function revealAll() {
-    revealElements.forEach(function (element) { element.classList.add("is-visible"); });
+    revealElements.forEach(reveal);
     if (observer) observer.disconnect();
   }
 
@@ -84,7 +90,7 @@
     observer = new IntersectionObserver(function (entries) {
       entries.forEach(function (entry) {
         if (entry.isIntersecting) {
-          entry.target.classList.add("is-visible");
+          reveal(entry.target);
           observer.unobserve(entry.target);
         }
       });
@@ -93,11 +99,43 @@
   } else {
     revealAll();
   }
-  motion.addEventListener("change", function () { if (motion.matches) revealAll(); });
-  document.addEventListener("homepage:motionchange", function (event) { if (!event.detail.enabled) revealAll(); });
+
+  function syncCardActivity() {
+    var hidden = !pageActive || document.hidden;
+    var active = !hidden && !motion.matches && root.dataset.motion !== "off";
+    root.dataset.pageHidden = hidden ? "true" : "false";
+    animatedCards.forEach(function (card) {
+      card.classList.toggle("is-inview", active && intersectingCards.indexOf(card) !== -1);
+    });
+  }
+
+  // Reveals are one-shot, but looping diagram animations are only active while
+  // their cards intersect the viewport. No extra animation frame loop is needed.
+  if (animatedCards.length && "IntersectionObserver" in window) {
+    var activityObserver = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        var index = intersectingCards.indexOf(entry.target);
+        if (entry.isIntersecting && index === -1) intersectingCards.push(entry.target);
+        else if (!entry.isIntersecting && index !== -1) intersectingCards.splice(index, 1);
+      });
+      syncCardActivity();
+    }, { threshold: 0 });
+    animatedCards.forEach(function (card) { activityObserver.observe(card); });
+  }
+  syncCardActivity();
+  motion.addEventListener("change", function () {
+    if (motion.matches) revealAll();
+    syncCardActivity();
+    scheduleUpdate();
+  });
+  document.addEventListener("homepage:motionchange", function (event) {
+    if (!event.detail.enabled) revealAll();
+    syncCardActivity();
+    scheduleUpdate();
+  });
   document.addEventListener("focusin", function (event) {
     var card = event.target.closest("[data-reveal]");
-    if (card) card.classList.add("is-visible");
+    if (card) reveal(card);
   });
   window.addEventListener("beforeprint", revealAll);
 
@@ -106,14 +144,50 @@
       var target = document.getElementById(link.hash.slice(1));
       return target ? { link: link, target: target } : null;
     }).filter(Boolean);
+  var chapters = Array.prototype.slice.call(document.querySelectorAll("[data-scene-chapter]"))
+    .map(function (element) {
+      return { element: element, index: parseInt(element.dataset.sceneChapter, 10) };
+    }).filter(function (chapter) { return !isNaN(chapter.index); });
+  var hero = chapters.filter(function (chapter) { return chapter.index === 0; })[0];
+  var paperPanels = Array.prototype.slice.call(document.querySelectorAll(".paper-chapter"));
+
+  function clamp(value) { return Math.max(0, Math.min(1, value)); }
 
   function updatePage() {
-    pendingFrame = false;
+    pendingFrame = 0;
+    if (!pageActive || document.hidden) return;
     if (masthead) masthead.classList.toggle("is-scrolled", window.scrollY > 12);
+    var headerHeight = parseFloat(getComputedStyle(root).getPropertyValue("--header-height")) || 76;
+    var sceneCovered = paperPanels.some(function (panel) {
+      var bounds = panel.getBoundingClientRect();
+      return bounds.top <= headerHeight && bounds.bottom >= window.innerHeight;
+    });
     var scrollRange = root.scrollHeight - window.innerHeight;
-    root.style.setProperty("--reading-progress", scrollRange > 0 ? Math.min(1, Math.max(0, window.scrollY / scrollRange)) : 1);
+    var progress = scrollRange > 0 ? clamp(window.scrollY / scrollRange) : 1;
+    var chapterIndex = 0;
+    var chapterLine = window.innerHeight * 0.45;
+    chapters.forEach(function (chapter) {
+      if (chapter.element.getBoundingClientRect().top <= chapterLine) chapterIndex = chapter.index;
+    });
+    if (chapters.length && scrollRange > 0 && window.scrollY >= scrollRange - 4) {
+      chapterIndex = chapters[chapters.length - 1].index;
+    }
+    var heroProgress = 0;
+    if (hero && !motion.matches && root.dataset.motion !== "off") {
+      var heroBounds = hero.element.getBoundingClientRect();
+      heroProgress = clamp(-heroBounds.top / Math.max(1, heroBounds.height));
+    }
+    root.style.setProperty("--reading-progress", progress);
+    root.style.setProperty("--scroll-progress", progress);
+    root.style.setProperty("--hero-progress", heroProgress);
+    root.dataset.chapter = String(chapterIndex);
+    // Scroll is native. This single event-driven frame synchronizes visual layers
+    // without a scroll proxy, wheel interception, or a second animation loop.
+    document.dispatchEvent(new CustomEvent("homepage:scroll", {
+      detail: { progress: progress, chapter: chapterIndex, heroProgress: heroProgress, sceneCovered: sceneCovered }
+    }));
     if (!navItems.length) return;
-    var focusLine = (parseFloat(getComputedStyle(root).getPropertyValue("--header-height")) || 76) + 48;
+    var focusLine = headerHeight + 48;
     var active = navItems[0];
     navItems.forEach(function (item) {
       if (item.target.getBoundingClientRect().top <= focusLine) active = item;
@@ -126,14 +200,27 @@
       else item.link.removeAttribute("aria-current");
     });
   }
-  var pendingFrame = false;
+  var pendingFrame = 0;
   function scheduleUpdate() {
-    if (pendingFrame) return;
-    pendingFrame = true;
-    window.requestAnimationFrame(updatePage);
+    if (pendingFrame || !pageActive || document.hidden) return;
+    pendingFrame = window.requestAnimationFrame(updatePage);
   }
   window.addEventListener("scroll", scheduleUpdate, { passive: true });
   window.addEventListener("resize", scheduleUpdate);
   window.addEventListener("load", scheduleUpdate);
+  window.addEventListener("pagehide", function () {
+    pageActive = false;
+    syncCardActivity();
+    if (pendingFrame) window.cancelAnimationFrame(pendingFrame);
+    pendingFrame = 0;
+  });
+  window.addEventListener("pageshow", function () { pageActive = true; syncCardActivity(); scheduleUpdate(); });
+  document.addEventListener("visibilitychange", function () {
+    syncCardActivity();
+    if (document.hidden && pendingFrame) {
+      window.cancelAnimationFrame(pendingFrame);
+      pendingFrame = 0;
+    } else if (!document.hidden) scheduleUpdate();
+  });
   updatePage();
 })();

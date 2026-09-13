@@ -1,0 +1,17 @@
+---
+layout: compress
+---
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    {% include head.html %}
+    {% include head/custom.html %}
+  </head>
+  <body class="immersive-home">
+    <a class="skip-link" href="#main">Skip to content</a>
+    {% include browser-upgrade.html %}
+    {% include masthead.html %}
+    <main id="main" class="immersive-page" tabindex="-1">{{ content }}</main>
+    {% include scripts.html %}
+  </body>
+</html>

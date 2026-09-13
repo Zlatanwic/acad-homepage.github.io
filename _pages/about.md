@@ -1,187 +1,140 @@
 ---
+layout: immersive
 permalink: /
 title: ""
-excerpt: "Kuo Li is an undergraduate student at Tongji University working on MLSys and AI infrastructure."
-author_profile: true
+excerpt: "Kuo Li — MLSys and AI Infrastructure. From models to systems. Incoming Tsinghua Ph.D. student, 2027."
+author_profile: false
 redirect_from:
   - /about/
   - /about.html
 ---
 
-<section class="academic-intro" id="about-me" aria-labelledby="intro-title">
-  <p class="intro-eyebrow"><span aria-hidden="true"></span> MLSys / AI Infrastructure</p>
-  <div class="intro-heading">
-    <h1 id="intro-title" data-reveal>Machine learning,<br><span class="intro-title-accent">from models to systems.</span></h1>
-    <div class="compute-scene" data-compute-scene data-scene-url="{{ '/assets/js/compute-scene.js' | relative_url }}" aria-hidden="true">
-      <div class="scene-viewport">
-        <svg class="scene-fallback" viewBox="0 0 280 200" fill="none" focusable="false" aria-hidden="true">
-          <g stroke="#79cafa" stroke-width="1">
-            <ellipse cx="140" cy="100" rx="119" ry="57" transform="rotate(-22 140 100)" opacity=".45"/>
-            <path d="m140 24 68 39v77l-68 39-68-39V63z M72 63l68 39 68-39 M140 102v77 M106 44l68 39v76 M174 44l-68 39v76 M72 101l68 40 68-40 M106 82l68 39 M174 82l-68 39"/>
-          </g>
-          <g fill="#315a7b"><circle cx="140" cy="24" r="4"/><circle cx="72" cy="63" r="4"/><circle cx="208" cy="63" r="4"/><circle cx="140" cy="102" r="5"/><circle cx="72" cy="140" r="4"/><circle cx="208" cy="140" r="4"/><circle cx="140" cy="179" r="4"/></g>
-          <g fill="#79cafa"><circle cx="106" cy="82" r="3"/><circle cx="174" cy="82" r="3"/><circle cx="106" cy="121" r="3"/><circle cx="174" cy="121" r="3"/></g>
-        </svg>
-      </div>
-      <span class="scene-caption"><span></span> COMPUTE / CONNECT / EVOLVE</span>
+<div class="world-scene compute-scene" data-compute-scene data-scene-url="{{ '/assets/js/compute-scene.js' | relative_url }}" aria-hidden="true">
+  <div class="scene-viewport">
+    <svg class="scene-fallback" viewBox="0 0 1440 1000" fill="none" focusable="false" aria-hidden="true">
+      <defs><linearGradient id="wafer" x1="700" y1="300" x2="1200" y2="700" gradientUnits="userSpaceOnUse"><stop stop-color="#a4dcfa"/><stop offset="1" stop-color="#18364a"/></linearGradient></defs>
+      <g stroke="#7fcef7" stroke-width="1.4">
+        <ellipse cx="1050" cy="480" rx="300" ry="200" transform="rotate(-28 1050 480)" opacity=".35"/>
+        <ellipse cx="1050" cy="480" rx="260" ry="310" transform="rotate(35 1050 480)" opacity=".18"/>
+        <path d="m820 525 220-100 220 100-220 120z" fill="url(#wafer)"/><path d="m820 525v22l220 120 220-120v-22 M1040 645v22"/>
+        <path d="m820 455 220-100 220 100-220 120z" fill="url(#wafer)"/><path d="m820 455v22l220 120 220-120v-22 M1040 575v22"/>
+        <path d="m820 385 220-100 220 100-220 120z" fill="url(#wafer)"/><path d="m820 385v22l220 120 220-120v-22 M1040 505v22"/>
+        <path d="m970 380 70-33 70 33-70 38z" fill="#c8eaff"/><path d="m970 380v20l70 38 70-38v-20 M1040 418v20"/>
+        <path d="M1040 285v-66 M820 385l-70-32 M1260 525l60 32" opacity=".6"/>
+      </g>
+      <g fill="#a5e0ff"><circle cx="1040" cy="219" r="5"/><circle cx="750" cy="353" r="4"/><circle cx="1320" cy="557" r="4"/></g>
+    </svg>
+  </div>
+</div>
+
+<section class="world-hero" id="about-me" data-scene-chapter="0" aria-labelledby="intro-title">
+  <div class="hero-topline mono"><span><span class="status-dot"></span> MLSys / AI Infrastructure</span><span>Shanghai, China / 2026</span></div>
+  <div class="hero-copy">
+    <p class="hero-kicker mono" data-reveal>Researcher. Builder. Systems thinker.</p>
+    <h1 id="intro-title" data-reveal>Kuo Li<span class="sky-dot">.</span></h1>
+    <p class="hero-statement" data-reveal>From models<br>to <em>systems.</em></p>
+    <p class="hero-description" data-reveal>Exploring the infrastructure<br>behind machine intelligence.</p>
+    <div class="hero-actions" data-reveal>
+      <a class="pill-link pill-link--solid intro-link--primary" data-magnetic href="{{ site.author.cv | relative_url }}" target="_blank" rel="noopener noreferrer">View CV <span aria-hidden="true">↗</span></a>
+      <a class="pill-link" data-magnetic href="#research-interests">Explore research <span aria-hidden="true">↓</span></a>
     </div>
   </div>
-  <p>
-    I am <span class="accent-text">Kuo Li</span>, an undergraduate student majoring in Data Science and Big Data Technology
-    in the Department of Computer Science and Technology at Tongji University. My research interests lie in
-    <strong>MLSys / AI Infrastructure</strong>, with a focus on LLM inference and serving, heterogeneous computing,
-    distributed training, and compiler and runtime systems.
-  </p>
-  <p>
-    I am an incoming Ph.D. student in the Department of Computer Science and Technology at Tsinghua University,
-    starting in 2027. I will be advised by
-    <a href="https://madsys.cs.tsinghua.edu.cn/author/yongwei-wu/" target="_blank" rel="noopener noreferrer">Yongwei Wu</a> and
-    <a href="https://madsys.cs.tsinghua.edu.cn/author/mingxing-zhang/" target="_blank" rel="noopener noreferrer">Mingxing Zhang</a>
-    in the <a href="https://madsys.cs.tsinghua.edu.cn/" target="_blank" rel="noopener noreferrer">MADSys</a> lab.
-  </p>
-  <p class="intro-invitation">
-    Please feel free to contact me about systems, machine learning infrastructure, or potential collaborations.
-  </p>
-  <div class="intro-links">
-    <a class="intro-link--primary" href="{{ site.author.cv | relative_url }}" target="_blank" rel="noopener noreferrer"><i class="fas fa-file-alt" aria-hidden="true"></i> View CV <span aria-hidden="true">↗</span></a>
-    <a href="mailto:{{ site.author.email }}"><i class="fas fa-envelope" aria-hidden="true"></i> Get in touch</a>
+  <div class="core-annotation mono" aria-hidden="true"><span>FIG. 01 — COMPUTE CORE</span><span class="annotation-line"></span><span>MODELS → RUNTIMES → HARDWARE</span></div>
+  <div class="hero-bottom mono"><a class="scroll-cue" href="#profile"><span aria-hidden="true">↓</span> Scroll to discover</a><span>Tongji University <span class="bottom-divider">/</span> Incoming Tsinghua Ph.D. ’27</span></div>
+</section>
+
+<section class="profile-chapter paper-chapter" id="profile" aria-labelledby="profile-title">
+  <div class="chapter-meta mono"><span>01 / THE PERSON</span><span>Curiosity, down to the metal.</span></div>
+  <div class="profile-grid">
+    <div class="profile-visual" data-reveal>
+      <div class="portrait-frame"><img src="{{ '/images/kuo-li-profile.jpg' | relative_url }}" alt="Kuo Li" width="1279" height="1706" loading="lazy"></div>
+      <div class="portrait-caption mono"><span>KUO LI</span><span>SHANGHAI, CN</span></div>
+      <a class="text-link" href="https://github.com/Zlatanwic" target="_blank" rel="noopener noreferrer">Find me on GitHub <span aria-hidden="true">↗</span></a>
+    </div>
+    <div class="profile-copy academic-intro">
+      <h2 id="profile-title" class="editorial-title" data-reveal>Machine learning.<br><em>Systems thinking.</em></h2>
+      <p data-reveal>I am <strong>Kuo Li</strong>, an undergraduate student majoring in Data Science and Big Data Technology in the Department of Computer Science and Technology at <strong>Tongji University</strong>. My research interests lie in <strong>MLSys / AI Infrastructure</strong>, with a focus on LLM inference and serving, heterogeneous computing, distributed training, and compiler and runtime systems.</p>
+      <p data-reveal>I am an incoming Ph.D. student in the Department of Computer Science and Technology at <strong>Tsinghua University</strong>, starting in <strong>2027</strong>. I will be advised by <a href="https://madsys.cs.tsinghua.edu.cn/author/yongwei-wu/" target="_blank" rel="noopener noreferrer">Yongwei Wu</a> and <a href="https://madsys.cs.tsinghua.edu.cn/author/mingxing-zhang/" target="_blank" rel="noopener noreferrer">Mingxing Zhang</a> in the <a href="https://madsys.cs.tsinghua.edu.cn/" target="_blank" rel="noopener noreferrer">MADSys</a> lab.</p>
+      <p class="profile-invitation" data-reveal>Please feel free to contact me about systems, machine learning infrastructure, or potential collaborations.</p>
+      <a class="text-link" href="#contact" data-reveal>Start a conversation <span aria-hidden="true">↗</span></a>
+    </div>
   </div>
 </section>
 
-<h2 class="section-heading" id="research-interests"><span class="section-number" aria-hidden="true">01</span> Research Interests</h2>
-
-<div class="highlight-blocks">
-  <article class="highlight-block floating-card" data-reveal>
-    <span class="card-index" aria-hidden="true">01 / SYSTEMS</span>
-    <h3><i class="fas fa-server" aria-hidden="true"></i> LLM Training and Inference Systems</h3>
-    <ul>
-      <li><span class="primary-gradient-text">Training:</span> Distributed parallelism strategies and communication–computation overlap.</li>
-      <li><span class="primary-gradient-text">Serving:</span> Runtime scheduling, KV cache management, and inference optimization.</li>
-      <li><span class="primary-gradient-text">Reliability:</span> Fault tolerance.</li>
-    </ul>
-  </article>
-
-  <article class="highlight-block floating-card" data-reveal>
-    <span class="card-index" aria-hidden="true">02 / COMPILERS</span>
-    <h3><i class="fas fa-microchip" aria-hidden="true"></i> Kernel Optimization and Deep Learning Compilers</h3>
-    <ul>
-      <li><span class="primary-gradient-text">Experience:</span> High-performance CUDA programming.</li>
-      <li><span class="primary-gradient-text">Currently learning:</span> Triton and TileLang.</li>
-    </ul>
-  </article>
-
-  <article class="highlight-block floating-card" data-reveal>
-    <span class="card-index" aria-hidden="true">03 / EFFICIENCY</span>
-    <h3><i class="fas fa-network-wired" aria-hidden="true"></i> Efficient AI</h3>
-    <ul>
-      <li><span class="primary-gradient-text">Focus:</span> Sparse attention.</li>
-    </ul>
-  </article>
-
-  <article class="highlight-block floating-card" data-reveal>
-    <span class="card-index" aria-hidden="true">04 / AGENTS</span>
-    <h3><i class="fas fa-robot" aria-hidden="true"></i> Agent OS / Infrastructure</h3>
-    <ul>
-      <li><span class="primary-gradient-text">Focus:</span> Self-evolving skills and agent harnesses.</li>
-    </ul>
-  </article>
-</div>
-
-<p class="research-exploration" data-reveal><strong>Also exploring:</strong> Systems for multimodal AI, reinforcement learning, and embodied intelligence.</p>
-
-<h2 class="section-heading" id="news"><span class="section-number" aria-hidden="true">02</span> News</h2>
-
-<ul class="academic-list news-list" data-reveal>
-  <li><time datetime="2026-05">May 2026 — Present</time><span>Conducting research on multi-request LLM serving at the Institute of Advanced Network, Shanghai Jiao Tong University.</span></li>
-  <li><time datetime="2026-05">May 2026</time><span>Contributed to heterogeneous LLM and agent harness systems at IPADS, Shanghai Jiao Tong University.</span></li>
-  <li><time datetime="2026-05">May 2026</time><span>Conducted research on optimizing the RISC-V edge inference stack at the LANDS Lab, Nanjing University.</span></li>
-</ul>
-
-<h2 class="section-heading" id="education"><span class="section-number" aria-hidden="true">03</span> Education</h2>
-
-<ul class="academic-list education-list" data-reveal>
-  <li>
-    <time datetime="2027">Starting in 2027</time>
-    <strong>Tsinghua University · Department of Computer Science and Technology</strong>
-    <span>Incoming Ph.D. Student</span>
-    <span>Institute of High Performance Computing (IHPC)</span>
-  </li>
-  <li>
-    <time datetime="2023">2023 — 2027 (Expected)</time>
-    <strong>Tongji University · Department of Computer Science and Technology</strong>
-    <span>Undergraduate, Data Science and Big Data Technology</span>
-    <span class="rank-label">Major Rank: <strong>4 / 40</strong></span>
-  </li>
-</ul>
-
-<h2 class="section-heading" id="research-experience"><span class="section-number" aria-hidden="true">04</span> Research Experience</h2>
-
-<div class="experience-list">
-  <article class="experience-item" data-reveal>
-    <time>May 2026 — Present</time>
-    <div>
-      <h3>Institute of Advanced Network, Shanghai Jiao Tong University</h3>
-      <p>Advisor: <a href="https://bochen.info/" target="_blank" rel="noopener noreferrer">Bo Chen</a>. Investigating the co-design of semantic-priority scheduling and KV cache management for multi-request LLM serving.</p>
-    </div>
-  </article>
-  <article class="experience-item" data-reveal>
-    <time>May 2026 — Jul. 2026</time>
-    <div>
-      <h3>IPADS, Shanghai Jiao Tong University</h3>
-      <p>Advisor: Erhu Feng. Contributed to the continued development and performance optimization of SkVM, a heterogeneous LLM and agent harness system.</p>
-    </div>
-  </article>
-</div>
-
-<h2 class="section-heading" id="publications"><span class="section-number" aria-hidden="true">05</span> Publications</h2>
-
-<div class="paper-placeholder" data-reveal>
-  <i class="fas fa-file-alt" aria-hidden="true"></i>
-  <div>
-    <h3>Publication updates to come.</h3>
-    <p>In the meantime, explore my <a href="#projects">selected projects <span aria-hidden="true">↓</span></a>.</p>
+<section class="research-chapter dark-chapter" id="research-interests" data-scene-chapter="1" aria-labelledby="research-title">
+  <div class="chapter-meta mono"><span>02 / RESEARCH INTERESTS</span><span>Across the stack.</span></div>
+  <div class="chapter-heading"><h2 id="research-title" class="editorial-title section-heading" data-reveal>Intelligence,<br><em>engineered.</em></h2><p data-reveal>Four directions.<br>One connected system.</p></div>
+  <div class="research-panels">
+    <article class="research-panel floating-card" data-reveal>
+      <div class="panel-head mono"><span>01 / SYSTEMS</span><span aria-hidden="true">↗</span></div>
+      <div class="panel-art art-stack" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
+      <h3>LLM Training &amp;<br>Inference Systems</h3>
+      <ul><li><strong>Training:</strong> Distributed parallelism strategies and communication–computation overlap.</li><li><strong>Serving:</strong> Runtime scheduling, KV cache management, and inference optimization.</li><li><strong>Reliability:</strong> Fault tolerance.</li></ul>
+      <div class="panel-foot mono">DISTRIBUTE / SCHEDULE / SERVE</div>
+    </article>
+    <article class="research-panel floating-card" data-reveal>
+      <div class="panel-head mono"><span>02 / COMPILERS</span><span aria-hidden="true">↗</span></div>
+      <div class="panel-art art-chip" aria-hidden="true"><span></span><span></span><span></span></div>
+      <h3>Kernel Optimization &amp;<br>Deep Learning Compilers</h3>
+      <ul><li><strong>Experience:</strong> High-performance CUDA programming.</li><li><strong>Currently learning:</strong> Triton and TileLang.</li></ul>
+      <div class="panel-foot mono">CUDA / TRITON / TILELANG</div>
+    </article>
+    <article class="research-panel floating-card" data-reveal>
+      <div class="panel-head mono"><span>03 / EFFICIENCY</span><span aria-hidden="true">↗</span></div>
+      <div class="panel-art art-sparse" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+      <h3>Efficient AI</h3>
+      <ul><li><strong>Focus:</strong> Sparse attention.</li></ul>
+      <div class="panel-foot mono">LESS COMPUTE / MORE POSSIBILITY</div>
+    </article>
+    <article class="research-panel floating-card" data-reveal>
+      <div class="panel-head mono"><span>04 / AGENTS</span><span aria-hidden="true">↗</span></div>
+      <div class="panel-art art-orbit" aria-hidden="true"><span></span><span></span><span></span></div>
+      <h3>Agent OS /<br>Infrastructure</h3>
+      <ul><li><strong>Focus:</strong> Self-evolving skills and agent harnesses.</li></ul>
+      <div class="panel-foot mono">COMPOSE / LEARN / EVOLVE</div>
+    </article>
   </div>
-</div>
+  <p class="exploration-note" data-reveal><span class="mono">ON THE HORIZON</span> Also exploring systems for multimodal AI, reinforcement learning, and embodied intelligence.</p>
+</section>
 
-<h2 class="section-heading" id="projects"><span class="section-number" aria-hidden="true">06</span> Selected Projects</h2>
-
-<div class="project-grid">
-  <article class="project-card floating-card" data-reveal>
-    <div class="project-card__head">
-      <i class="fas fa-layer-group" aria-hidden="true"></i>
-      <span>LLM SERVING</span>
-    </div>
-    <h3>SemServe</h3>
-    <p>An online inference system prototype that co-designs semantic priority and KV cache storage precision.</p>
-    <ul>
-      <li>Automatic SLO-aware tuning of semantic priorities.</li>
-      <li>Tiered storage across FP16, INT8, and CPU offload.</li>
-    </ul>
-    <div class="tag-row"><span>PyTorch</span><span>Transformers</span><span>Qwen</span></div>
-  </article>
-
-  <article class="project-card floating-card" data-reveal>
-    <div class="project-card__head">
-      <i class="fas fa-code-branch" aria-hidden="true"></i>
-      <span>AGENT RUNTIME</span>
-    </div>
-    <h3>SkVM</h3>
-    <p>A skill compilation and runtime system for heterogeneous LLMs and agent harnesses.</p>
-    <ul>
-      <li>Containerized execution for Terminal-Bench.</li>
-      <li>Parallelism classification and multi-role optimization across AOT and JIT stages.</li>
-    </ul>
-    <div class="tag-row"><span>TypeScript</span><span>Bun</span><span>Docker</span></div>
-  </article>
-</div>
-
-<footer class="academic-footer">
-  <div>
-    <p class="footer-title">Let's talk systems.</p>
-    <div><a href="mailto:{{ site.author.email }}">{{ site.author.email }} <span aria-hidden="true">↗</span></a></div>
-    {% if site.author.email_secondary %}
-      <div><a href="mailto:{{ site.author.email_secondary }}">{{ site.author.email_secondary }} <span aria-hidden="true">↗</span></a></div>
-    {% endif %}
+<section class="journey-chapter paper-chapter" data-scene-chapter="2" aria-labelledby="journey-title">
+  <div class="chapter-meta mono"><span>03 / THE JOURNEY</span><span>Learning. Building. Moving forward.</span></div>
+  <h2 id="journey-title" class="editorial-title" data-reveal>A foundation.<br><em>A new frontier.</em></h2>
+  <div class="journey-section" id="education">
+    <h3 class="subsection-title section-heading" data-reveal><span class="mono">01</span> Education</h3>
+    <div class="education-record" data-reveal><div class="record-year">2027<span class="mono">INCOMING</span></div><div class="record-copy"><h4>Tsinghua University</h4><p>Department of Computer Science and Technology</p><p class="record-detail">Incoming Ph.D. Student<br>Institute of High Performance Computing (IHPC)</p></div><span class="record-symbol" aria-hidden="true">↗</span></div>
+    <div class="education-record" data-reveal><div class="record-year">2023<span class="mono">— 2027 (EXPECTED)</span></div><div class="record-copy"><h4>Tongji University</h4><p>Department of Computer Science and Technology</p><p class="record-detail">Undergraduate, Data Science and Big Data Technology</p><span class="rank-chip mono">MAJOR RANK <strong>4 / 40</strong></span></div><span class="record-symbol" aria-hidden="true">↗</span></div>
   </div>
-  <div class="footer-meta"><p>Last updated: September 2026</p><a href="#about-me">Back to top <span aria-hidden="true">↑</span></a></div>
+  <div class="journey-section" id="research-experience">
+    <h3 class="subsection-title section-heading" data-reveal><span class="mono">02</span> Research Experience</h3>
+    <article class="experience-record" data-reveal><time class="mono">May 2026 — Present</time><div><h4>Institute of Advanced Network,<br>Shanghai Jiao Tong University</h4><p>Advisor: <a href="https://bochen.info/" target="_blank" rel="noopener noreferrer">Bo Chen</a>. Investigating the co-design of semantic-priority scheduling and KV cache management for multi-request LLM serving.</p></div></article>
+    <article class="experience-record" data-reveal><time class="mono">May 2026 — Jul. 2026</time><div><h4>IPADS,<br>Shanghai Jiao Tong University</h4><p>Advisor: Erhu Feng. Contributed to the continued development and performance optimization of SkVM, a heterogeneous LLM and agent harness system.</p></div></article>
+  </div>
+  <div class="journey-section" id="news">
+    <h3 class="subsection-title section-heading" data-reveal><span class="mono">03</span> News / Field Notes</h3>
+    <ul class="field-notes"><li data-reveal><time class="mono">May 2026 — Present</time><p>Conducting research on multi-request LLM serving at the Institute of Advanced Network, Shanghai Jiao Tong University.</p></li><li data-reveal><time class="mono">May 2026</time><p>Contributed to heterogeneous LLM and agent harness systems at IPADS, Shanghai Jiao Tong University.</p></li><li data-reveal><time class="mono">May 2026</time><p>Conducted research on optimizing the RISC-V edge inference stack at the LANDS Lab, Nanjing University.</p></li></ul>
+  </div>
+</section>
+
+<section class="work-chapter dark-chapter" id="projects" data-scene-chapter="3" aria-labelledby="work-title">
+  <div class="chapter-meta mono"><span>04 / SELECTED PROJECTS</span><span>Ideas, in execution.</span></div>
+  <h2 id="work-title" class="editorial-title section-heading" data-reveal>Built to<br><em>make it work.</em></h2>
+  <div class="work-grid">
+    <article class="work-card floating-card" data-reveal>
+      <div class="work-visual serving-visual" aria-hidden="true"><div class="request-lanes"><span></span><span></span><span></span></div><div class="runtime-chip">S</div><div class="memory-tiers"><span>FP16</span><span>INT8</span><span>CPU</span></div></div>
+      <div class="work-content"><div class="mono work-category">01 / LLM SERVING</div><h3>SemServe</h3><p>An online inference system prototype that co-designs semantic priority and KV cache storage precision.</p><ul><li>Automatic SLO-aware tuning of semantic priorities.</li><li>Tiered storage across FP16, INT8, and CPU offload.</li></ul><div class="work-tags mono"><span>PyTorch</span><span>Transformers</span><span>Qwen</span></div></div>
+    </article>
+    <article class="work-card floating-card" data-reveal>
+      <div class="work-visual agent-visual" aria-hidden="true"><span class="skill-node">SKILL</span><div class="runtime-orbit"><span></span><span></span></div><div class="runtime-chip">Sk</div><span class="runtime-node">RUNTIME</span></div>
+      <div class="work-content"><div class="mono work-category">02 / AGENT RUNTIME</div><h3>SkVM</h3><p>A skill compilation and runtime system for heterogeneous LLMs and agent harnesses.</p><ul><li>Containerized execution for Terminal-Bench.</li><li>Parallelism classification and multi-role optimization across AOT and JIT stages.</li></ul><div class="work-tags mono"><span>TypeScript</span><span>Bun</span><span>Docker</span></div></div>
+    </article>
+  </div>
+  <div class="publication-note" id="publications" data-reveal><h3 class="section-heading">Publications</h3><div><p>Publication updates to come.</p><span>In the meantime, explore the selected projects above.</span></div><span class="mono">TO BE CONTINUED ↗</span></div>
+</section>
+
+<footer class="contact-chapter" id="contact" data-scene-chapter="4" aria-labelledby="contact-title">
+  <div class="chapter-meta mono"><span>05 / WHAT'S NEXT?</span><span>Always curious.</span></div>
+  <h2 id="contact-title" data-reveal>Let's talk<br><em>systems.</em><span class="contact-arrow" aria-hidden="true">↗</span></h2>
+  <div class="contact-links" data-reveal><a href="mailto:{{ site.author.email }}">{{ site.author.email }} <span aria-hidden="true">↗</span></a>{% if site.author.email_secondary %}<a href="mailto:{{ site.author.email_secondary }}">{{ site.author.email_secondary }} <span aria-hidden="true">↗</span></a>{% endif %}</div>
+  <div class="footer-line mono"><span>© 2026 Kuo Li <span class="bottom-divider">/</span> Last updated: September 2026</span><a href="https://github.com/Zlatanwic" target="_blank" rel="noopener noreferrer">GitHub ↗</a><a href="#about-me">Back to top ↑</a></div>
 </footer>

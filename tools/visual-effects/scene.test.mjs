@@ -66,17 +66,20 @@ class FakeElement {
   getBoundingClientRect() { return { left: 0, top: 0, width: this.clientWidth, height: this.clientHeight }; }
 }
 
-function setup({ finePointer = true, width = 250, height = 195, initFailure = false } = {}) {
+function setup({ finePointer = true, width = 1280, height = 800, initFailure = false } = {}) {
   const stats = { frames: 0, disposals: 0, contextReleases: 0, initFailure, contextLost: false };
   const queuedFrames = new Map();
   let frameId = 0;
   const host = new FakeElement(width, height);
   const fallback = new FakeElement();
   host.append(fallback);
+  const fakeWindow = Object.assign(new FakeElement(width, height), {
+    devicePixelRatio: 3, matchMedia: () => ({ matches: finePointer })
+  });
   const sandbox = {
     module: { exports: {} },
     stats,
-    window: { devicePixelRatio: 3, matchMedia: () => ({ matches: finePointer }) },
+    window: fakeWindow,
     document: { createElement: () => new FakeElement() },
     requestAnimationFrame: (callback) => { queuedFrames.set(++frameId, callback); return frameId; },
     cancelAnimationFrame: (id) => queuedFrames.delete(id),
@@ -94,7 +97,7 @@ function setup({ finePointer = true, width = 250, height = 195, initFailure = fa
     queuedFrames.clear();
     for (const callback of callbacks) callback(timestamp);
   }
-  return { controller, stats, host, fallback, failures, queuedFrames, frame };
+  return { controller, stats, host, fallback, failures, queuedFrames, frame, window: fakeWindow };
 }
 
 test('creation renders once, preserves fallback, and starts without an animation loop', () => {
@@ -133,6 +136,7 @@ test('animation is idempotent, rate-limited, pausable, and resumes without catch
   assert.equal(run.stats.contextReleases, 1);
   assert.equal(run.stats.resizeDisconnected, true);
   assert.equal(run.host.events.size, 0);
+  assert.equal(run.window.events.size, 0);
   assert.deepEqual(run.host.children, [run.fallback]);
 });
 
@@ -203,6 +207,129 @@ test('lost contexts stop permanently, remove listeners, and never restart', () =
   assert.equal(prevented, true);
   assert.equal(run.failures.length, 1);
   assert.equal(canvas.events.size, 0);
+  assert.equal(run.window.events.size, 0);
   assert.equal(run.queuedFrames.size, 0);
   assert.equal(run.host.dataset.sceneState, 'fallback');
+});
+
+test('the fixed scene contains five layered processors and instanced detail', () => {
+  const run = setup();
+  const scene = run.stats.scene;
+  const stack = scene.getObjectByName('processor-stack');
+  assert.equal(stack.children.filter((child) => child.name.startsWith('processor-layer-')).length, 5);
+  assert.equal(scene.getObjectByName('processor-contacts').count, 192);
+  assert.equal(scene.getObjectByName('silicon-dies').count, 16);
+  assert.equal(scene.getObjectByName('compute-particles').count, 260);
+  assert.equal(scene.getObjectByName('data-orbits').children.length, 3);
+  assert.ok(scene.getObjectByName('memory-satellite-3'));
+  assert.ok(stack.children[0].children[0].material.isMeshStandardMaterial);
+  assert.ok(scene.getObjectByName('compute-universe').position.x > 0);
+  run.controller.dispose();
+});
+
+test('scroll targets do not render or start an inactive scene and animate smoothly when active', () => {
+  const run = setup();
+  const scene = run.stats.scene;
+  const layer = scene.getObjectByName('processor-layer-4');
+  const initialY = layer.position.y;
+  run.controller.setProgress(0.5);
+  run.controller.setChapter(2);
+  assert.equal(layer.position.y, initialY);
+  assert.equal(run.stats.frames, 1);
+  assert.equal(run.queuedFrames.size, 0);
+  run.controller.setActive(true);
+  run.frame(100);
+  run.frame(150);
+  const intermediateY = layer.position.y;
+  assert.ok(intermediateY > initialY);
+  for (let time = 200; time <= 2500; time += 50) run.frame(time);
+  assert.ok(layer.position.y > intermediateY);
+  assert.ok(layer.position.y < 2.2);
+  run.controller.setActive(false);
+  const pausedFrames = run.stats.frames;
+  run.controller.setProgress(1);
+  run.controller.setChapter(4);
+  run.frame(3000);
+  assert.equal(run.stats.frames, pausedFrames);
+  run.controller.dispose();
+});
+
+test('progress and chapter reject invalid values and clamp valid targets', () => {
+  const reference = setup();
+  const bounded = setup();
+  reference.controller.setProgress(1);
+  reference.controller.setChapter(4);
+  bounded.controller.setProgress(20);
+  bounded.controller.setChapter(40);
+  for (const value of [NaN, Infinity, -Infinity, '0', null, undefined]) {
+    bounded.controller.setProgress(value);
+    bounded.controller.setChapter(value);
+  }
+  reference.controller.setActive(true);
+  bounded.controller.setActive(true);
+  for (let time = 100; time < 800; time += 50) {
+    reference.frame(time);
+    bounded.frame(time);
+  }
+  const firstLayer = reference.stats.scene.getObjectByName('processor-layer-4');
+  const secondLayer = bounded.stats.scene.getObjectByName('processor-layer-4');
+  assert.equal(firstLayer.position.y, secondLayer.position.y);
+  assert.equal(firstLayer.rotation.y, secondLayer.rotation.y);
+  reference.controller.setProgress(0);
+  reference.controller.setChapter(0);
+  bounded.controller.setProgress(-20);
+  bounded.controller.setChapter(-30);
+  for (let time = 800; time < 1600; time += 50) {
+    reference.frame(time);
+    bounded.frame(time);
+  }
+  assert.equal(firstLayer.position.y, secondLayer.position.y);
+  bounded.stats.scene.traverse((object) => {
+    assert.ok(object.position.toArray().every(Number.isFinite));
+    assert.ok([object.rotation.x, object.rotation.y, object.rotation.z].every(Number.isFinite));
+  });
+  reference.controller.dispose();
+  bounded.controller.dispose();
+});
+
+test('portrait layout centers the sculpture below the midpoint and keeps it in the camera frustum', () => {
+  const run = setup({ width: 390, height: 844 });
+  const universe = run.stats.scene.getObjectByName('compute-universe');
+  assert.equal(universe.position.x, 0);
+  assert.ok(universe.position.y < 0);
+  const camera = run.stats.camera;
+  const visibleWidth = 2 * Math.tan(camera.fov * Math.PI / 360) * camera.position.z * camera.aspect;
+  assert.ok(visibleWidth >= 6.79);
+  assert.equal(run.stats.pixelRatio, 1);
+  run.host.clientWidth = 1440;
+  run.host.clientHeight = 900;
+  run.stats.resize();
+  assert.ok(universe.position.x > 0);
+  assert.equal(run.stats.pixelRatio, 1.5);
+  run.controller.dispose();
+});
+
+test('pointer parallax uses the window, ignores touch, and cleans up on disposal', () => {
+  const run = setup();
+  const universe = run.stats.scene.getObjectByName('compute-universe');
+  const pointerMove = run.window.events.get('pointermove');
+  assert.equal(typeof pointerMove, 'function');
+  run.controller.setActive(true);
+  pointerMove({ pointerType: 'touch', clientX: 1280, clientY: 0 });
+  run.frame(100);
+  run.frame(150);
+  assert.equal(universe.rotation.y, 0);
+  pointerMove({ pointerType: 'mouse', clientX: 1280, clientY: 0 });
+  run.frame(200);
+  assert.ok(universe.rotation.y > 0);
+  assert.ok(universe.rotation.y <= 0.065);
+  run.window.events.get('pointerout')({ relatedTarget: null });
+  const rotation = universe.rotation.y;
+  run.frame(250);
+  assert.ok(universe.rotation.y < rotation);
+  run.controller.dispose();
+  assert.equal(run.window.events.size, 0);
+  run.controller.setProgress(0.2);
+  run.controller.setChapter(3);
+  assert.equal(run.queuedFrames.size, 0);
 });

@@ -16,23 +16,30 @@
   var sceneLoading = false;
   var sceneFailed = false;
   var sceneInView = false;
+  var sceneCovered = false;
   var sceneObserver;
   var pageActive = true;
+  var sceneProgress = 0;
+  var sceneChapter = 0;
   var cards = Array.prototype.slice.call(document.querySelectorAll(".floating-card"));
+  var magneticLinks = Array.prototype.slice.call(document.querySelectorAll("[data-magnetic]"));
+  var pointerResets = [];
 
   try { paused = window.localStorage.getItem(storageKey) === "off"; } catch (_) { /* Storage is optional. */ }
 
-  function resetCards() {
-    cards.forEach(function (card) {
-      card.style.removeProperty("--tilt-x");
-      card.style.removeProperty("--tilt-y");
-      card.style.removeProperty("--sheen-shift");
-      card.classList.remove("is-tilting");
-    });
+  function resetPointers() {
+    pointerResets.forEach(function (reset) { reset(); });
+  }
+
+  function syncScenePosition() {
+    if (!scene || sceneFailed) return;
+    // Optional methods keep the controller compatible with a static scene module.
+    if (typeof scene.setProgress === "function") scene.setProgress(sceneProgress);
+    if (typeof scene.setChapter === "function") scene.setChapter(sceneChapter);
   }
 
   function mayAnimateScene() {
-    return enabled && sceneInView && pageActive && !document.hidden && !sceneFailed;
+    return enabled && sceneInView && !sceneCovered && pageActive && !document.hidden && !sceneFailed;
   }
 
   function syncScene() {
@@ -53,6 +60,7 @@
           sceneHost.dataset.sceneState = "fallback";
         }
       });
+      syncScenePosition();
       scene.setActive(mayAnimateScene());
     }).catch(function () {
       sceneLoading = false;
@@ -71,7 +79,7 @@
       button.title = reduced.matches ? "Your system prefers reduced motion" : (enabled ? "Pause visual effects" : "Enable visual effects");
     }
     if (label) label.textContent = enabled ? "Motion on" : "Motion off";
-    if (!enabled) resetCards();
+    if (!enabled) resetPointers();
     document.dispatchEvent(new CustomEvent("homepage:motionchange", { detail: { enabled: enabled } }));
     syncScene();
   }
@@ -82,10 +90,23 @@
     updateMotion();
   });
   reduced.addEventListener("change", updateMotion);
-  finePointer.addEventListener("change", resetCards);
+  finePointer.addEventListener("change", resetPointers);
   document.addEventListener("visibilitychange", function () {
-    if (document.hidden) resetCards();
+    if (document.hidden) resetPointers();
     syncScene();
+  });
+  document.addEventListener("homepage:scroll", function (event) {
+    var detail = event.detail || {};
+    var coverageChanged = typeof detail.sceneCovered === "boolean" && detail.sceneCovered !== sceneCovered;
+    if (coverageChanged) sceneCovered = detail.sceneCovered;
+    if (typeof detail.progress === "number" && isFinite(detail.progress)) {
+      sceneProgress = Math.max(0, Math.min(1, detail.progress));
+    }
+    if (typeof detail.chapter === "number" && isFinite(detail.chapter)) {
+      sceneChapter = Math.max(0, Math.min(4, Math.round(detail.chapter)));
+    }
+    syncScenePosition();
+    if (coverageChanged) syncScene();
   });
   window.addEventListener("beforeprint", function () { printing = true; updateMotion(); });
   window.addEventListener("afterprint", function () { printing = false; updateMotion(); });
@@ -93,11 +114,7 @@
     if (event.key === storageKey) { paused = event.newValue === "off"; updateMotion(); }
   });
 
-  cards.forEach(function (card) {
-    var sheen = document.createElement("span");
-    sheen.className = "card-sheen";
-    sheen.setAttribute("aria-hidden", "true");
-    card.appendChild(sheen);
+  function trackPointer(element, properties, update) {
     var bounds;
     var frame = 0;
     var x = 0;
@@ -106,35 +123,57 @@
       if (frame) window.cancelAnimationFrame(frame);
       frame = 0;
       bounds = null;
-      card.classList.remove("is-tilting");
-      card.style.removeProperty("--tilt-x");
-      card.style.removeProperty("--tilt-y");
-      card.style.removeProperty("--sheen-shift");
+      element.classList.remove("is-tilting");
+      properties.forEach(function (property) { element.style.removeProperty(property); });
     }
-    card.addEventListener("pointerenter", function (event) {
-      if (enabled && finePointer.matches && event.pointerType !== "touch") bounds = card.getBoundingClientRect();
+    function pointerAllowed(event) {
+      return enabled && pageActive && !document.hidden && finePointer.matches && event.pointerType !== "touch";
+    }
+    pointerResets.push(reset);
+    element.addEventListener("pointerenter", function (event) {
+      if (pointerAllowed(event)) bounds = element.getBoundingClientRect();
+      else reset();
     });
-    card.addEventListener("pointermove", function (event) {
-      if (!enabled || !finePointer.matches || event.pointerType === "touch") return;
-      if (!bounds) bounds = card.getBoundingClientRect();
+    element.addEventListener("pointermove", function (event) {
+      if (!pointerAllowed(event)) { reset(); return; }
+      if (!bounds) bounds = element.getBoundingClientRect();
+      if (!bounds.width || !bounds.height) return;
       x = Math.max(-0.5, Math.min(0.5, (event.clientX - bounds.left) / bounds.width - 0.5));
       y = Math.max(-0.5, Math.min(0.5, (event.clientY - bounds.top) / bounds.height - 0.5));
       if (frame) return;
       frame = window.requestAnimationFrame(function () {
         frame = 0;
-        if (!enabled || !finePointer.matches || document.hidden) return;
-        card.classList.add("is-tilting");
-        card.style.setProperty("--tilt-x", (-y * 7).toFixed(2) + "deg");
-        card.style.setProperty("--tilt-y", (x * 7).toFixed(2) + "deg");
-        card.style.setProperty("--sheen-shift", (x * 80).toFixed(2) + "%");
+        if (!enabled || !finePointer.matches || !pageActive || document.hidden) return;
+        update(element, x, y);
       });
     });
-    card.addEventListener("pointerleave", reset);
-    card.addEventListener("pointercancel", reset);
-    // Scrolling changes the card's viewport bounds; never use stale tilt coordinates.
-    window.addEventListener("scroll", reset, { passive: true });
-    window.addEventListener("resize", reset);
+    element.addEventListener("pointerleave", reset);
+    element.addEventListener("pointercancel", reset);
+    element.addEventListener("focusin", reset);
+    element.addEventListener("keydown", reset);
+  }
+
+  cards.forEach(function (card) {
+    var sheen = document.createElement("span");
+    sheen.className = "card-sheen";
+    sheen.setAttribute("aria-hidden", "true");
+    card.appendChild(sheen);
+    trackPointer(card, ["--tilt-x", "--tilt-y", "--sheen-shift"], function (element, x, y) {
+      element.classList.add("is-tilting");
+      element.style.setProperty("--tilt-x", (-y * 10).toFixed(2) + "deg");
+      element.style.setProperty("--tilt-y", (x * 10).toFixed(2) + "deg");
+      element.style.setProperty("--sheen-shift", (x * 80).toFixed(2) + "%");
+    });
   });
+  magneticLinks.forEach(function (link) {
+    trackPointer(link, ["--magnetic-x", "--magnetic-y"], function (element, x, y) {
+      element.style.setProperty("--magnetic-x", (x * 16).toFixed(2) + "px");
+      element.style.setProperty("--magnetic-y", (y * 16).toFixed(2) + "px");
+    });
+  });
+  // One shared listener cancels pending frames and invalidates viewport bounds.
+  window.addEventListener("scroll", resetPointers, { passive: true });
+  window.addEventListener("resize", resetPointers);
 
   if (sceneElement && "IntersectionObserver" in window) {
     sceneObserver = new IntersectionObserver(function (entries) {
@@ -145,7 +184,7 @@
   }
   window.addEventListener("pagehide", function () {
     pageActive = false;
-    resetCards();
+    resetPointers();
     if (scene) scene.setActive(false);
   });
   window.addEventListener("pageshow", function () { pageActive = true; syncScene(); });

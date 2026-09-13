@@ -87,6 +87,8 @@ exclude:
   - assets/js/_main.js
   - assets/js/plugins
   - assets/js/vendor
+  - assets/js/src
+  - tools/visual-effects
   - config
   - gulpfile.js
   - log

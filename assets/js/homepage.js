@@ -63,6 +63,15 @@
     root.classList.add("nav-enhanced");
   }
 
+  // Keep content visible without JS; enhance section headings and intro only here.
+  document.querySelectorAll(".section-heading, .academic-intro > p:not(.intro-eyebrow), .intro-links").forEach(function (element) {
+    element.setAttribute("data-reveal", "");
+  });
+  document.querySelectorAll(".highlight-blocks, .project-grid").forEach(function (group) {
+    Array.prototype.forEach.call(group.children, function (card, index) {
+      card.style.setProperty("--reveal-delay", (index % 2) * 70 + "ms");
+    });
+  });
   var revealElements = Array.prototype.slice.call(document.querySelectorAll("[data-reveal]"));
   var observer;
   function revealAll() {
@@ -70,7 +79,7 @@
     if (observer) observer.disconnect();
   }
 
-  if (!motion.matches && "IntersectionObserver" in window) {
+  if (!motion.matches && root.dataset.motion !== "off" && "IntersectionObserver" in window) {
     root.classList.add("js-enhanced");
     observer = new IntersectionObserver(function (entries) {
       entries.forEach(function (entry) {
@@ -85,6 +94,7 @@
     revealAll();
   }
   motion.addEventListener("change", function () { if (motion.matches) revealAll(); });
+  document.addEventListener("homepage:motionchange", function (event) { if (!event.detail.enabled) revealAll(); });
   document.addEventListener("focusin", function (event) {
     var card = event.target.closest("[data-reveal]");
     if (card) card.classList.add("is-visible");
@@ -100,6 +110,8 @@
   function updatePage() {
     pendingFrame = false;
     if (masthead) masthead.classList.toggle("is-scrolled", window.scrollY > 12);
+    var scrollRange = root.scrollHeight - window.innerHeight;
+    root.style.setProperty("--reading-progress", scrollRange > 0 ? Math.min(1, Math.max(0, window.scrollY / scrollRange)) : 1);
     if (!navItems.length) return;
     var focusLine = (parseFloat(getComputedStyle(root).getPropertyValue("--header-height")) || 76) + 48;
     var active = navItems[0];

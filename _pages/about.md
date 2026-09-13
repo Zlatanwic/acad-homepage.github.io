@@ -10,7 +10,22 @@ redirect_from:
 
 <section class="academic-intro" id="about-me" aria-labelledby="intro-title">
   <p class="intro-eyebrow"><span aria-hidden="true"></span> MLSys / AI Infrastructure</p>
-  <h1 id="intro-title">Machine learning,<br>from models to systems.</h1>
+  <div class="intro-heading">
+    <h1 id="intro-title" data-reveal>Machine learning,<br><span class="intro-title-accent">from models to systems.</span></h1>
+    <div class="compute-scene" data-compute-scene data-scene-url="{{ '/assets/js/compute-scene.js' | relative_url }}" aria-hidden="true">
+      <div class="scene-viewport">
+        <svg class="scene-fallback" viewBox="0 0 280 200" fill="none" focusable="false" aria-hidden="true">
+          <g stroke="#79cafa" stroke-width="1">
+            <ellipse cx="140" cy="100" rx="119" ry="57" transform="rotate(-22 140 100)" opacity=".45"/>
+            <path d="m140 24 68 39v77l-68 39-68-39V63z M72 63l68 39 68-39 M140 102v77 M106 44l68 39v76 M174 44l-68 39v76 M72 101l68 40 68-40 M106 82l68 39 M174 82l-68 39"/>
+          </g>
+          <g fill="#315a7b"><circle cx="140" cy="24" r="4"/><circle cx="72" cy="63" r="4"/><circle cx="208" cy="63" r="4"/><circle cx="140" cy="102" r="5"/><circle cx="72" cy="140" r="4"/><circle cx="208" cy="140" r="4"/><circle cx="140" cy="179" r="4"/></g>
+          <g fill="#79cafa"><circle cx="106" cy="82" r="3"/><circle cx="174" cy="82" r="3"/><circle cx="106" cy="121" r="3"/><circle cx="174" cy="121" r="3"/></g>
+        </svg>
+      </div>
+      <span class="scene-caption"><span></span> COMPUTE / CONNECT / EVOLVE</span>
+    </div>
+  </div>
   <p>
     I am <span class="accent-text">Kuo Li</span>, an undergraduate student majoring in Data Science and Big Data Technology
     in the Department of Computer Science and Technology at Tongji University. My research interests lie in

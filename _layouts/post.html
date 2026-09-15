@@ -1,0 +1,21 @@
+---
+layout: blog
+---
+<article class="blog-article" aria-labelledby="post-title">
+  <header class="post-header">
+    <a class="blog-back mono" href="{{ '/blog/' | relative_url }}">← BACK TO THE JOURNAL</a>
+    <div class="post-meta mono"><time datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: '%B %d, %Y' }}</time><span>{{ page.author | default: site.author.name | escape }}</span>{% if page.category %}<span>{{ page.category | escape }}</span>{% endif %}</div>
+    <h1 id="post-title">{{ page.title | escape }}</h1>
+    {% if page.description %}<p class="post-deck">{{ page.description | escape }}</p>{% endif %}
+    {% if page.tags.size > 0 %}<ul class="blog-tags" aria-label="Post topics">{% for tag in page.tags %}<li><a href="{{ '/blog/' | relative_url }}?tag={{ tag | url_encode }}">{{ tag | escape }}</a></li>{% endfor %}</ul>{% endif %}
+  </header>
+  <div class="post-layout">
+    <div class="post-content" id="post-content">{{ content }}</div>
+    <aside class="post-sidebar" data-blog-toc hidden><nav class="post-toc" aria-labelledby="post-toc-title"><h2 class="mono" id="post-toc-title">ON THIS PAGE</h2><ol data-blog-toc-list></ol></nav><a class="blog-inline-link" href="#post-title">Back to top ↑</a></aside>
+  </div>
+  <footer class="post-ending"><span class="mono">END OF NOTE</span><a href="{{ '/blog/feed.xml' | relative_url }}">Follow the next one via Atom ↗</a></footer>
+  <nav class="post-pagination" aria-label="More posts">
+    {% if page.previous %}<a href="{{ page.previous.url | relative_url }}"><span class="mono">← OLDER NOTE</span><strong>{{ page.previous.title | escape }}</strong></a>{% endif %}
+    {% if page.next %}<a href="{{ page.next.url | relative_url }}"><span class="mono">NEWER NOTE →</span><strong>{{ page.next.title | escape }}</strong></a>{% endif %}
+  </nav>
+</article>

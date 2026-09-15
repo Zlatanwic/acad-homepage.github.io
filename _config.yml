@@ -10,6 +10,8 @@ title                    : "Kuo Li | Academic Homepage"
 description              : "Kuo Li is an undergraduate student at Tongji University working on MLSys and AI infrastructure."
 locale                   : "en-US"
 repository               : "Zlatanwic/acad-homepage.github.io"
+url                      : "https://zlatanwic.github.io"
+baseurl                  : "/acad-homepage.github.io"
 google_scholar_stats_use_cdn : true
 
 # google analytics
@@ -69,6 +71,7 @@ include:
   - files
 exclude:
   - docs
+  - blog-integration.md
   - google_scholar_crawler
   - "*.sublime-project"
   - "*.sublime-workspace"
@@ -131,6 +134,17 @@ defaults:
     values:
       layout: default
       author_profile: true
+
+  # Markdown blog posts (drafts are never published by default).
+  - scope:
+      path: ""
+      type: posts
+    values:
+      layout: post
+      author_profile: false
+      blog: true
+      lang: en
+      permalink: /blog/:year/:month/:day/:title/
 
 
 # Sass/SCSS

@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="{{ page.lang | default: 'en' | escape }}" class="no-js" data-motion="off">
+  <head>
+    {% include head.html %}
+    {% include head/custom.html %}
+  </head>
+  <body class="immersive-home blog-site">
+    <a class="skip-link" href="#main">Skip to content</a>
+    {% include masthead.html %}
+    <main id="main" class="blog-main" tabindex="-1">{{ content }}</main>
+    <footer class="blog-footer">
+      <a class="blog-footer-brand" href="{{ '/' | relative_url }}">Kuo Li<span aria-hidden="true">.</span></a>
+      <p>Systems, ideas, and everything in between.</p>
+      <nav aria-label="Blog footer"><a href="{{ '/' | relative_url }}">Homepage ↗</a><a href="{{ '/blog/' | relative_url }}">All posts</a><a href="{{ '/blog/feed.xml' | relative_url }}">Subscribe via Atom</a></nav>
+      <small>© {{ site.time | date: '%Y' }} {{ site.author.name | escape }}</small>
+    </footer>
+    <!-- Shared navigation and reading progress, without the homepage WebGL runtime. -->
+    <script src="{{ '/assets/js/homepage.js' | relative_url }}" defer></script>
+    <script src="{{ '/assets/js/blog.js' | relative_url }}" defer></script>
+    {% include analytics.html %}
+  </body>
+</html>

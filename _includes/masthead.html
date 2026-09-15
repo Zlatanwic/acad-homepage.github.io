@@ -1,6 +1,6 @@
 <header class="masthead">
   <nav id="site-nav" class="site-navigation" aria-label="Main navigation">
-    <a class="site-brand" href="#about-me" aria-label="Kuo Li — Home">
+    <a class="site-brand" href="{% if page.url == '/' %}#about-me{% else %}{{ '/' | relative_url }}#about-me{% endif %}" aria-label="Kuo Li — Home">
       <span class="site-brand__mark" aria-hidden="true">KL<span>.</span></span>
       <span class="site-brand__label">Academic homepage</span>
     </a>
@@ -9,7 +9,8 @@
     </button>
     <ul id="nav-links" class="nav-links">
       {% for link in site.data.navigation.main %}
-        <li><a href="{{ link.url }}">{{ link.title }}</a></li>
+        {% assign link_start = link.url | slice: 0, 1 %}
+        <li><a href="{% if link_start == '#' %}{% unless page.url == '/' %}{{ '/' | relative_url }}{% endunless %}{{ link.url }}{% else %}{{ link.url | relative_url }}{% endif %}"{% if link.url == '/blog/' and page.blog %} class="is-active" aria-current="page"{% endif %}>{{ link.title | escape }}</a></li>
       {% endfor %}
     </ul>
   </nav>

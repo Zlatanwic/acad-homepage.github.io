@@ -1,0 +1,43 @@
+---
+layout: blog
+title: Blog
+description: "Technical notes and personal writing by Kuo Li — machine learning systems, engineering, and life beyond the terminal."
+permalink: /blog/
+blog: true
+author_profile: false
+---
+<section class="blog-journal" aria-labelledby="blog-title">
+  <header class="blog-hero">
+    <div class="blog-eyebrow mono"><span>THE OPEN NOTEBOOK</span><a href="{{ '/blog/feed.xml' | relative_url }}">SUBSCRIBE / ATOM ↗</a></div>
+    <div class="blog-hero-heading"><h1 id="blog-title">Thinking<br><em>out loud.</em></h1><p>Technical notes. Personal perspectives.<br>A place for ideas in progress.</p></div>
+    <div class="blog-hero-bottom mono"><span>ML SYSTEMS / ENGINEERING / LIFE</span><span>{{ site.posts.size | default: 0 }} PUBLISHED {% if site.posts.size == 1 %}POST{% else %}POSTS{% endif %}</span></div>
+  </header>
+  <div class="blog-index-layout">
+    <section class="blog-entries" data-blog-index aria-labelledby="blog-entries-title">
+      <div class="blog-section-heading"><h2 id="blog-entries-title">The journal</h2><span class="mono">LATEST FIRST ↓</span></div>
+      <div class="blog-controls" data-blog-controls hidden>
+        <div class="blog-search-field"><label for="blog-search">Search the journal</label><input type="search" id="blog-search" placeholder="Search titles, summaries, or topics…" autocomplete="off" aria-controls="blog-posts"></div>
+        <div class="blog-topic-field"><label for="blog-tag">Topic</label><select id="blog-tag" aria-controls="blog-posts"><option value="">All topics</option>{% assign sorted_tags = site.tags | sort %}{% for tag in sorted_tags %}<option value="{{ tag[0] | escape }}">{{ tag[0] | escape }}</option>{% endfor %}</select></div>
+      </div>
+      <p class="blog-status mono" data-blog-status role="status" aria-live="polite" aria-atomic="true">{% if site.posts.size > 0 %}{{ site.posts.size }} {% if site.posts.size == 1 %}post{% else %}posts{% endif %}{% endif %}</p>
+      <div id="blog-posts" class="blog-posts">
+        {% for post in site.posts %}{% include blog-card.html post=post %}{% endfor %}
+      </div>
+      <div class="blog-no-results" data-blog-no-results hidden><h3>No matching notes.</h3><p>Try another phrase or explore all topics.</p><button type="button" data-blog-reset>Clear filters ↗</button></div>
+      {% if site.posts.size == 0 %}
+      <div class="blog-empty">
+        <div class="notebook-art" aria-hidden="true"><span class="notebook-page"></span><span class="notebook-page"></span><span class="notebook-page"><i></i><i></i><i></i><b>01</b></span></div>
+        <span class="mono">A BLANK PAGE. A GOOD START.</span>
+        <h3>The first note<br>is yet to come.</h3>
+        <p>No published posts yet. This notebook is ready for technical deep dives, working notes, and stories beyond research.</p>
+        <a class="blog-inline-link" href="{{ '/' | relative_url }}#research-interests">Explore my research in the meantime <span aria-hidden="true">↗</span></a>
+      </div>
+      {% endif %}
+      {% if site.posts.size > 0 %}<noscript><p class="blog-noscript">All published posts are listed above. Enable JavaScript to search and filter them.</p></noscript>{% endif %}
+    </section>
+    <aside class="blog-sidebar" aria-labelledby="blog-about-title">
+      <div class="blog-sidebar-block"><span class="mono">ABOUT THIS SPACE</span><h2 id="blog-about-title">From the lab.<br>From everyday life.</h2><p>A notebook for machine learning systems, the details of building things, and personal perspectives along the way.</p><a class="blog-inline-link" href="{{ '/' | relative_url }}#profile">About me <span aria-hidden="true">↗</span></a></div>
+      <div class="blog-sidebar-block blog-subscribe"><span class="mono">FOLLOW THE NOTEBOOK</span><p>Read new posts in your feed reader. No account or newsletter sign-up required.</p><a class="blog-inline-link" href="{{ '/blog/feed.xml' | relative_url }}">Subscribe via Atom <span aria-hidden="true">↗</span></a></div>
+    </aside>
+  </div>
+</section>

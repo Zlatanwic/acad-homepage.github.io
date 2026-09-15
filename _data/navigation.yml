@@ -20,3 +20,6 @@ main:
 
   - title: "Beyond Research"
     url: "#personal-interests"
+
+  - title: "Blog"
+    url: "/blog/"

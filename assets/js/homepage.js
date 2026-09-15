@@ -65,7 +65,7 @@
   }
 
   // Keep content visible without JS; enhance section headings and intro only here.
-  document.querySelectorAll(".section-heading, .academic-intro > p:not(.intro-eyebrow), .intro-links").forEach(function (element) {
+  document.querySelectorAll(".section-heading:not([data-bits-blur]), .academic-intro > p:not(.intro-eyebrow), .intro-links").forEach(function (element) {
     element.setAttribute("data-reveal", "");
   });
   document.querySelectorAll(".highlight-blocks, .project-grid").forEach(function (group) {

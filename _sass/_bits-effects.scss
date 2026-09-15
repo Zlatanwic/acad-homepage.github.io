@@ -1,0 +1,117 @@
+// React Bits adaptations: SpotlightCard, BlurText, ShinyText, StarBorder,
+// GlareHover — David Haz and contributors, revision
+// 3a1c7f2f9f94ed833934ab5c2635760b9e644583.
+// https://github.com/DavidHDev/react-bits
+// License: assets/vendor/react-bits/LICENSE.md (MIT + Commons Clause).
+// No host-card transforms or pseudo-elements: existing 3D tilt owns those.
+
+[data-bits-spotlight], [data-bits-star], [data-bits-glare] { position: relative; isolation: isolate; }
+[data-bits-spotlight] > .card-sheen { display: none !important; }
+[data-bits-tone="light"] { --bits-spotlight-color: rgba(34, 145, 212, .13); }
+
+.immersive-home [data-bits-spotlight] > .bits-spotlight-layer[aria-hidden],
+.immersive-home [data-bits-glare] > .bits-glare-layer,
+.immersive-home [data-bits-star] > .bits-star-top,
+.immersive-home [data-bits-star] > .bits-star-bottom {
+  position: absolute;
+  z-index: 0;
+  display: block;
+  pointer-events: none;
+  user-select: none;
+  margin: 0;
+  border: 0;
+  opacity: 0;
+}
+.immersive-home [data-bits-spotlight] > .bits-spotlight-layer[aria-hidden] {
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(420px circle at var(--bits-spotlight-x, 50%) var(--bits-spotlight-y, 50%), var(--bits-spotlight-color, rgba(122, 204, 250, .2)), transparent 68%);
+}
+
+[data-bits-blur] .bits-word { display: inline-block; }
+[data-bits-star] { overflow: hidden; }
+[data-bits-star] > .bits-button-label { position: relative; z-index: 1; }
+.immersive-home .pill-link[data-bits-star] > .bits-button-label {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: inherit;
+  font-size: inherit;
+  line-height: 1;
+}
+.immersive-home [data-bits-star] > .bits-star-top,
+.immersive-home [data-bits-star] > .bits-star-bottom {
+  width: 300%;
+  height: 2px;
+  background: radial-gradient(ellipse at center, var(--bits-star-color, #b5e6ff) 8%, rgba(118, 209, 255, .65) 25%, transparent 60%);
+}
+.immersive-home [data-bits-star] > .bits-star-top { top: 0; left: -250%; }
+.immersive-home [data-bits-star] > .bits-star-bottom { bottom: 0; right: -250%; }
+
+[data-bits-glare] { overflow: hidden; }
+.immersive-home [data-bits-glare] > .bits-glare-layer {
+  inset: 0;
+  z-index: 2;
+  background: linear-gradient(120deg, transparent 60%, rgba(255, 255, 255, .27) 70%, transparent 100%);
+  transform: translateX(-110%);
+}
+
+@keyframes bits-blur-text {
+  0% { opacity: 0; filter: blur(10px); transform: translateY(50px); }
+  55% { opacity: .55; filter: blur(5px); transform: translateY(-5px); }
+  100% { opacity: 1; filter: blur(0); transform: translateY(0); }
+}
+@keyframes bits-shiny-text {
+  0%, 18% { background-position: 150% 50%; }
+  62%, 100% { background-position: -50% 50%; }
+}
+@keyframes bits-star-top { from { transform: translateX(0); } to { transform: translateX(100%); } }
+@keyframes bits-star-bottom { from { transform: translateX(0); } to { transform: translateX(-100%); } }
+@keyframes bits-glare-sweep {
+  0% { opacity: 0; transform: translateX(-110%); }
+  30% { opacity: .8; }
+  100% { opacity: 0; transform: translateX(110%); }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html[data-motion="on"].bits-active {
+    [data-bits-blur].bits-ready:not(.bits-revealed) .bits-word { opacity: 0; }
+    [data-bits-blur].bits-ready.bits-revealed .bits-word { animation: bits-blur-text 750ms cubic-bezier(.2, .7, .2, 1) var(--bits-delay, 0ms) both; }
+    [data-bits-star].bits-inview > .bits-star-top { opacity: .9; animation: bits-star-top 5.5s ease-in-out infinite alternate; }
+    [data-bits-star].bits-inview > .bits-star-bottom { opacity: .9; animation: bits-star-bottom 5.5s ease-in-out infinite alternate; }
+    [data-bits-spotlight]:focus-within > .bits-spotlight-layer { opacity: .7; }
+    @supports ((background-clip: text) or (-webkit-background-clip: text)) {
+      [data-bits-shiny].bits-inview {
+        background-image: linear-gradient(120deg, currentColor 35%, var(--bits-shine-color, #fff) 50%, currentColor 65%);
+        background-size: 200% 100%;
+        background-clip: text;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        animation: bits-shiny-text 6.5s ease-in-out infinite;
+      }
+    }
+  }
+}
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  html[data-motion="on"].bits-active {
+    [data-bits-spotlight] > .bits-spotlight-layer { transition: opacity 350ms ease-out; }
+    [data-bits-spotlight].bits-pointer-active > .bits-spotlight-layer { opacity: 1; }
+    [data-bits-glare].bits-pointer-active > .bits-glare-layer { animation: bits-glare-sweep 850ms ease-out both; }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-bits-blur] .bits-word { opacity: 1 !important; filter: none !important; transform: none !important; animation: none !important; }
+  [data-bits-shiny] { -webkit-text-fill-color: currentColor !important; background: none !important; animation: none !important; }
+  .bits-spotlight-layer, .bits-glare-layer, .bits-star-top, .bits-star-bottom { display: none !important; }
+}
+@media (forced-colors: active) {
+  [data-bits-blur] .bits-word { opacity: 1 !important; filter: none !important; transform: none !important; animation: none !important; }
+  [data-bits-shiny] { -webkit-text-fill-color: currentColor !important; background: none !important; animation: none !important; }
+  .bits-spotlight-layer, .bits-glare-layer, .bits-star-top, .bits-star-bottom { display: none !important; }
+}
+@media print {
+  [data-bits-blur] .bits-word { opacity: 1 !important; filter: none !important; transform: none !important; animation: none !important; }
+  [data-bits-shiny] { -webkit-text-fill-color: currentColor !important; background: none !important; animation: none !important; }
+  .bits-spotlight-layer, .bits-glare-layer, .bits-star-top, .bits-star-bottom { display: none !important; }
+}

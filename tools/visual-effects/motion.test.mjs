@@ -58,7 +58,7 @@ class MediaStub extends EventTargetStub {
   change(matches) { this.matches = matches; this.fire('change'); }
 }
 
-function setup({ reducedMotion = false, stored = null, saveData = false, fine = true, deniedStorage = false, sceneMethods = true } = {}) {
+function setup({ reducedMotion = false, stored = null, saveData = false, fine = true, deniedStorage = false, sceneMethods = true, gateway = false } = {}) {
   const root = new ElementStub();
   const button = new ElementStub();
   const label = new ElementStub();
@@ -66,6 +66,7 @@ function setup({ reducedMotion = false, stored = null, saveData = false, fine = 
   const sceneHost = new ElementStub();
   const card = new ElementStub();
   const magnetic = new ElementStub();
+  const gatewayElement = gateway ? new ElementStub() : null;
   const reduced = new MediaStub(reducedMotion);
   const finePointer = new MediaStub(fine);
   const document = new EventTargetStub();
@@ -87,7 +88,8 @@ function setup({ reducedMotion = false, stored = null, saveData = false, fine = 
   document.querySelector = (selector) => ({
     '.motion-toggle': button,
     '[data-motion-label]': label,
-    '[data-compute-scene]': sceneElement
+    '[data-compute-scene]': sceneElement,
+    '[data-space-gateway]': gatewayElement
   })[selector] || null;
   document.querySelectorAll = (selector) => ({ '.floating-card': [card], '[data-magnetic]': [magnetic] })[selector] || [];
   document.addEventListener('homepage:motionchange', (event) => changes.push(event.detail.enabled));
@@ -135,7 +137,7 @@ function setup({ reducedMotion = false, stored = null, saveData = false, fine = 
   runInNewContext(executable, sandbox);
 
   return {
-    root, button, label, sceneHost, card, magnetic, reduced, finePointer, document, window,
+    root, button, label, sceneHost, card, magnetic, gatewayElement, reduced, finePointer, document, window,
     imports, scenes, changes, queuedFrames,
     persisted: () => persisted,
     inView(value) { intersect([{ isIntersecting: value }]); },
@@ -360,6 +362,72 @@ test('opaque paper coverage pauses the scene and safely defers an in-flight lazy
   assert.equal(run.sceneHost.dataset.sceneAnimating, 'false');
   run.document.hidden = false;
   run.document.fire('visibilitychange');
+  assert.equal(run.sceneHost.dataset.sceneAnimating, 'true');
+});
+
+test('space gateway initially suppresses compute-scene imports until it reports leaving the viewport', async () => {
+  const run = setup({ gateway: true });
+  run.inView(true);
+  assert.equal(run.imports.length, 0);
+  run.document.fire('homepage:gatewayvisibility', { detail: { visible: true } });
+  assert.equal(run.imports.length, 0);
+  run.document.fire('homepage:gatewayvisibility', { detail: { visible: false } });
+  assert.equal(run.imports.length, 1);
+  await run.resolve();
+  assert.equal(run.sceneHost.dataset.sceneAnimating, 'true');
+  run.document.fire('homepage:gatewayvisibility', { detail: { visible: true } });
+  assert.equal(run.sceneHost.dataset.sceneAnimating, 'false');
+  run.document.fire('homepage:gatewayvisibility', { detail: { visible: false } });
+  assert.equal(run.sceneHost.dataset.sceneAnimating, 'true');
+  assert.equal(run.scenes.length, 1);
+});
+
+test('compute import resolving while the gateway is visible cannot create a second active scene', async () => {
+  const run = setup({ gateway: true });
+  run.inView(true);
+  run.document.fire('homepage:gatewayvisibility', { detail: { visible: false } });
+  assert.equal(run.imports.length, 1);
+  run.document.fire('homepage:gatewayvisibility', { detail: { visible: true } });
+  await run.resolve();
+  assert.equal(run.scenes.length, 0);
+  run.document.fire('homepage:gatewayvisibility', { detail: { visible: false } });
+  assert.equal(run.imports.length, 2);
+  await run.resolve();
+  assert.equal(run.scenes.length, 1);
+  assert.equal(run.sceneHost.dataset.sceneAnimating, 'true');
+});
+
+test('gateway visibility remains independent of opaque chapter coverage', async () => {
+  const run = setup({ gateway: true });
+  run.inView(true);
+  run.document.fire('homepage:scroll', { detail: { sceneCovered: true } });
+  run.document.fire('homepage:gatewayvisibility', { detail: { visible: false } });
+  assert.equal(run.imports.length, 0);
+  run.document.fire('homepage:scroll', { detail: { sceneCovered: false } });
+  assert.equal(run.imports.length, 1);
+  await run.resolve();
+  run.document.fire('homepage:gatewayvisibility', { detail: { visible: true } });
+  run.document.fire('homepage:scroll', { detail: { sceneCovered: true } });
+  run.document.fire('homepage:scroll', { detail: { sceneCovered: false } });
+  assert.equal(run.sceneHost.dataset.sceneAnimating, 'false');
+  run.document.fire('homepage:gatewayvisibility', { detail: { visible: false } });
+  assert.equal(run.sceneHost.dataset.sceneAnimating, 'true');
+});
+
+test('invalid or unchanged gateway visibility events do not activate or pause anything', async () => {
+  const run = setup({ gateway: true });
+  run.inView(true);
+  for (const detail of [undefined, {}, { visible: 'false' }, { visible: 0 }, { visible: null }, { visible: true }]) {
+    run.document.fire('homepage:gatewayvisibility', { detail });
+  }
+  assert.equal(run.imports.length, 0);
+  run.document.fire('homepage:gatewayvisibility', { detail: { visible: false } });
+  await run.resolve();
+  const calls = run.scenes[0].calls.length;
+  for (const detail of [undefined, {}, { visible: 'true' }, { visible: 1 }, { visible: null }, { visible: false }]) {
+    run.document.fire('homepage:gatewayvisibility', { detail });
+  }
+  assert.equal(run.scenes[0].calls.length, calls);
   assert.equal(run.sceneHost.dataset.sceneAnimating, 'true');
 });
 

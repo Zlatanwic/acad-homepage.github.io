@@ -17,6 +17,8 @@
   var sceneFailed = false;
   var sceneInView = false;
   var sceneCovered = false;
+  // The flight deck owns the GPU until its controller reports that it is hidden.
+  var gatewayVisible = Boolean(document.querySelector("[data-space-gateway]"));
   var sceneObserver;
   var pageActive = true;
   var sceneProgress = 0;
@@ -39,7 +41,7 @@
   }
 
   function mayAnimateScene() {
-    return enabled && sceneInView && !sceneCovered && pageActive && !document.hidden && !sceneFailed;
+    return enabled && sceneInView && !sceneCovered && !gatewayVisible && pageActive && !document.hidden && !sceneFailed;
   }
 
   function syncScene() {
@@ -107,6 +109,12 @@
     }
     syncScenePosition();
     if (coverageChanged) syncScene();
+  });
+  document.addEventListener("homepage:gatewayvisibility", function (event) {
+    var visible = event.detail && event.detail.visible;
+    if (typeof visible !== "boolean" || visible === gatewayVisible) return;
+    gatewayVisible = visible;
+    syncScene();
   });
   window.addEventListener("beforeprint", function () { printing = true; updateMotion(); });
   window.addEventListener("afterprint", function () { printing = false; updateMotion(); });

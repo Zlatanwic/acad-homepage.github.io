@@ -188,7 +188,7 @@
     }));
     if (!navItems.length) return;
     var focusLine = headerHeight + 48;
-    var active = navItems[0];
+    var active = null;
     navItems.forEach(function (item) {
       if (item.target.getBoundingClientRect().top <= focusLine) active = item;
     });

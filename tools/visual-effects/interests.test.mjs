@@ -172,7 +172,7 @@ test('adding personal interests preserves academic content, CV, and both contact
   for (const url of ['https://madsys.cs.tsinghua.edu.cn/author/yongwei-wu/', 'https://madsys.cs.tsinghua.edu.cn/author/mingxing-zhang/', 'https://madsys.cs.tsinghua.edu.cn/', 'https://bochen.info/']) {
     assert.ok(academic.includes(`href="${url}"`), `academic link changed: ${url}`);
   }
-  assert.equal((academicPages[1].match(/<article class="dossier-panel">/g) || []).length, 4);
+  assert.equal((academicPages[1].match(/<article class="dossier-panel dossier-module"/g) || []).length, 4);
   assert.doesNotMatch(academic, /\bGPA\b|Honors and Awards/);
 });
 

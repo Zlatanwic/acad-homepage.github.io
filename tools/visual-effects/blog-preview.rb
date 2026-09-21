@@ -45,7 +45,7 @@ end
   FileUtils.cp(original, target)
 end
 
-%w[images assets/fonts files].each do |relative|
+%w[images assets/images assets/fonts files].each do |relative|
   original = File.join(BlogBuildTest::ROOT, relative)
   next unless File.directory?(original)
 

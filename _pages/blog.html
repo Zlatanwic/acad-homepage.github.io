@@ -11,7 +11,7 @@ file_code: KL-06
 <section class="blog-journal" aria-labelledby="blog-title">
   <header class="blog-hero">
     <div class="blog-eyebrow mono"><span>KL-06 / TRANSMISSIONS</span><a href="{{ '/blog/feed.xml' | relative_url }}">SUBSCRIBE / ATOM ↗</a></div>
-    <div class="blog-hero-heading"><h1 id="blog-title">The journal.</h1><p>Technical notes. Personal perspectives.<br>A place for ideas in progress.</p></div>
+    <div class="blog-hero-heading dossier-hero-grid"><div><p class="dossier-label">TRANSMISSION LOG</p><h1 id="blog-title">The journal.</h1><p>Technical notes. Personal perspectives.<br>A place for ideas in progress.</p></div><div class="dossier-instrument" aria-hidden="true">{% include dossier-emblem.html kind='blog' %}<span class="dossier-instrument-caption">KL-06 / NOTES &amp; TRANSMISSIONS</span></div></div>
     <div class="blog-hero-bottom mono"><span>ML SYSTEMS / ENGINEERING / LIFE</span><span>{{ site.posts.size | default: 0 }} PUBLISHED {% if site.posts.size == 1 %}POST{% else %}POSTS{% endif %}</span></div>
   </header>
   <div class="blog-index-layout">
@@ -28,7 +28,7 @@ file_code: KL-06
       <div class="blog-no-results" data-blog-no-results hidden><h3>No matching notes.</h3><p>Try another phrase or explore all topics.</p><button type="button" data-blog-reset>Clear filters ↗</button></div>
       {% if site.posts.size == 0 %}
       <div class="blog-empty">
-        <div class="notebook-art" aria-hidden="true"><span class="notebook-page"></span><span class="notebook-page"></span><span class="notebook-page"><i></i><i></i><i></i><b>01</b></span></div>
+        <div class="dossier-empty-signal" aria-hidden="true"><span>∅</span><i></i><i></i><i></i><small>TRANSMISSION QUEUE / 00</small></div>
         <span class="mono">A BLANK PAGE. A GOOD START.</span>
         <h3>The first note<br>is yet to come.</h3>
         <p>No published posts yet. This notebook is ready for technical deep dives, working notes, and stories beyond research.</p>

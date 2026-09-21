@@ -1,0 +1,12 @@
+{% assign archive = site.data.archive | where: 'id', page.archive_id | first %}
+<header class="dossier-heading">
+  <div class="dossier-document-line"><span><i class="dossier-system-dot" aria-hidden="true"></i> PERSONAL ARCHIVE / PUBLIC ACCESS</span><span>{{ page.file_code | escape }} / {{ page.subtitle | escape }}</span></div>
+  <div class="dossier-hero-grid">
+    <div class="dossier-hero-copy"><p class="dossier-label">{{ archive.sector | escape }}</p><div class="dossier-title-row"><h1>{{ page.title | escape }}</h1></div><p class="dossier-summary">{{ page.summary | escape }}</p></div>
+    <div class="dossier-instrument" aria-hidden="true">{% include dossier-emblem.html kind=page.archive_id %}<span class="dossier-instrument-caption">{{ page.file_code | escape }} / {{ archive.sector | escape }}</span></div>
+  </div>
+  <dl class="dossier-status-strip"><div><dt>Archive entry</dt><dd>{{ archive.number }} <span>/ 06</span></dd></div><div><dt>{{ archive.field | escape }}</dt><dd>{{ archive.value | escape }}</dd></div><div><dt>Document type</dt><dd>{{ page.subtitle | escape }}</dd></div></dl>
+</header>
+{% if archive.sections %}
+<nav class="dossier-section-nav" aria-label="In this dossier"><span class="dossier-label">CONTENTS <span aria-hidden="true">//</span></span>{% for section in archive.sections %}<a href="#{{ section.anchor }}"><span aria-hidden="true">{{ forloop.index | prepend: '0' }}</span> {{ section.label | escape }} <span aria-hidden="true">↗</span></a>{% endfor %}</nav>
+{% endif %}

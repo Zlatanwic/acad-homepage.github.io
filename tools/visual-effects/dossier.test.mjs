@@ -3,6 +3,7 @@ import { readFile } from 'node:fs/promises';
 import { test } from 'node:test';
 
 const css = await readFile(new URL('../../_sass/_dossier.scss', import.meta.url), 'utf8');
+const hud = await readFile(new URL('../../_sass/_dossier-hud.scss', import.meta.url), 'utf8');
 const luminance = (hex) => {
   const c = hex.match(/[a-f\d]{2}/gi).map(v => parseInt(v, 16) / 255).map(v => v <= .04045 ? v / 12.92 : ((v + .055) / 1.055) ** 2.4);
   return c[0] * .2126 + c[1] * .7152 + c[2] * .0722;
@@ -37,4 +38,26 @@ test('archive is normal document flow with native focus and actual blog TOC clas
   assert.doesNotMatch(css, /position:\s*(?:fixed|sticky)|scroll-snap|animation:/);
   assert.match(css, /text-wrap:\s*balance/);
   assert.match(css, /text-wrap:\s*pretty/);
+});
+
+test('HUD enhancement is scoped, responsive, and never introduces scroll-driven or looping motion', () => {
+  assert.match(hud, /\.dossier-hud\s*\{/);
+  assert.doesNotMatch(hud, /position:\s*(?:fixed|sticky)|scroll-snap|\binfinite\b|backdrop-filter|will-change/);
+  assert.match(hud, /html\[data-motion='subtle'\]\s*\{\s*scroll-behavior: auto/);
+  assert.match(hud, /@media \(prefers-reduced-motion: no-preference\)/);
+  const animated = hud.slice(hud.indexOf('@media (prefers-reduced-motion: no-preference)'), hud.indexOf('@media (max-width: 1150px)'));
+  assert.match(animated, /\.dossier-instrument \.dossier-emblem-core[^}]*animation: dossier-instrument-in 200ms ease-out both/);
+  assert.doesNotMatch(animated, /\.dossier-body|\.dossier-copy|\.post-content|\binfinite\b/);
+  assert.match(hud, /@media \(max-width: 720px\)/);
+  assert.match(hud, /@media print/);
+  assert.match(hud, /\.dossier-section-nav[^}]*display: flex/);
+});
+
+test('the vector illustrations are decorative and do not add external media or runtime dependencies', async () => {
+  const emblem = await readFile(new URL('../../_includes/dossier-emblem.html', import.meta.url), 'utf8');
+  assert.match(emblem, /<svg[^>]*aria-hidden="true"[^>]*focusable="false"/);
+  assert.doesNotMatch(emblem, /<script|<foreignObject|<image|https?:\/\//);
+  for (const kind of ['profile', 'research', 'education', 'projects', 'interests']) {
+    assert.ok(emblem.includes(`when '${kind}'`));
+  }
 });

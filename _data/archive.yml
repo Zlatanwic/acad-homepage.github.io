@@ -3,28 +3,67 @@
   title: Profile
   detail: Identity & contact
   url: /profile/
+  sector: IDENTITY CORE
+  field: Research profile
+  value: MLSys / AI Infrastructure
+  sections:
+    - { label: Identity, anchor: profile }
+    - { label: Affiliations, anchor: affiliation-heading }
+    - { label: Contact, anchor: contact }
 - id: research
   number: "02"
   title: Research
   detail: Areas of inquiry
   url: /research/
+  sector: RESEARCH MATRIX
+  field: Research scope
+  value: Four connected directions
+  sections:
+    - { label: Systems, anchor: research-systems }
+    - { label: Compilers, anchor: research-compilers }
+    - { label: Efficient AI, anchor: research-efficiency }
+    - { label: Agents, anchor: research-agents }
 - id: education
   number: "03"
   title: Trajectory
   detail: Education & experience
   url: /education/
+  sector: MISSION RECORD
+  field: Next chapter
+  value: Tsinghua · Incoming 2027
+  sections:
+    - { label: Education, anchor: education }
+    - { label: Experience, anchor: research-experience }
+    - { label: Research log, anchor: news }
 - id: projects
   number: "04"
   title: Projects
   detail: Selected systems
   url: /projects/
+  sector: ENGINEERING BAY
+  field: Selected work
+  value: Serving & agent runtimes
+  sections:
+    - { label: SemServe, anchor: project-semserve }
+    - { label: SkVM, anchor: project-skvm }
+    - { label: Publications, anchor: publications }
 - id: interests
   number: "05"
   title: Beyond research
   detail: A personal collection
   url: /interests/
+  sector: OFF-DUTY COLLECTION
+  field: Personal channels
+  value: Football / Games / Music
+  sections:
+    - { label: Football, anchor: football-heading }
+    - { label: Games, anchor: games-heading }
+    - { label: Music, anchor: music-heading }
 - id: blog
   number: "06"
   title: Journal
   detail: Notes & transmissions
   url: /blog/
+  sector: TRANSMISSION LOG
+  field: Journal format
+  value: Technical notes & personal writing

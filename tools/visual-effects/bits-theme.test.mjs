@@ -35,7 +35,7 @@ test('independent reading layouts exclude scroll-driven effects and flight is co
   for (const layout of [dossier, blog]) {
     assert.doesNotMatch(layout, /motion\.js|space-gateway\.js|space-scene\.js|include space-gateway\.html/);
   }
-  assert.match(blog, /data-motion="off"/);
+  assert.match(blog, /data-motion="subtle"/);
   assert.match(blog, /\/assets\/js\/blog\.js/);
   const license = await read('assets/vendor/react-bits/LICENSE.md');
   assert.match(license, /Copyright \(c\) 2026 David Haz/);

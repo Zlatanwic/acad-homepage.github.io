@@ -12,7 +12,8 @@ summary: "Ideas, in execution. Prototypes across LLM serving and agent runtimes.
   <p class="dossier-label">Selected work</p>
   <h2 id="projects-heading">Built to make it work.</h2>
   <div class="dossier-grid">
-    <article class="dossier-panel">
+    <article class="dossier-panel dossier-project" id="project-semserve">
+      <div class="dossier-project-banner" aria-hidden="true"><span>01</span>{% include dossier-emblem.html kind='projects' %}<small>SERVING / PROTOTYPE</small></div>
       <p class="dossier-label">01 / LLM serving</p>
       <h3>SemServe</h3>
       <p>An online inference system prototype that co-designs semantic priority and KV cache storage precision.</p>
@@ -20,9 +21,11 @@ summary: "Ideas, in execution. Prototypes across LLM serving and agent runtimes.
         <li>Automatic SLO-aware tuning of semantic priorities.</li>
         <li>Tiered storage across FP16, INT8, and CPU offload.</li>
       </ul>
+      <div class="dossier-pipeline" role="group" aria-label="SemServe components"><span>Semantic priority</span><b aria-hidden="true">+</b><span>KV cache precision</span><b aria-hidden="true">→</b><span>Online inference</span></div>
       <ul class="dossier-tags" aria-label="SemServe technologies"><li>PyTorch</li><li>Transformers</li><li>Qwen</li></ul>
     </article>
-    <article class="dossier-panel">
+    <article class="dossier-panel dossier-project" id="project-skvm">
+      <div class="dossier-project-banner" aria-hidden="true"><span>02</span>{% include dossier-emblem.html kind='research' %}<small>COMPILATION / RUNTIME</small></div>
       <p class="dossier-label">02 / Agent runtime</p>
       <h3>SkVM</h3>
       <p>A skill compilation and runtime system for heterogeneous LLMs and agent harnesses.</p>
@@ -30,6 +33,7 @@ summary: "Ideas, in execution. Prototypes across LLM serving and agent runtimes.
         <li>Containerized execution for Terminal-Bench.</li>
         <li>Parallelism classification and multi-role optimization across AOT and JIT stages.</li>
       </ul>
+      <div class="dossier-pipeline" role="group" aria-label="SkVM components"><span>Skills</span><b aria-hidden="true">→</b><span>AOT / JIT</span><b aria-hidden="true">→</b><span>Agent runtime</span></div>
       <ul class="dossier-tags" aria-label="SkVM technologies"><li>TypeScript</li><li>Bun</li><li>Docker</li></ul>
     </article>
   </div>

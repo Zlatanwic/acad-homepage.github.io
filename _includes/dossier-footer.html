@@ -1,1 +1,4 @@
-<footer class="dossier-footer"><span>© {{ site.time | date: '%Y' }} Kuo Li</span><span>PERSONAL ARCHIVE / {{ page.file_code | default: 'KL-06' | escape }}</span><a href="{{ '/' | relative_url }}">Return to star map <span aria-hidden="true">↗</span></a></footer>
+{% assign current_id = page.archive_id | default: 'blog' %}
+{% for entry in site.data.archive %}{% if entry.id == current_id %}{% assign next_index = forloop.index | modulo: 6 %}{% assign next_entry = site.data.archive[next_index] %}{% endif %}{% endfor %}
+<a class="dossier-next" href="{{ next_entry.url | relative_url }}"><span><small>NEXT DOSSIER / KL-{{ next_entry.number }}</small><strong>{{ next_entry.title | escape }}</strong></span><span class="dossier-next-arrow" aria-hidden="true">→</span></a>
+<footer class="dossier-footer"><span>© {{ site.time | date: '%Y' }} Kuo Li</span><span>END OF RECORD / {{ page.file_code | default: 'KL-06' | escape }}</span><a href="{{ '/' | relative_url }}">Return to star map <span aria-hidden="true">↗</span></a></footer>

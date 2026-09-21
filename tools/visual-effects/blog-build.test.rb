@@ -264,6 +264,23 @@ class BlogBuildTest < Minitest::Test
     end
   end
 
+  def test_terminal_shell_has_working_section_links_and_a_complete_next_dossier_cycle
+    ARCHIVE_ROUTES.each_with_index do |route, index|
+      document = html("#{route.delete_prefix('/')}index.html", with_posts: false)
+      assert document.at_css('body.dossier-hud'), "#{route} must share the terminal presentation"
+      assert_equal 'subtle', document.at_css('html')['data-motion']
+      assert document.at_css('.dossier-instrument svg[aria-hidden="true"][focusable="false"]')
+      next_link = document.at_css('a.dossier-next')
+      assert_equal "#{BASE}#{ARCHIVE_ROUTES[(index + 1) % 6]}", next_link['href']
+      document.css('.dossier-section-nav a').each do |link|
+        assert document.at_css("[id='#{link['href'].delete_prefix('#')}']"), "#{route} section target missing"
+      end
+    end
+    post = html("#{FIRST_PATH.delete_prefix('/')}index.html")
+    assert_equal "#{BASE}/profile/", post.at_css('.dossier-next')['href'], 'nested posts exit to the first dossier'
+    assert_equal "#{BASE}/blog/", post.at_css('.dossier-navigation [aria-current="page"]')['href']
+  end
+
   def test_empty_blog_is_honest_and_drafts_are_not_published
     document = html('blog/index.html', with_posts: false)
     assert_empty document.css('[data-blog-card]')

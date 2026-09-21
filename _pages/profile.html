@@ -1,0 +1,48 @@
+---
+layout: dossier
+permalink: /profile/
+title: "Kuo Li"
+archive_id: profile
+file_code: KL-01
+subtitle: "Personal dossier"
+summary: "Researcher. Builder. Systems thinker. Exploring the infrastructure behind machine intelligence."
+---
+
+<section class="dossier-profile" id="profile" aria-labelledby="profile-heading">
+  <figure class="dossier-portrait">
+    <img src="{{ '/images/kuo-li-profile.jpg' | relative_url }}" alt="Kuo Li" width="1279" height="1706" decoding="async">
+    <figcaption><span>Kuo Li</span><span>Shanghai, China</span></figcaption>
+  </figure>
+  <div class="dossier-copy">
+    <p class="dossier-label">Identity / Research profile</p>
+    <h2 id="profile-heading">From models to systems.</h2>
+    <p>I am <strong>Kuo Li</strong>, an undergraduate student majoring in Data Science and Big Data Technology in the Department of Computer Science and Technology at <strong>Tongji University</strong>. My research interests lie in <strong>MLSys / AI Infrastructure</strong>, with a focus on LLM inference and serving, heterogeneous computing, distributed training, and compiler and runtime systems.</p>
+    <p>I am an incoming Ph.D. student in the Department of Computer Science and Technology at <strong>Tsinghua University</strong>, starting in <strong>2027</strong>. I will be advised by <a href="https://madsys.cs.tsinghua.edu.cn/author/yongwei-wu/" target="_blank" rel="noopener noreferrer">Yongwei Wu</a> and <a href="https://madsys.cs.tsinghua.edu.cn/author/mingxing-zhang/" target="_blank" rel="noopener noreferrer">Mingxing Zhang</a> in the <a href="https://madsys.cs.tsinghua.edu.cn/" target="_blank" rel="noopener noreferrer">MADSys</a> lab.</p>
+    <div class="dossier-actions">
+      <a class="dossier-button" href="{{ site.author.cv | relative_url }}" target="_blank" rel="noopener noreferrer">View CV <span aria-hidden="true">↗</span></a>
+      <a class="dossier-button" href="{{ '/research/' | relative_url }}">Research dossier <span aria-hidden="true">→</span></a>
+    </div>
+  </div>
+</section>
+
+<div class="dossier-grid">
+  <section class="dossier-panel" aria-labelledby="affiliation-heading">
+    <p class="dossier-label">Affiliations</p>
+    <h2 id="affiliation-heading">Academic coordinates</h2>
+    <dl class="dossier-meta">
+      <div><dt>Current</dt><dd>Tongji University<br>Data Science and Big Data Technology</dd></div>
+      <div><dt>Next</dt><dd>Incoming Ph.D., Tsinghua University<br>Institute of High Performance Computing · 2027</dd></div>
+      <div><dt>Focus</dt><dd>Machine Learning Systems / AI Infrastructure</dd></div>
+    </dl>
+  </section>
+  <section class="dossier-panel" id="contact" aria-labelledby="contact-heading">
+    <p class="dossier-label">Open channel</p>
+    <h2 id="contact-heading">Let's talk systems.</h2>
+    <p>Please feel free to contact me about systems, machine learning infrastructure, or potential collaborations.</p>
+    <div class="dossier-records">
+      <a class="dossier-link" href="mailto:{{ site.author.email }}">{{ site.author.email }} <span aria-hidden="true">↗</span></a>
+      {% if site.author.email_secondary %}<a class="dossier-link" href="mailto:{{ site.author.email_secondary }}">{{ site.author.email_secondary }} <span aria-hidden="true">↗</span></a>{% endif %}
+      <a class="dossier-link" href="https://github.com/Zlatanwic" target="_blank" rel="noopener noreferrer">GitHub / Zlatanwic <span aria-hidden="true">↗</span></a>
+    </div>
+  </section>
+</div>

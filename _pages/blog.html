@@ -5,11 +5,13 @@ description: "Technical notes and personal writing by Kuo Li — machine learnin
 permalink: /blog/
 blog: true
 author_profile: false
+archive_id: blog
+file_code: KL-06
 ---
 <section class="blog-journal" aria-labelledby="blog-title">
   <header class="blog-hero">
-    <div class="blog-eyebrow mono"><span>THE OPEN NOTEBOOK</span><a href="{{ '/blog/feed.xml' | relative_url }}">SUBSCRIBE / ATOM ↗</a></div>
-    <div class="blog-hero-heading"><h1 id="blog-title">Thinking<br><em>out loud.</em></h1><p>Technical notes. Personal perspectives.<br>A place for ideas in progress.</p></div>
+    <div class="blog-eyebrow mono"><span>KL-06 / TRANSMISSIONS</span><a href="{{ '/blog/feed.xml' | relative_url }}">SUBSCRIBE / ATOM ↗</a></div>
+    <div class="blog-hero-heading"><h1 id="blog-title">The journal.</h1><p>Technical notes. Personal perspectives.<br>A place for ideas in progress.</p></div>
     <div class="blog-hero-bottom mono"><span>ML SYSTEMS / ENGINEERING / LIFE</span><span>{{ site.posts.size | default: 0 }} PUBLISHED {% if site.posts.size == 1 %}POST{% else %}POSTS{% endif %}</span></div>
   </header>
   <div class="blog-index-layout">
@@ -30,13 +32,13 @@ author_profile: false
         <span class="mono">A BLANK PAGE. A GOOD START.</span>
         <h3>The first note<br>is yet to come.</h3>
         <p>No published posts yet. This notebook is ready for technical deep dives, working notes, and stories beyond research.</p>
-        <a class="blog-inline-link" href="{{ '/' | relative_url }}#research-interests">Explore my research in the meantime <span aria-hidden="true">↗</span></a>
+        <a class="blog-inline-link" href="{{ '/research/' | relative_url }}">Explore my research in the meantime <span aria-hidden="true">↗</span></a>
       </div>
       {% endif %}
       {% if site.posts.size > 0 %}<noscript><p class="blog-noscript">All published posts are listed above. Enable JavaScript to search and filter them.</p></noscript>{% endif %}
     </section>
     <aside class="blog-sidebar" aria-labelledby="blog-about-title">
-      <div class="blog-sidebar-block"><span class="mono">ABOUT THIS SPACE</span><h2 id="blog-about-title">From the lab.<br>From everyday life.</h2><p>A notebook for machine learning systems, the details of building things, and personal perspectives along the way.</p><a class="blog-inline-link" href="{{ '/' | relative_url }}#profile">About me <span aria-hidden="true">↗</span></a></div>
+      <div class="blog-sidebar-block"><span class="mono">ABOUT THIS SPACE</span><h2 id="blog-about-title">From the lab.<br>From everyday life.</h2><p>A notebook for machine learning systems, the details of building things, and personal perspectives along the way.</p><a class="blog-inline-link" href="{{ '/profile/' | relative_url }}">About me <span aria-hidden="true">↗</span></a></div>
       <div class="blog-sidebar-block blog-subscribe"><span class="mono">FOLLOW THE NOTEBOOK</span><p>Read new posts in your feed reader. No account or newsletter sign-up required.</p><a class="blog-inline-link" href="{{ '/blog/feed.xml' | relative_url }}">Subscribe via Atom <span aria-hidden="true">↗</span></a></div>
     </aside>
   </div>

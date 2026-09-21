@@ -98,7 +98,8 @@
     if (!url) return;
     endFlight("Arrived at " + target.label + ".");
     window.location.assign(url.href);
-    // Preserve normal anchor history/scrolling and move keyboard focus into the chapter.
+    // Independent archives use native page navigation and their own focus order.
+    // Retain anchor focus for any explicitly configured same-document destination.
     if (url.pathname === window.location.pathname && url.search === window.location.search && url.hash) {
       var id;
       try { id = decodeURIComponent(url.hash.slice(1)); } catch (_) { return; }

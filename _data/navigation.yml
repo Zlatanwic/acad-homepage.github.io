@@ -1,25 +1,13 @@
-# main links links
 main:
-  - title: "Research Interests"
-    url: "#research-interests"
-
-  - title: "Education"
-    url: "#education"
-
-  - title: "Experience"
-    url: "#research-experience"
-
-  - title: "News"
-    url: "#news"
-
+  - title: "Profile"
+    url: "/profile/"
+  - title: "Research"
+    url: "/research/"
+  - title: "Education & Experience"
+    url: "/education/"
   - title: "Projects"
-    url: "#projects"
-
-  - title: "Publications"
-    url: "#publications"
-
+    url: "/projects/"
   - title: "Beyond Research"
-    url: "#personal-interests"
-
+    url: "/interests/"
   - title: "Blog"
     url: "/blog/"

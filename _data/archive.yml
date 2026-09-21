@@ -1,0 +1,30 @@
+- id: profile
+  number: "01"
+  title: Profile
+  detail: Identity & contact
+  url: /profile/
+- id: research
+  number: "02"
+  title: Research
+  detail: Areas of inquiry
+  url: /research/
+- id: education
+  number: "03"
+  title: Trajectory
+  detail: Education & experience
+  url: /education/
+- id: projects
+  number: "04"
+  title: Projects
+  detail: Selected systems
+  url: /projects/
+- id: interests
+  number: "05"
+  title: Beyond research
+  detail: A personal collection
+  url: /interests/
+- id: blog
+  number: "06"
+  title: Journal
+  detail: Notes & transmissions
+  url: /blog/

@@ -50,7 +50,7 @@ class Element extends Events {
 
 async function flush() { for (let i = 0; i < 5; i += 1) await Promise.resolve(); }
 
-function setup({ motion = 'on', reducedMotion = false, saveData = false, noObserver = false, deepLink = false, asyncReady = false, constructionError = false } = {}) {
+function setup({ motion = 'on', reducedMotion = false, saveData = false, noObserver = false, deepLink = false, asyncReady = false, constructionError = false, legacyAnchor = false } = {}) {
   const root = new Element();
   const body = new Element();
   const gateway = new Element();
@@ -80,7 +80,7 @@ function setup({ motion = 'on', reducedMotion = false, saveData = false, noObser
     const orb = new Element();
     orb.rect = { left: 110 + index * 360, top: 180, width: 88, height: 88 };
     link.dataset = { destination: id, label: index ? 'Blog' : 'Research', x: '0.3', y: '0.4', mobileX: '0.2', mobileY: '0.3', radius: '44', kind: 'ocean', color: '#78bfff' };
-    link.setAttribute('href', index ? '/acad-homepage.github.io/blog/' : '#research-interests');
+    link.setAttribute('href', index ? '/acad-homepage.github.io/blog/' : legacyAnchor ? '#research-interests' : '/acad-homepage.github.io/research/');
     link.querySelector = (selector) => selector === '.space-planet-orb' ? orb : null;
     link.orb = orb;
     return link;
@@ -190,7 +190,7 @@ test('deep-link arrival never scrolls, focuses, loads or redirects to the gatewa
   assert.equal(run.window.location.hash, '#research-interests');
 });
 
-test('successful flight navigates once with base URL and focuses the destination', async () => {
+test('successful research flight opens its independent archive without focusing the old chapter', async () => {
   const run = setup();
   const scene = await run.ready();
   assert.equal(run.click().defaultPrevented, true);
@@ -199,10 +199,21 @@ test('successful flight navigates once with base URL and focuses the destination
   assert.equal(scene.flights[0].id, 'research');
   scene.flights[0].resolve(true);
   await flush();
+  assert.deepEqual(run.navigations, ['https://example.com/acad-homepage.github.io/research/']);
+  assert.equal(run.chapter.focusCount, 0);
+  assert.equal(run.chapter.hasAttribute('tabindex'), false);
+  assert.equal(run.gateway.hasAttribute('aria-busy'), false);
+});
+
+test('explicit same-document destinations retain native anchor focus behavior', async () => {
+  const run = setup({ legacyAnchor: true });
+  const scene = await run.ready();
+  run.click();
+  scene.flights[0].resolve(true);
+  await flush();
   assert.deepEqual(run.navigations, ['https://example.com/acad-homepage.github.io/#research-interests']);
   assert.equal(run.chapter.focusCount, 1);
   assert.equal(run.chapter.getAttribute('tabindex'), '-1');
-  assert.equal(run.gateway.hasAttribute('aria-busy'), false);
   run.chapter.fire('blur');
   assert.equal(run.chapter.hasAttribute('tabindex'), false);
 });
@@ -426,4 +437,13 @@ test('unsafe or external hrefs are never used by the scripted navigation path', 
     assert.equal(run.click().defaultPrevented, false);
   }
   assert.equal(scene.flights.length, 0);
+});
+
+test('flight deck markup links to six real pages and has no scrolling-homepage controls', async () => {
+  const template = await readFile(new URL('../../_includes/space-gateway.html', import.meta.url), 'utf8');
+  for (const path of ['profile', 'research', 'education', 'projects', 'interests', 'blog']) {
+    assert.match(template, new RegExp('data-destination="' + path + '"[^>]+href="\\{\\{ \'/' + path + '/\' \\| relative_url \\}\\}"'));
+  }
+  assert.match(template, /data-space-skip href="\{\{ '\/profile\/' \| relative_url \}\}">Open archive/);
+  assert.doesNotMatch(template, /href="#|data-space-return|class="space-scroll"|Scroll to homepage/);
 });

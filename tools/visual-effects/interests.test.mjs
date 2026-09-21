@@ -3,39 +3,39 @@ import { readFile, stat } from 'node:fs/promises';
 import { test } from 'node:test';
 
 const readSource = (path) => readFile(new URL(`../../${path}`, import.meta.url), 'utf8');
-const [about, navigation, configuration, stylesheet, mainStylesheet] = await Promise.all([
-  readSource('_pages/about.md'),
+const [interests, navigation, configuration, stylesheet, mainStylesheet, ...academicPages] = await Promise.all([
+  readSource('_pages/interests.html'),
   readSource('_data/navigation.yml'),
   readSource('_config.yml'),
   readSource('_sass/_interests.scss'),
-  readSource('assets/css/main.scss')
+  readSource('assets/css/main.scss'),
+  ...['profile', 'research', 'education', 'projects'].map((name) => readSource(`_pages/${name}.html`))
 ]);
 
-const section = about.match(/<section\b([^>]*\bid="personal-interests"[^>]*)>([\s\S]*?)<\/section>/);
+const academic = academicPages.join('\n');
 const text = (markup) => markup.replace(/<[^>]*>/g, ' ').replace(/&amp;/g, '&').replace(/&#39;|&rsquo;|’/g, "'").replace(/\s+/g, ' ').trim();
 const classNames = (attributes) => attributes.match(/\bclass="([^"]*)"/)?.[1].split(/\s+/) || [];
 const attribute = (attributes, name) => attributes.match(new RegExp(`\\b${name}="([^"]*)"`))?.[1];
-const interestImages = () => [...section[2].matchAll(/<img\b([^>]*)>/g)].map((match) => match[1]);
+const interestImages = () => [...interests.matchAll(/<img\b([^>]*)>/g)].map((match) => match[1]);
 const localAsset = (value) => value?.match(/^\{\{\s*'(\/images\/interests\/(?:football|games|albums)\/[a-z0-9-]+\.(?:jpg|webp))'\s*\|\s*relative_url\s*\}\}$/)?.[1];
 
-test('personal interests are a labelled chapter with three accessible photo groups', () => {
-  assert.ok(section, 'the personal interests section must exist');
-  assert.ok(classNames(section[1]).includes('interests-chapter'));
-  assert.ok(classNames(section[1]).includes('paper-chapter'));
-  assert.match(section[1], /aria-labelledby="interests-title"/);
-  assert.match(section[2], /<h2\b[^>]*\bid="interests-title"[^>]*>/);
+test('personal interests are an independent dossier with three labelled, accessible photo groups', () => {
+  assert.match(interests, /^layout: dossier$/m);
+  assert.match(interests, /^permalink: \/interests\/$/m);
+  assert.match(interests, /\bid="personal-interests"/);
+  assert.doesNotMatch(interests, /data-reveal|data-bits|data-scene|floating-card|paper-chapter/);
 
-  const cards = [...section[2].matchAll(/<article\b([^>]*)>([\s\S]*?)<\/article>/g)];
-  assert.equal(cards.length, 3);
-  const galleries = ['football-gallery', 'gaming-gallery', 'album-gallery'];
-  for (const [index, [, attributes, body]] of cards.entries()) {
-    assert.ok(classNames(attributes).includes('interest-card'));
-    assert.ok(classNames(attributes).includes('floating-card'), 'use the existing tilt/lifecycle controller');
-    assert.match(attributes, /\bdata-reveal(?:\s|=|$)/);
-    assert.match(body, /<h3\b[^>]*>[^]*?<\/h3>/);
-    const art = body.match(/<[^>]+\bclass="[^"]*\binterest-art\b[^"]*"[^>]*>/);
+  const sections = [...interests.matchAll(/<section\b([^>]*)>([\s\S]*?)<\/section>/g)];
+  assert.equal(sections.length, 3);
+  const galleries = ['football', 'games', 'albums'];
+  for (const [index, [, attributes, body]] of sections.entries()) {
+    assert.ok(classNames(attributes).includes('dossier-gallery-section'));
+    const headingId = attribute(attributes, 'aria-labelledby');
+    assert.ok(headingId, 'each theme section needs a heading association');
+    assert.match(body, new RegExp(`<h2\\b[^>]*\\bid="${headingId}"[^>]*>`));
+    const art = body.match(/<[^>]+\bclass="[^"]*\bdossier-media-grid\b[^"]*"[^>]*>/);
     assert.ok(art, 'each interest has a photo gallery');
-    assert.ok(classNames(art[0]).includes(galleries[index]));
+    assert.ok(classNames(art[0]).includes(`dossier-media-grid--${galleries[index]}`));
     assert.equal(attribute(art[0], 'role'), 'group');
     assert.ok(attribute(art[0], 'aria-label')?.trim(), 'photo groups need an accessible name');
     assert.doesNotMatch(art[0], /aria-hidden="true"/, 'meaningful photos must be exposed to assistive technology');
@@ -43,7 +43,6 @@ test('personal interests are a labelled chapter with three accessible photo grou
 });
 
 test('all eleven interest images are local, present, labelled, and lazy loaded with reserved dimensions', async () => {
-  assert.ok(section);
   const images = interestImages();
   assert.equal(images.length, 11);
   const counts = { football: 0, games: 0, albums: 0 };
@@ -80,7 +79,7 @@ test('photos depict every requested footballer, game character, and album artist
 });
 
 test('each photograph opens the same local asset safely and announces its new tab', () => {
-  const links = [...section[2].matchAll(/<a\b([^>]*)>([\s\S]*?)<\/a>/g)];
+  const links = [...interests.matchAll(/<a\b([^>]*)>([\s\S]*?)<\/a>/g)];
   const photoLinks = links.filter(([, , body]) => /<img\b/.test(body));
   assert.equal(photoLinks.length, 11);
   for (const [, attributes, body] of photoLinks) {
@@ -97,8 +96,8 @@ test('each photograph opens the same local asset safely and announces its new ta
 });
 
 test('image credits are a native disclosure with verified attribution, source links, and complete source notes', async () => {
-  const disclosures = [...section[2].matchAll(/<details\b([^>]*)>([\s\S]*?)<\/details>/g)];
-  const credits = disclosures.filter(([, attributes]) => classNames(attributes).includes('interest-credits'));
+  const disclosures = [...interests.matchAll(/<details\b([^>]*)>([\s\S]*?)<\/details>/g)];
+  const credits = disclosures.filter(([, attributes]) => classNames(attributes).includes('dossier-credits'));
   assert.equal(credits.length, 1, 'one native image-credits disclosure must remain available');
   const [, attributes, body] = credits[0];
   assert.doesNotMatch(attributes, /\bhidden(?:\s|=|$)|aria-hidden="true"/);
@@ -129,7 +128,7 @@ test('image credits are a native disclosure with verified attribution, source li
   for (const attribution of ['pantkiewicz', 'Patryk Antkiewicz', 'Steffen Prößdorf', 'CC BY-SA 2.0', 'CC BY-SA 4.0', 'NullReason', 'Guyrichtheman', 'PFHLai']) {
     assert.ok(creditText.includes(attribution), `photograph attribution missing: ${attribution}`);
   }
-  assert.match(creditText, /Files unchanged; card framing crops their display/);
+  assert.match(creditText, /Files unchanged; gallery framing crops their display/);
   assert.match(creditText, /No endorsement is implied/);
 
   for (const category of ['football', 'games', 'albums']) {
@@ -140,49 +139,47 @@ test('image credits are a native disclosure with verified attribution, source li
 });
 
 test('football, AAA games, and rock favorites preserve every user-supplied interest', () => {
-  assert.ok(section);
-  assert.match(text(section[2]), /Manchester City/);
-  const lists = [...section[2].matchAll(/<ul\b[^>]*\bclass="[^"]*\binterest-favorites\b[^"]*"[^>]*>([\s\S]*?)<\/ul>/g)];
-  assert.ok(lists.length >= 2, 'games and bands remain semantic lists');
+  assert.match(text(interests), /Manchester City/);
+  assert.match(text(interests), /devoted Manchester City supporter/);
+  const lists = [...interests.matchAll(/<ul\b[^>]*\bclass="[^"]*\bdossier-tags\b[^"]*"[^>]*>([\s\S]*?)<\/ul>/g)];
+  assert.ok(lists.length >= 1, 'game favorites remain a semantic list');
   const favorites = lists.flatMap((list) => [...list[1].matchAll(/<li\b[^>]*>([\s\S]*?)<\/li>/g)].map((item) => text(item[1])));
+  const captions = [...interests.matchAll(/<span\b[^>]*\bclass="dossier-caption"[^>]*>([\s\S]*?)<\/span>/g)];
+  favorites.push(...captions.map((caption) => text(caption[1])));
   for (const name of [/Resident Evil/i, /Cyberpunk 2077/i, /Grand Theft Auto|\bGTA\b/i, /Hitman/i, /Oasis/, /Stereophonics/, /Blur/, /Queen/, /Guns\s*(?:N'?|&)?\s*Roses/i, /Suede/]) {
     assert.ok(favorites.some((item) => name.test(item)), `favorite missing: ${name}`);
   }
 });
 
-test('Beyond Research navigation resolves once and follows the document order before contact', () => {
-  const anchors = [...navigation.matchAll(/url:\s*"(#[^"]+)"/g)].map((match) => match[1]);
-  assert.equal(anchors.filter((hash) => hash === '#personal-interests').length, 1);
-  assert.match(navigation, /title:\s*"Beyond Research"\s+url:\s*"#personal-interests"/);
-  assert.equal(new Set(anchors).size, anchors.length);
-  const positions = anchors.map((hash) => {
-    const targets = [...about.matchAll(new RegExp(`\\bid="${hash.slice(1)}"`, 'g'))];
-    assert.equal(targets.length, 1, `${hash} must resolve to one unique target`);
-    return targets[0].index;
-  });
-  assert.deepEqual(positions, [...positions].sort((left, right) => left - right));
-  assert.ok(about.indexOf('id="publications"') < section.index);
-  assert.ok(section.index < about.indexOf('id="contact"'));
-  assert.match(about.slice(about.indexOf('id="contact"')), /06\s*\/\s*WHAT'S NEXT\?/);
+test('Beyond Research navigation opens its independent page instead of a homepage chapter', () => {
+  const paths = [...navigation.matchAll(/url:\s*"([^"]+)"/g)].map((match) => match[1]);
+  assert.equal(paths.filter((path) => path === '/interests/').length, 1);
+  assert.match(navigation, /title:\s*"Beyond Research"\s+url:\s*"\/interests\/"/);
+  assert.equal(new Set(paths).size, paths.length);
+  assert.ok(paths.every((path) => path.startsWith('/') && !path.includes('#')), 'navigation targets independent documents');
+  assert.equal((interests.match(/\bid="personal-interests"/g) || []).length, 1);
 });
 
 test('adding personal interests preserves academic content, CV, and both contact addresses', () => {
-  assert.match(about, /href="\{\{ site\.author\.cv \| relative_url \}\}"/);
+  assert.match(academic, /href="\{\{ site\.author\.cv \| relative_url \}\}"/);
   assert.match(configuration, /cv\s*:\s*"\/files\/Li_Kuo_CV\.pdf"/);
   assert.match(configuration, /email\s*:\s*"2353113@tongji\.edu\.cn"/);
   assert.match(configuration, /email_secondary\s*:\s*"rodebiau9320@gmail\.com"/);
-  assert.match(about, /href="mailto:\{\{ site\.author\.email \}\}"/);
-  assert.match(about, /href="mailto:\{\{ site\.author\.email_secondary \}\}"/);
-  assert.match(about, /MAJOR RANK\s*<strong>4\s*\/\s*40<\/strong>/);
-  assert.match(about, /2027<span class="mono">INCOMING/);
+  assert.match(academic, /href="mailto:\{\{ site\.author\.email \}\}"/);
+  assert.match(academic, /href="mailto:\{\{ site\.author\.email_secondary \}\}"/);
+  assert.match(academic, /Major rank<\/dt><dd><strong>4\s*\/\s*40<\/strong>/);
+  assert.match(academic, /2027<\/span><span class="dossier-label">Incoming/);
   for (const url of ['https://madsys.cs.tsinghua.edu.cn/author/yongwei-wu/', 'https://madsys.cs.tsinghua.edu.cn/author/mingxing-zhang/', 'https://madsys.cs.tsinghua.edu.cn/', 'https://bochen.info/']) {
-    assert.ok(about.includes(`href="${url}"`), `academic link changed: ${url}`);
+    assert.ok(academic.includes(`href="${url}"`), `academic link changed: ${url}`);
   }
-  assert.equal((about.match(/class="research-panel floating-card"/g) || []).length, 4);
+  assert.equal((academicPages[1].match(/<article class="dossier-panel">/g) || []).length, 4);
+  assert.doesNotMatch(academic, /\bGPA\b|Honors and Awards/);
 });
 
-test('interest photo animation only runs for opted-in, in-view cards without reduced motion', () => {
+test('dossier galleries are static while retained legacy photo animations remain opt-in and visibility-gated', () => {
   assert.match(mainStylesheet, /@import\s+"interests";\s*$/);
+  assert.match(mainStylesheet, /@import\s+"dossier";/);
+  assert.doesNotMatch(interests, /class="[^"]*\b(?:interest-card|floating-card)\b|data-reveal|data-scene|data-bits/);
   // Follow SCSS block ancestry rather than depending on a particular nesting style.
   // Motion-off / print reset declarations are allowed outside the opt-in blocks.
   const cleaned = stylesheet.replace(/\/\*[\s\S]*?\*\//g, '').replace(/^\s*\/\/.*$/gm, '');

@@ -6,7 +6,7 @@ import { runInNewContext } from 'node:vm';
 const source = await readFile(new URL('../../assets/js/bits.js', import.meta.url), 'utf8');
 const css = await readFile(new URL('../../_sass/_bits-effects.scss', import.meta.url), 'utf8');
 const homepage = await readFile(new URL('../../assets/js/homepage.js', import.meta.url), 'utf8');
-const template = await readFile(new URL('../../_pages/about.md', import.meta.url), 'utf8');
+const dossierTemplates = await Promise.all(['profile', 'research', 'education', 'projects', 'interests'].map((name) => readFile(new URL(`../../_pages/${name}.html`, import.meta.url), 'utf8')));
 
 class Events {
   listeners = new Map();
@@ -287,11 +287,14 @@ test('CSS gates ambient animation, preserves focus and separates layers from exi
   assert.match(source, /MIT \+ Commons Clause/);
 });
 
-test('Bits headings are excluded from the legacy reveal controller', () => {
+test('legacy reveal controller excludes Bits headings and live dossiers never require reveal effects', () => {
   assert.match(homepage, /\.section-heading:not\(\[data-bits-blur\]\)/);
-  const enhancedHeadings = template.match(/<[^>]+\bdata-bits-blur\b[^>]*>/g) || [];
-  assert.ok(enhancedHeadings.length >= 6);
-  for (const heading of enhancedHeadings) assert.doesNotMatch(heading, /\bdata-reveal\b/);
+  assert.equal(dossierTemplates.length, 5);
+  for (const template of dossierTemplates) {
+    assert.match(template, /^layout: dossier$/m);
+    assert.match(template, /<h2\b/);
+    assert.doesNotMatch(template, /\bdata-bits-|\bdata-reveal\b|\bdata-scene-chapter\b|\bfloating-card\b/);
+  }
 });
 
 test('spotlight layers outrank the later interest-card direct-child layout rule', () => {

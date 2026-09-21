@@ -10,8 +10,9 @@ assert.equal((source.match(/import\(sceneElement\.dataset\.sceneUrl\)/g) || []).
 const executable = source.replace('import(sceneElement.dataset.sceneUrl)', '__importScene(sceneElement.dataset.sceneUrl)');
 const homepageSource = await readFile(new URL('../../assets/js/homepage.js', import.meta.url), 'utf8');
 const navigationSource = await readFile(new URL('../../_data/navigation.yml', import.meta.url), 'utf8');
-const aboutSource = await readFile(new URL('../../_pages/about.md', import.meta.url), 'utf8');
-const configuredAnchors = [...navigationSource.matchAll(/url:\s*"(#[^"]+)"/g)].map((match) => match[1]);
+// The legacy controller remains covered with a representative fixture. Live
+// navigation now targets separate documents and is checked independently below.
+const fixtureAnchors = ['#research-interests', '#education', '#research-experience', '#news', '#projects', '#publications', '#personal-interests'];
 
 class EventTargetStub {
   listeners = new Map();
@@ -511,7 +512,7 @@ function setupHomepage({ reducedMotion = false, stored = 'on' } = {}) {
     section.getBoundingClientRect = () => ({ top: offset - window.scrollY, bottom: offset + height - window.scrollY, height });
     sectionTargets.set(id, section);
   }
-  const links = ['#about-me', ...configuredAnchors].map((hash) => {
+  const links = ['#about-me', ...fixtureAnchors].map((hash) => {
     const link = new ElementStub();
     link.hash = hash;
     return link;
@@ -675,15 +676,7 @@ test('card activity tracks actual intersections while one-shot reveals remain vi
   assert.equal(run.cards[1].classes.has('is-inview'), true);
 });
 
-test('configured navigation matches unique DOM targets and follows nested journey sections', () => {
-  assert.ok(configuredAnchors.length > 0);
-  const targetPositions = configuredAnchors.map((hash) => {
-    const id = hash.slice(1);
-    const matches = [...aboutSource.matchAll(new RegExp(`\\bid="${id}"`, 'g'))];
-    assert.equal(matches.length, 1, `${hash} must have exactly one DOM target`);
-    return matches[0].index;
-  });
-  assert.deepEqual(targetPositions, targetPositions.slice().sort((a, b) => a - b));
+test('legacy navigation fixture correctly follows nested journey sections', () => {
   const run = setupHomepage();
   const nested = [
     ['#education', 2850],
@@ -701,6 +694,18 @@ test('configured navigation matches unique DOM targets and follows nested journe
     assert.equal(selected.length, 1);
     assert.equal(selected[0].hash, hash);
   }
+});
+
+test('live navigation targets standalone dossiers and the blog, not scroll chapters', async () => {
+  const paths = [...navigationSource.matchAll(/url:\s*"([^"]+)"/g)].map((match) => match[1]);
+  assert.equal(new Set(paths).size, paths.length);
+  for (const name of ['profile', 'research', 'education', 'projects', 'interests', 'blog']) {
+    const path = `/${name}/`;
+    assert.ok(paths.includes(path), `missing standalone navigation target: ${path}`);
+    const page = await readFile(new URL(`../../_pages/${name}.html`, import.meta.url), 'utf8');
+    assert.match(page, new RegExp(`^permalink: ${path}$`, 'm'));
+  }
+  assert.ok(paths.every((path) => path.startsWith('/') && !path.includes('#')));
 });
 
 test('touch and coarse pointers cannot tilt; preferences/hidden tab reset in-flight effects', () => {

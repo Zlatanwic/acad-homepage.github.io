@@ -1,6 +1,6 @@
 <header class="masthead">
   <nav id="site-nav" class="site-navigation" aria-label="Main navigation">
-    <a class="site-brand" href="{% if page.url == '/' %}#about-me{% else %}{{ '/' | relative_url }}#about-me{% endif %}" aria-label="Kuo Li — Home">
+    <a class="site-brand" href="{{ '/' | relative_url }}" aria-label="Kuo Li — Home">
       <span class="site-brand__mark" aria-hidden="true">KL<span>.</span></span>
       <span class="site-brand__label">Academic homepage</span>
     </a>

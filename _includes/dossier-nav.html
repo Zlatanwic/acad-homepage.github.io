@@ -1,0 +1,9 @@
+<aside class="dossier-index">
+  <p class="dossier-label">ARCHIVE DIRECTORY</p>
+  <nav id="site-nav" class="dossier-navigation" aria-label="Archive navigation">
+    {% for entry in site.data.archive %}
+    <a href="{{ entry.url | relative_url }}"{% if page.archive_id == entry.id or page.blog and entry.id == 'blog' %} aria-current="page"{% endif %}><span class="dossier-nav-number">{{ entry.number }}</span><span>{{ entry.title | escape }}<small>{{ entry.detail | escape }}</small></span><span class="dossier-nav-arrow" aria-hidden="true">↗</span></a>
+    {% endfor %}
+  </nav>
+  <div class="dossier-index-note"><span class="dossier-label">A WORK IN PROGRESS</span><p>Curiosity,<br>down to the metal.</p><a href="{{ '/profile/#contact' | relative_url }}">Get in touch <span aria-hidden="true">↗</span></a></div>
+</aside>

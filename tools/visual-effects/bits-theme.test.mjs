@@ -18,16 +18,25 @@ test('interest print reset has sufficient specificity for the new card surface',
   assert.match(print, /box-shadow: none/);
 });
 
-test('effects stay after the shared controller and out of the reading layout', async () => {
-  const scripts = await read('_includes/scripts.html');
-  const motionIndex = scripts.indexOf('/assets/js/motion.js');
-  const homepageIndex = scripts.indexOf('/assets/js/homepage.js');
-  const bitsIndex = scripts.indexOf('/assets/js/bits.js');
-  assert.ok(motionIndex >= 0 && homepageIndex >= 0 && bitsIndex >= 0);
-  assert.ok(bitsIndex > homepageIndex && homepageIndex > motionIndex);
+test('independent reading layouts exclude scroll-driven effects and flight is confined to the gateway', async () => {
+  const deck = await read('_layouts/flight-deck.html');
+  const landing = await read('_pages/about.md');
+  const dossier = await read('_layouts/dossier.html');
   const blog = await read('_layouts/blog.html');
+  const motionIndex = deck.indexOf('/assets/js/motion.js');
+  const flightIndex = deck.indexOf('/assets/js/space-gateway.js');
+  assert.ok(motionIndex >= 0 && flightIndex > motionIndex, 'shared motion preference initializes before the flight controller');
+  assert.match(landing, /^layout: flight-deck$/m);
+  assert.match(landing, /include space-gateway\.html/);
+  assert.doesNotMatch(landing, /data-scene-chapter|data-compute-scene|data-reveal|data-bits/);
+  for (const layout of [deck, dossier, blog]) {
+    assert.doesNotMatch(layout, /homepage\.js|bits\.js|compute-scene\.js|include scripts\.html/);
+  }
+  for (const layout of [dossier, blog]) {
+    assert.doesNotMatch(layout, /motion\.js|space-gateway\.js|space-scene\.js|include space-gateway\.html/);
+  }
   assert.match(blog, /data-motion="off"/);
-  assert.doesNotMatch(blog, /bits\.js|motion\.js|compute-scene\.js/);
+  assert.match(blog, /\/assets\/js\/blog\.js/);
   const license = await read('assets/vendor/react-bits/LICENSE.md');
   assert.match(license, /Copyright \(c\) 2026 David Haz/);
   assert.match(license, /Commons Clause Restriction/);

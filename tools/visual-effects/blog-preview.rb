@@ -38,7 +38,7 @@ end
 
 # Keep the shared assets local. Homepage runtime files are included as well, so
 # following a homepage link from an article does not produce missing resources.
-%w[blog.js homepage.js motion.js compute-scene.js compute-scene.LICENSE.txt].each do |filename|
+%w[blog.js motion.js legacy-routes.js space-gateway.js space-scene.js space-scene.LICENSE.txt].each do |filename|
   original = File.join(BlogBuildTest::ROOT, 'assets', 'js', filename)
   target = File.join(site_directory, 'assets', 'js', filename)
   FileUtils.mkdir_p(File.dirname(target))

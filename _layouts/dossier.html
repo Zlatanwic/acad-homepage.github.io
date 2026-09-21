@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="en" class="no-js" data-motion="off">
+  <head>{% include head.html %}{% include head/custom.html %}</head>
+  <body class="dossier-site">
+    <a class="skip-link" href="#main">Skip to content</a>
+    {% include dossier-header.html %}
+    <div class="dossier-shell">
+      {% include dossier-nav.html %}
+      <main id="main" class="dossier-main" tabindex="-1">
+        <header class="dossier-heading">
+          <div class="dossier-document-line"><span>PERSONAL ARCHIVE</span><span>{{ page.file_code | escape }} / {{ page.subtitle | escape }}</span></div>
+          <div class="dossier-title-row"><h1>{{ page.title | escape }}</h1><span class="dossier-file-mark" aria-hidden="true">{{ page.file_code | remove: 'KL-' }}</span></div>
+          <p>{{ page.summary | escape }}</p>
+        </header>
+        <div class="dossier-body">{{ content }}</div>
+        {% include dossier-footer.html %}
+      </main>
+    </div>
+    {% include analytics.html %}
+  </body>
+</html>

@@ -1,0 +1,13 @@
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>{% include head.html %}{% include head/custom.html %}</head>
+  <body class="immersive-home flight-deck-home">
+    <a class="skip-link" href="{{ '/profile/' | relative_url }}">Skip flight and open profile</a>
+    <main id="main" class="flight-deck-main">{{ content }}</main>
+    <button class="motion-toggle" type="button" aria-label="Visual effects" aria-pressed="false" hidden><span class="motion-toggle__icon" aria-hidden="true"></span><span data-motion-label>Motion off</span></button>
+    <script src="{{ '/assets/js/legacy-routes.js' | relative_url }}" defer></script>
+    <script src="{{ '/assets/js/motion.js' | relative_url }}" defer></script>
+    <script src="{{ '/assets/js/space-gateway.js' | relative_url }}" defer></script>
+    {% include analytics.html %}
+  </body>
+</html>

@@ -160,9 +160,9 @@ test('Beyond Research navigation opens its independent page instead of a homepag
   assert.equal((interests.match(/\bid="personal-interests"/g) || []).length, 1);
 });
 
-test('adding personal interests preserves academic content, CV, and both contact addresses', () => {
-  assert.match(academic, /href="\{\{ site\.author\.cv \| relative_url \}\}"/);
-  assert.match(configuration, /cv\s*:\s*"\/files\/Li_Kuo_CV\.pdf"/);
+test('personal interests preserve academic content and both contact addresses without publishing a CV', () => {
+  assert.doesNotMatch(academic, /site\.author\.cv|Li_Kuo_CV\.pdf/);
+  assert.doesNotMatch(configuration, /^\s*cv\s*:/m);
   assert.match(configuration, /email\s*:\s*"2353113@tongji\.edu\.cn"/);
   assert.match(configuration, /email_secondary\s*:\s*"rodebiau9320@gmail\.com"/);
   assert.match(academic, /href="mailto:\{\{ site\.author\.email \}\}"/);

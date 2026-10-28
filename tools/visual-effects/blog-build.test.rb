@@ -229,7 +229,8 @@ class BlogBuildTest < Minitest::Test
 
   def test_dossier_split_preserves_profile_research_education_projects_and_interests
     profile = html('profile/index.html', with_posts: false)
-    assert profile.at_css("a[href='#{BASE}/files/Li_Kuo_CV.pdf']")
+    refute profile.at_css("a[href='#{BASE}/files/Li_Kuo_CV.pdf']"), 'the CV must not be linked from the profile'
+    refute self.class.render(with_posts: false).key?('files/Li_Kuo_CV.pdf'), 'the CV must not be published'
     %w[2353113@tongji.edu.cn rodebiau9320@gmail.com].each do |email|
       assert profile.at_css("a[href='mailto:#{email}']"), "contact missing: #{email}"
     end

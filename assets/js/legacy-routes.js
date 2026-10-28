@@ -3,8 +3,8 @@
 
   // Old bookmarks continue to work after replacing the scrolling homepage.
   // Resolve routes from rendered links so project and custom-domain URLs agree.
-  var gateway = document.querySelector("[data-space-gateway]");
-  if (!gateway) return;
+  var archive = document.querySelector("[data-legacy-destination]");
+  if (!archive) return;
   var routes = {
     "about-me": ["profile", ""],
     "profile": ["profile", ""],
@@ -23,7 +23,7 @@
     try { hash = decodeURIComponent(window.location.hash.slice(1)); } catch (_) { return; }
     if (!Object.prototype.hasOwnProperty.call(routes, hash)) return;
     var route = routes[hash];
-    var link = gateway.querySelector('[data-destination="' + route[0] + '"]');
+    var link = document.querySelector('[data-legacy-destination="' + route[0] + '"]');
     if (!link) return;
     var href = link.getAttribute("href");
     if (!href) return;

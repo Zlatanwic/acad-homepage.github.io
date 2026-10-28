@@ -163,15 +163,19 @@ class BlogBuildTest < Minitest::Test
   end
 
   def assert_archive_navigation(document, current_path:)
-    navigation = document.at_css('#site-nav')
+    navigation = document.at_css('.susun-series[aria-labelledby="dossier-directory-label"]')
     refute_nil navigation, 'the archive index must be usable without JavaScript'
     ARCHIVE_ROUTES.each do |route|
       assert navigation.at_css("a[href='#{BASE}#{route}']"), "archive navigation is missing #{route}"
     end
-    assert document.at_css("a[href='#{BASE}/']"), 'every archive must offer a native return to the flight deck'
+    assert document.at_css("a[href='#{BASE}/']"), 'every archive must offer a native return to the homepage'
     current = navigation.css('a[aria-current="page"]')
-    assert_equal 1, current.length, 'exactly one archive route is marked as the current page'
-    assert_equal "#{BASE}#{current_path}", current.first['href']
+    if current.empty? && current_path == '/blog/'
+      assert document.at_css(".susun-nav a[aria-current='page'][href='#{BASE}/blog/']"), 'posts mark Writing as current'
+    else
+      assert_equal 1, current.length, 'exactly one archive route is marked as the current page'
+      assert_equal "#{BASE}#{current_path}", current.first['href']
+    end
     assert_empty navigation.css("a[href^='#']"), 'archive navigation must open independent pages, not scroll the old homepage'
   end
 
@@ -183,21 +187,17 @@ class BlogBuildTest < Minitest::Test
     assert_empty document.css('[data-reveal], [data-bits-blur]'), 'archive content must be immediately visible without an animation controller'
   end
 
-  def test_homepage_is_only_the_flight_deck_with_six_independent_destinations
+  def test_homepage_is_a_reading_page_with_six_independent_destinations
     document = html('index.html', with_posts: false)
-    assert_equal 1, document.css('[data-space-gateway]').length
     assert_equal 1, document.css('h1').length
-    destinations = document.css('[data-space-destination]')
-    assert_equal 6, destinations.length
-    assert_equal ARCHIVE_ROUTES.map { |route| "#{BASE}#{route}" }, destinations.map { |link| link['href'] }
-    assert destinations.all? { |link| link.name == 'a' && !link.text.strip.empty? }, 'planets must remain labelled native links'
-    assert_empty document.css('[data-compute-scene], [data-scene-chapter], .world-hero, .paper-chapter')
-    assert_empty document.css('#profile, #research-interests, #education, #research-experience, #projects, #personal-interests, #contact')
-    assert document.at_css("[data-space-skip][href='#{BASE}/profile/']"), 'skipping flight opens an independent dossier'
-    document.css("a[href^='#']").each do |link|
-      assert document.at_css("[id='#{link['href'].delete_prefix('#')}']"), "local anchor has no target: #{link['href']}"
+    assert_empty document.css('[data-space-gateway]')
+    assert_empty document.css("a[href='#{BASE}/starmap/']")
+    ARCHIVE_ROUTES.each do |route|
+      assert document.at_css(".susun-series a[href='#{BASE}#{route}']"), "homepage navigation is missing #{route}"
     end
     assert_equal "#{ORIGIN}#{BASE}/", document.at_css("link[rel='canonical']")&.[]('href')
+
+    refute self.class.render(with_posts: false).key?('starmap/index.html'), 'flight deck must not be published'
   end
 
   def test_dossiers_are_independent_accessible_documents_with_native_navigation
@@ -264,21 +264,16 @@ class BlogBuildTest < Minitest::Test
     end
   end
 
-  def test_terminal_shell_has_working_section_links_and_a_complete_next_dossier_cycle
-    ARCHIVE_ROUTES.each_with_index do |route, index|
+  def test_shared_layout_keeps_reading_pages_and_navigation_available
+    ARCHIVE_ROUTES.each do |route|
       document = html("#{route.delete_prefix('/')}index.html", with_posts: false)
-      assert document.at_css('body.dossier-hud'), "#{route} must share the terminal presentation"
-      assert_equal 'subtle', document.at_css('html')['data-motion']
-      assert document.at_css('.dossier-instrument svg[aria-hidden="true"][focusable="false"]')
-      next_link = document.at_css('a.dossier-next')
-      assert_equal "#{BASE}#{ARCHIVE_ROUTES[(index + 1) % 6]}", next_link['href']
-      document.css('.dossier-section-nav a').each do |link|
-        assert document.at_css("[id='#{link['href'].delete_prefix('#')}']"), "#{route} section target missing"
-      end
+      assert document.at_css('body.susun-site'), "#{route} must share the reading layout"
+      assert document.at_css("link[rel='stylesheet'][href='#{BASE}/assets/css/susun.css']")
+      assert_equal 1, document.css('h1').length
+      assert_empty document.css("a[href='#{BASE}/starmap/']")
     end
     post = html("#{FIRST_PATH.delete_prefix('/')}index.html")
-    assert_equal "#{BASE}/profile/", post.at_css('.dossier-next')['href'], 'nested posts exit to the first dossier'
-    assert_equal "#{BASE}/blog/", post.at_css('.dossier-navigation [aria-current="page"]')['href']
+    assert post.at_css(".susun-nav a[aria-current='page'][href='#{BASE}/blog/']")
   end
 
   def test_empty_blog_is_honest_and_drafts_are_not_published
@@ -342,7 +337,7 @@ class BlogBuildTest < Minitest::Test
   def test_nested_navigation_and_previous_next_links_keep_the_project_base_path
     [FIRST_PATH, SECOND_PATH].each do |path|
       document = html("#{path.delete_prefix('/')}index.html")
-      assert document.at_css("#site-nav a[href='#{BASE}/blog/']"), 'Blog navigation must work from a dated article'
+      assert document.at_css(".susun-nav a[href='#{BASE}/blog/']"), 'Blog navigation must work from a dated article'
       assert_archive_navigation(document, current_path: '/blog/')
       assert_reading_page_is_static(document)
       other = path == FIRST_PATH ? SECOND_PATH : FIRST_PATH

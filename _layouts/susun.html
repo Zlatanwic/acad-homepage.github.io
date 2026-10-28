@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="{{ page.lang | default: 'en' | escape }}" class="no-js">
+  <head>{% include head.html %}{% include head/custom.html %}<link rel="stylesheet" href="{{ '/assets/css/susun.css' | relative_url }}"></head>
+  <body class="susun-site{% if page.archive_id %} dossier-context dossier--{{ page.archive_id | escape }}{% endif %}">
+    <a class="skip-link" href="#main">Skip to content</a>
+    <div class="susun-app">
+      <header class="susun-sidebar">
+        <a class="susun-brand" href="{{ '/' | relative_url }}" aria-label="Kuo Li — home">
+          <span class="susun-brand-square" aria-hidden="true"></span>
+          <span>Kuo Li <small>/ systems</small></span>
+        </a>
+
+        <nav class="susun-nav" aria-label="Primary navigation">
+          <a href="{{ '/' | relative_url }}"{% if page.url == '/' %} aria-current="page"{% endif %}>Home</a>
+          <a href="{{ '/profile/' | relative_url }}"{% if page.url == '/profile/' %} aria-current="page"{% endif %}>About</a>
+          <a href="{{ '/blog/' | relative_url }}"{% if page.url == '/blog/' or page.blog %} aria-current="page"{% endif %}>Writing</a>
+          <a href="https://github.com/Zlatanwic" target="_blank" rel="noopener noreferrer">GitHub <span aria-hidden="true">↗</span></a>
+          <a href="{{ site.author.cv | relative_url }}" target="_blank" rel="noopener noreferrer">CV <span aria-hidden="true">↗</span></a>
+        </nav>
+
+        <section class="susun-series" aria-labelledby="dossier-directory-label">
+          <h2 id="dossier-directory-label">dossiers</h2>
+          {% for entry in site.data.archive %}
+          <a href="{{ entry.url | relative_url }}" data-legacy-destination="{{ entry.id }}"{% if page.archive_id == entry.id %} aria-current="page"{% endif %}>
+            {{ entry.title }}
+            <span class="susun-count">{{ entry.number }}</span>
+          </a>
+          {% endfor %}
+        </section>
+
+        <section class="susun-series susun-series--secondary" aria-labelledby="explore-label">
+          <h2 id="explore-label">explore</h2>
+          <a href="{{ '/blog/feed.xml' | relative_url }}">RSS <span class="susun-count">XML</span></a>
+        </section>
+
+        <div class="susun-sidebar-foot">
+          <span class="susun-status"><i aria-hidden="true"></i> open to research</span>
+          <span>Shanghai · UTC+8</span>
+        </div>
+      </header>
+
+      <div class="susun-page">
+        <main id="main" tabindex="-1">
+          {% if page.archive_id and page.archive_id != 'blog' %}
+          <header class="susun-page-heading">
+            <p class="susun-eyebrow">{{ page.subtitle | escape }}</p>
+            <h1>{{ page.title | escape }}</h1>
+            {% if page.summary %}<p>{{ page.summary | escape }}</p>{% endif %}
+          </header>
+          {% endif %}
+          {{ content }}
+        </main>
+        <footer class="susun-footer">
+          <span>© {{ site.time | date: '%Y' }} Kuo Li</span>
+          <span>{% if page.file_code %}{{ page.file_code | escape }} / {% endif %}SYSTEMS FOR AI</span>
+          <a href="{{ '/' | relative_url }}">Index <span aria-hidden="true">↗</span></a>
+        </footer>
+      </div>
+    </div>
+    {% if page.url == '/' %}<script src="{{ '/assets/js/legacy-routes.js' | relative_url }}" defer></script>{% endif %}
+    {% if page.blog %}<script src="{{ '/assets/js/blog.js' | relative_url }}" defer></script>{% endif %}
+    {% include analytics.html %}
+  </body>
+</html>

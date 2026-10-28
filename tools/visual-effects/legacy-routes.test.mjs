@@ -19,13 +19,15 @@ function setup({ hash = '', base = '/acad-homepage.github.io/', absent = false, 
     location,
     addEventListener(type, handler) { listeners.set(type, handler); }
   };
-  const gateway = {
+  const document = {
     querySelector(selector) {
-      const id = selector.match(/^\[data-destination="([a-z]+)"\]$/)?.[1];
+      if (absent) return null;
+      if (selector === '[data-legacy-destination]') return {};
+      const id = selector.match(/^\[data-legacy-destination="([a-z]+)"\]$/)?.[1];
       return id && Object.prototype.hasOwnProperty.call(links, id) ? { getAttribute: () => links[id] } : null;
     }
   };
-  runInNewContext(source, { window, document: { querySelector: () => absent ? null : gateway }, URL });
+  runInNewContext(source, { window, document, URL });
   return {
     navigations, listeners, links, location,
     change(nextHash) {
@@ -64,7 +66,7 @@ test('rendered route URLs are authoritative rather than hard-coded project paths
   assert.deepEqual(run.navigations, ['https://example.com/archives/personnel/#contact']);
 });
 
-test('plain gateway arrival, the flight-deck anchor and unknown hashes do not redirect', () => {
+test('plain homepage arrival, an obsolete anchor and unknown hashes do not redirect', () => {
   for (const hash of ['', '#', '#space-gateway', '#unknown', '#__proto__', '#constructor', '#toString', '#%E0%A4%A']) {
     assert.deepEqual(setup({ hash }).navigations, [], hash);
   }
@@ -81,6 +83,28 @@ test('legacy hash changes redirect after load, while unrelated changes are left 
 
 test('percent-encoded known hashes resolve safely', () => {
   assert.deepEqual(setup({ hash: '#research%2Dexperience' }).navigations, ['https://example.com/acad-homepage.github.io/education/#research-experience']);
+});
+
+test('homepage sidebar preserves old bookmarks with and without a project base URL', () => {
+  for (const base of ['/acad-homepage.github.io/', '/']) {
+    for (const [hash, path] of Object.entries({
+      'about-me': 'profile/', contact: 'profile/#contact',
+      'research-interests': 'research/', education: 'education/',
+      'research-experience': 'education/#research-experience', news: 'education/#news',
+      projects: 'projects/', publications: 'projects/#publications',
+      'personal-interests': 'interests/'
+    })) {
+      assert.deepEqual(setup({ hash: '#' + hash, base }).navigations,
+        ['https://example.com' + base + path], `${base}#${hash}`);
+    }
+  }
+});
+
+test('sidebar routes use rendered links and reject external destinations', () => {
+  const custom = setup({ hash: '#contact', hrefs: { profile: '/archives/personnel/' } });
+  assert.deepEqual(custom.navigations, ['https://example.com/archives/personnel/#contact']);
+  const external = setup({ hash: '#profile', hrefs: { profile: 'https://elsewhere.example/' } });
+  assert.deepEqual(external.navigations, []);
 });
 
 test('the compatibility script does nothing on independent archive pages', () => {

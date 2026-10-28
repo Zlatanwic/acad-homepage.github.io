@@ -291,7 +291,7 @@ test('legacy reveal controller excludes Bits headings and live dossiers never re
   assert.match(homepage, /\.section-heading:not\(\[data-bits-blur\]\)/);
   assert.equal(dossierTemplates.length, 5);
   for (const template of dossierTemplates) {
-    assert.match(template, /^layout: dossier$/m);
+    assert.match(template, /^layout: susun$/m);
     assert.match(template, /<h2\b/);
     assert.doesNotMatch(template, /\bdata-bits-|\bdata-reveal\b|\bdata-scene-chapter\b|\bfloating-card\b/);
   }

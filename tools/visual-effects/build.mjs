@@ -5,9 +5,9 @@ import { fileURLToPath } from 'node:url';
 
 const here = dirname(fileURLToPath(import.meta.url));
 const root = resolve(here, '../..');
-for (const scene of ['compute-scene', 'space-scene']) {
+for (const scene of ['compute-scene']) {
   const output = resolve(root, `assets/js/${scene}.js`);
-  const title = scene === 'compute-scene' ? 'compute scene' : 'space scene';
+  const title = 'compute scene';
   await build({
     entryPoints: [resolve(root, `assets/js/src/${scene}.js`)],
     outfile: output,

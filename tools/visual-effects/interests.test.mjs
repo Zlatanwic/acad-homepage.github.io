@@ -20,7 +20,7 @@ const interestImages = () => [...interests.matchAll(/<img\b([^>]*)>/g)].map((mat
 const localAsset = (value) => value?.match(/^\{\{\s*'(\/images\/interests\/(?:football|games|albums)\/[a-z0-9-]+\.(?:jpg|webp))'\s*\|\s*relative_url\s*\}\}$/)?.[1];
 
 test('personal interests are an independent dossier with three labelled, accessible photo groups', () => {
-  assert.match(interests, /^layout: dossier$/m);
+  assert.match(interests, /^layout: susun$/m);
   assert.match(interests, /^permalink: \/interests\/$/m);
   assert.match(interests, /\bid="personal-interests"/);
   assert.doesNotMatch(interests, /data-reveal|data-bits|data-scene|floating-card|paper-chapter/);

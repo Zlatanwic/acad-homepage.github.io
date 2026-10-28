@@ -113,8 +113,6 @@
   .post-ending, .post-pagination { border-top: 1px solid var(--archive-line); padding: 20px 0; display: flex; justify-content: space-between; gap: 25px; font-size: 12px; flex-wrap: wrap; }
   .post-pagination a { display: grid; gap: 8px; max-width: 45%; text-decoration: none; }
 }
-.flight-deck-home .space-gateway { height: 100dvh; }
-.flight-deck-home .motion-toggle { right: max(22px, env(safe-area-inset-right)); bottom: max(22px, env(safe-area-inset-bottom)); }
 @media (max-width: 1000px) {
   .dossier-shell { grid-template-columns: 180px minmax(0, 1fr); padding: 0 3vw; }
   .dossier-index { padding-right: 15px; }

@@ -1,0 +1,52 @@
+---
+import 'katex/dist/katex.min.css';
+import { href, publishedPosts } from '../lib/posts';
+import '../styles/blog.css';
+const { title, description, lang = 'en', article = false } = Astro.props;
+const canonical = new URL(Astro.url.pathname, Astro.site);
+const links = [
+  ['Profile', '/profile/'], ['Research', '/research/'], ['Trajectory', '/education/'],
+  ['Projects', '/projects/'], ['Beyond research', '/interests/'], ['Journal', '/blog/']
+];
+const posts = await publishedPosts();
+const series = [...new Set(posts.map(post => post.data.series?.name).filter(Boolean))].sort();
+---
+<!doctype html>
+<html lang={lang}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title} - Kuo Li | Academic Homepage</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical.href} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical.href} />
+    <meta property="og:type" content={article ? 'article' : 'website'} />
+    <link rel="alternate" type="application/atom+xml" title="Kuo Li — Blog" href={href('/blog/feed.xml')} />
+    <link rel="stylesheet" href={href('/assets/css/main.css')} />
+    <link rel="stylesheet" href={href('/assets/css/susun.css')} />
+  </head>
+  <body class="susun-site astro-journal">
+    <a class="skip-link" href="#main">Skip to content</a>
+    <div class="susun-app">
+      <header class="susun-sidebar">
+        <a class="susun-brand" href={href('/')} aria-label="Kuo Li — home"><span class="susun-brand-square" aria-hidden="true"></span><span>Kuo Li <small>/ systems</small></span></a>
+        <nav class="susun-nav" aria-label="Primary navigation">
+          <a href={href('/')}>Home</a><a href={href('/profile/')}>About</a><a href={href('/blog/')} aria-current="page">Writing</a><a href="https://github.com/Zlatanwic" target="_blank" rel="noopener noreferrer">GitHub <span aria-hidden="true">↗</span></a>
+        </nav>
+        <section class="susun-series" aria-labelledby="archive-nav"><h2 id="archive-nav">dossiers</h2>
+          {links.map(([label, path], index) => <a href={href(path)}>{label} <span class="susun-count">{String(index + 1).padStart(2, '0')}</span></a>)}
+        </section>
+        {series.length > 0 && <section class="susun-series" aria-labelledby="series-nav"><h2 id="series-nav">series</h2>
+          {series.map((name, index) => <a href={`${href('/blog/')}#series-${index + 1}`}>{name} <span class="susun-count">{posts.filter(post => post.data.series?.name === name).length}</span></a>)}
+        </section>}
+        <section class="susun-series" aria-labelledby="explore-nav"><h2 id="explore-nav">explore</h2><a href={href('/blog/feed.xml')}>RSS <span class="susun-count">XML</span></a></section>
+      </header>
+      <div class="susun-page"><main id="main" tabindex="-1"><slot /></main>
+        <footer class="susun-footer"><span>© {new Date().getFullYear()} Kuo Li</span><span>SYSTEMS FOR AI</span><a href={href('/')}>Index ↗</a></footer>
+      </div>
+    </div>
+    <script is:inline src={href('/assets/js/blog.js')} defer></script>
+  </body>
+</html>

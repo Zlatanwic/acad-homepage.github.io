@@ -71,6 +71,7 @@ include:
 exclude:
   - docs
   - blog-integration.md
+  - blog-astro
   - google_scholar_crawler
   - "*.sublime-project"
   - "*.sublime-workspace"

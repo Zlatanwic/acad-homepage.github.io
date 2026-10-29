@@ -1,6 +1,8 @@
-name: Manual artifact deployment to Pages
+name: Build and deploy website
 
 on:
+  push:
+    branches: [main]
   workflow_dispatch:
 
 permissions:
@@ -21,11 +23,36 @@ jobs:
       - name: Setup Pages
         id: pages
         uses: actions/configure-pages@v5
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: blog-astro/package-lock.json
+      - name: Install blog dependencies
+        run: npm ci --prefix blog-astro --no-audit --no-fund
+      - name: Verify blog with isolated fixtures
+        run: npm --prefix blog-astro test
+        env:
+          ASTRO_TELEMETRY_DISABLED: '1'
+      - name: Build Astro blog
+        run: npm --prefix blog-astro run build
+        env:
+          ASTRO_TELEMETRY_DISABLED: '1'
+      - name: Share published post index with homepage
+        run: cp blog-astro/dist/blog/index.json _data/blog_index.json
       - name: Build with Jekyll
         uses: actions/jekyll-build-pages@v1
         with:
           source: ./
           destination: ./_site
+      - name: Combine website and Astro blog
+        shell: bash
+        run: |
+          sudo chown -R "$(id -u):$(id -g)" _site
+          rm -rf -- _site/blog
+          cp -R blog-astro/dist/blog _site/blog
+          if [ -d blog-astro/dist/_astro ]; then cp -R blog-astro/dist/_astro _site/; fi
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v4
 

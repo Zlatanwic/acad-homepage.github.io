@@ -1,0 +1,28 @@
+---
+import { render } from 'astro:content';
+import BlogShell from '../../layouts/BlogShell.astro';
+import { publishedPosts, postDate, postPath, displayDate, href, readingTime } from '../../lib/posts';
+
+export async function getStaticPaths() {
+  const posts = await publishedPosts();
+  return posts.map((post, index) => ({ params: { slug: postPath(post).replace(/^\/blog\//, '').replace(/\/$/, '') }, props: { post, older: posts[index + 1], newer: posts[index - 1] } }));
+}
+const { post, older, newer } = Astro.props;
+const { Content } = await render(post);
+---
+<BlogShell title={post.data.title} description={post.data.description || 'Writing by Kuo Li.'} lang={post.data.lang} article={true}>
+  <article class="blog-article" aria-labelledby="post-title">
+    <header class="post-header">
+      <a class="blog-back mono" href={href('/blog/')}>← BACK TO THE JOURNAL</a>
+      <div class="post-meta mono"><time datetime={postDate(post).toISOString()}>{displayDate(postDate(post))}</time><span>{readingTime(post.body)} min read</span>{post.data.category && <span>{post.data.category}</span>}</div>
+      <h1 id="post-title">{post.data.title}</h1>
+      {post.data.description && <p class="post-deck">{post.data.description}</p>}
+      {post.data.series && <p class="mono">{post.data.series.name} / Part {post.data.series.part}</p>}
+      {post.data.tags.length > 0 && <ul class="blog-tags" aria-label="Post topics">{post.data.tags.map(tag => <li><a href={`${href('/blog/')}?tag=${encodeURIComponent(tag)}`}>{tag}</a></li>)}</ul>}
+    </header>
+    {post.data.heroImage && <img class="astro-hero-image" src={post.data.heroImage} alt="" />}
+    <div class="post-layout"><div class="post-content" id="post-content"><Content /></div><aside class="post-sidebar" data-blog-toc hidden><nav class="post-toc" aria-labelledby="post-toc-title"><h2 class="mono" id="post-toc-title">ON THIS PAGE</h2><ol data-blog-toc-list></ol></nav><a class="blog-inline-link" href="#post-title">Back to top ↑</a></aside></div>
+    <footer class="post-ending"><span class="mono">END OF NOTE</span><a href={href('/blog/feed.xml')}>Follow the next one via Atom ↗</a></footer>
+    <nav class="post-pagination" aria-label="More posts">{older && <a href={href(postPath(older))}><span class="mono">← OLDER NOTE</span><strong>{older.data.title}</strong></a>}{newer && <a href={href(postPath(newer))}><span class="mono">NEWER NOTE →</span><strong>{newer.data.title}</strong></a>}</nav>
+  </article>
+</BlogShell>

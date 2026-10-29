@@ -2,4 +2,9 @@ _site/
 push.sh
 .DS_Store
 tools/visual-effects/node_modules/
+blog-astro/node_modules/
+blog-astro/.astro/
+blog-astro/dist/
+blog-astro/.verify-*/
+_data/blog_index.json
 /tmp/

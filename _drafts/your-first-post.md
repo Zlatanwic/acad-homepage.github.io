@@ -3,6 +3,7 @@ title: "Your first post"
 description: "Replace this sentence with a short summary of your article."
 category: "Technical notes"
 tags: [MLSys, Notes]
+# Optional: series: { name: "Inference notes", part: 1 }
 lang: en
 published: false
 ---

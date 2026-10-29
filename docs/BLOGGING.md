@@ -2,7 +2,7 @@
 
 博客入口：<https://zlatanwic.github.io/acad-homepage.github.io/blog/>
 
-这是站内原生 Jekyll 博客，不需要额外服务器、数据库或管理后台。技术笔记与个人随笔共用文章列表，支持搜索、标签筛选、文章目录、代码高亮和 Atom 订阅。界面默认英文，正文可以中文或英文。
+博客由 Astro 生成，个人主页仍由 Jekyll 生成。GitHub Actions 会把两者合并并发布，不需要额外服务器或数据库。博客支持 Markdown、MDX、数学公式、系列文章、搜索、标签筛选、目录、代码高亮和 Atom 订阅。界面默认英文，正文可以中文或英文。
 
 ## 发布第一篇文章
 
@@ -10,7 +10,7 @@
 2. 在 `_posts` 下新建 `2026-09-15-my-first-post.md`。文件名必须为 `YYYY-MM-DD-英文短标题.md`；日期不要晚于实际发布日期。以后发布时换成当天日期。
 3. 修改文件顶部的配置和正文，并把 `published: false` 改为 `published: true`。
 4. 提交到仓库的 `main` 分支。可以直接使用 GitHub 网页的 Add file / Create new file，不必在本地安装工具。
-5. 等待 Actions 中的 **pages build and deployment** 成功，然后刷新博客页面。
+5. 等待 Actions 中的 **Build and deploy website** 成功，然后刷新博客页面。
 
 ```yaml
 ---
@@ -28,15 +28,19 @@ published: true
 - `##` 和 `###` 标题自动出现在文章页目录。文章主标题由 `title` 生成，正文一般从二级标题开始。
 - 代码块使用三个反引号并标注语言，例如 `python`、`cpp`、`bash`。
 - 标签和搜索在浏览器端处理，不向第三方发送查询。关闭 JavaScript 后仍能阅读所有文章。
+- 需要组织系列时，添加 `series: { name: "系列名称", part: 1 }`；同名文章会按 `part` 排列。
+- 行内公式使用 `$...$`，独立公式使用 `$$...$$`。需要 MDX 组件时，可以使用 `.mdx` 扩展名。
 
 ## 图片和附件
 
-把图片放到 `images/blog/`（可自行创建子目录）。用带 `relative_url` 的路径兼容 GitHub Pages 子目录：
+把图片放到 `images/blog/`（可自行创建子目录）。使用站点的完整子路径，兼容 GitHub Pages：
 
 ```markdown
-![有意义的图片说明]({{ '/images/blog/my-diagram.png' | relative_url }})
-[下载附件]({{ '/files/my-note.pdf' | relative_url }})
+![有意义的图片说明](/acad-homepage.github.io/images/blog/my-diagram.png)
+[下载附件](/acad-homepage.github.io/files/my-note.pdf)
 ```
+
+Astro 不处理 Jekyll 的 `{{ ... | relative_url }}` 语法。旧草稿如使用了该语法，发布前请按上面的格式修改链接。
 
 只使用你有权发布的内容。不要把密钥、尚未公开的研究材料或敏感个人信息放进文章。
 
@@ -55,8 +59,8 @@ Atom 地址：<https://zlatanwic.github.io/acad-homepage.github.io/blog/feed.xml
 开发时可以运行：
 
 ```text
-npm --prefix tools/visual-effects test
-ruby tools/visual-effects/blog-build.test.rb
+npm ci --prefix blog-astro
+npm --prefix blog-astro run build
 ```
 
-第二条命令在隔离的临时目录创建测试文章和构建，不会把示例内容发布到你的博客。
+构建输出在 `blog-astro/dist/`。完整网站发布还需要 GitHub Actions 合并 Astro 与 Jekyll 输出。

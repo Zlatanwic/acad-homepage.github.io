@@ -86,9 +86,10 @@ redirect_from:
     <h2 id="writing-title">Writing</h2>
     <a href="{{ '/blog/' | relative_url }}">All posts ↗</a>
   </div>
-  {% if site.posts.size > 0 %}
+  {% assign writing_posts = site.data.blog_index | default: site.posts %}
+  {% if writing_posts.size > 0 %}
   <div class="susun-archive-list">
-    {% for post in site.posts limit: 5 %}
+    {% for post in writing_posts limit: 5 %}
     {% if post.description %}{% assign post_summary = post.description %}{% else %}{% assign post_summary = post.excerpt | strip_html | normalize_whitespace %}{% endif %}
     <a href="{{ post.url | relative_url }}">
       <time class="susun-date" datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: '%b %d' }}</time>

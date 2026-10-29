@@ -1,0 +1,38 @@
+---
+import BlogShell from '../../layouts/BlogShell.astro';
+import { publishedPosts, postDate, postPath, displayDate, href } from '../../lib/posts';
+const posts = await publishedPosts();
+const tags = [...new Set(posts.flatMap(post => post.data.tags))].sort((a, b) => a.localeCompare(b));
+const series = [...new Set(posts.map(post => post.data.series?.name).filter(Boolean))].sort();
+---
+<BlogShell title="Writing" description="Technical notes and personal writing by Kuo Li.">
+  <section class="blog-journal" aria-labelledby="blog-title">
+    <header class="blog-hero">
+      <div class="blog-eyebrow mono"><span>NOTES / WRITING</span><a href={href('/blog/feed.xml')}>SUBSCRIBE / ATOM ↗</a></div>
+      <div class="blog-hero-heading"><h1 id="blog-title">The journal.</h1><p>Technical notes. Personal perspectives.<br />A place for ideas in progress.</p></div>
+    </header>
+    {series.length > 0 && <section class="astro-series" aria-labelledby="series-heading"><h2 id="series-heading">Series</h2>
+      {series.map((name, index) => <div id={`series-${index + 1}`} class="astro-series-group"><h3>{name}</h3><ol>
+        {posts.filter(post => post.data.series?.name === name).sort((a, b) => (a.data.series?.part || 0) - (b.data.series?.part || 0)).map(post => <li><span>{String(post.data.series?.part).padStart(2, '0')}</span><a href={href(postPath(post))}>{post.data.title}</a></li>)}
+      </ol></div>)}
+    </section>}
+    <section class="blog-entries" data-blog-index aria-labelledby="blog-entries-title">
+      <div class="blog-section-heading"><h2 id="blog-entries-title">Latest writing</h2><span class="mono">LATEST FIRST ↓</span></div>
+      <div class="blog-controls" data-blog-controls hidden>
+        <div><label for="blog-search">Search the journal</label><input type="search" id="blog-search" placeholder="Search titles, summaries, or topics…" autocomplete="off" aria-controls="blog-posts" /></div>
+        <div><label for="blog-tag">Topic</label><select id="blog-tag" aria-controls="blog-posts"><option value="">All topics</option>{tags.map(tag => <option value={tag}>{tag}</option>)}</select></div>
+      </div>
+      <p class="blog-status mono" data-blog-status role="status" aria-live="polite" aria-atomic="true">{posts.length ? `${posts.length} posts` : ''}</p>
+      <div id="blog-posts" class="blog-posts">
+        {posts.map(post => <article class="blog-card" data-blog-card data-search={`${post.data.title} ${post.data.description || ''} ${post.data.tags.join(' ')}`} data-tags={JSON.stringify(post.data.tags)}>
+          <div class="blog-card-meta mono"><time datetime={postDate(post).toISOString()}>{displayDate(postDate(post))}</time>{post.data.category && <span>{post.data.category}</span>}</div>
+          <h3><a href={href(postPath(post))}>{post.data.title}<span aria-hidden="true">↗</span></a></h3>
+          {post.data.description && <p>{post.data.description}</p>}
+          {post.data.tags.length > 0 && <ul class="blog-tags" aria-label="Post topics">{post.data.tags.map(tag => <li>{tag}</li>)}</ul>}
+        </article>)}
+      </div>
+      <div class="blog-no-results" data-blog-no-results hidden><h3>No matching notes.</h3><p>Try another phrase or explore all topics.</p><button type="button" data-blog-reset>Clear filters ↗</button></div>
+      {posts.length === 0 && <div class="blog-empty"><span class="mono">A BLANK PAGE. A GOOD START.</span><h3>The first note<br />is yet to come.</h3><p>No published posts yet. This notebook is ready for technical deep dives and personal perspectives.</p><a class="blog-inline-link" href={href('/research/')}>Explore my research ↗</a></div>}
+    </section>
+  </section>
+</BlogShell>

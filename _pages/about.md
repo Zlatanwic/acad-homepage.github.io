@@ -86,7 +86,7 @@ redirect_from:
     <h2 id="writing-title">Writing</h2>
     <a href="{{ '/blog/' | relative_url }}">All posts ↗</a>
   </div>
-  {% assign writing_posts = site.data.blog_index | default: site.posts %}
+  {% assign writing_posts = site.posts %}
   {% if writing_posts.size > 0 %}
   <div class="susun-archive-list">
     {% for post in writing_posts limit: 5 %}

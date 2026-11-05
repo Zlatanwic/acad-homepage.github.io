@@ -31,7 +31,7 @@ redirect_from:
   <div class="susun-now-list">
     <div>
       <time class="susun-mono" datetime="2026-10">Oct 2026</time>
-      <p>Joined 趋境科技 as an LLM inference engine development intern.</p>
+      <p>Joined <a href="https://approaching-ai.com/" target="_blank" rel="noopener noreferrer">Approaching.AI</a> as an LLM inference engine development intern.</p>
     </div>
     <div>
       <time class="susun-mono" datetime="2026-09">Sep 2026</time>

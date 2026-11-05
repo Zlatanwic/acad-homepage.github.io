@@ -23,23 +23,19 @@ redirect_from:
   </div>
 </header>
 
-<section class="susun-section" aria-labelledby="now-title">
+<section class="susun-section" aria-labelledby="news-title">
   <div class="susun-section-head">
-    <h2 id="now-title">Now</h2>
+    <h2 id="news-title">News</h2>
     <span>Updated Oct 2026</span>
   </div>
   <div class="susun-now-list">
     <div>
-      <span class="susun-mono">2027 / INCOMING</span>
-      <p>Joining Tsinghua CS and the <a href="https://madsys.cs.tsinghua.edu.cn/" target="_blank" rel="noopener noreferrer">MADSys</a> group, advised by Yongwei Wu and Mingxing Zhang.</p>
+      <time class="susun-mono" datetime="2026-10">Oct 2026</time>
+      <p>Joined 趋境科技 as an LLM inference engine development intern.</p>
     </div>
     <div>
-      <span class="susun-mono">RESEARCH / SERVING</span>
-      <p>Co-designing semantic-priority scheduling and KV-cache management for multi-request LLM serving.</p>
-    </div>
-    <div>
-      <span class="susun-mono">BUILDING / AGENTS</span>
-      <p>Exploring skill compilation and runtime systems for heterogeneous LLM and agent workloads.</p>
+      <time class="susun-mono" datetime="2026-09">Sep 2026</time>
+      <p>Became an incoming Ph.D. student in the <a href="https://madsys.cs.tsinghua.edu.cn/" target="_blank" rel="noopener noreferrer">MADSys</a> group at Tsinghua University, advised by Prof. <a href="https://madsys.cs.tsinghua.edu.cn/author/mingxing-zhang/" target="_blank" rel="noopener noreferrer">Mingxing Zhang</a> and Prof. <a href="https://madsys.cs.tsinghua.edu.cn/author/yongwei-wu/" target="_blank" rel="noopener noreferrer">Yongwei Wu</a>.</p>
     </div>
   </div>
 </section>

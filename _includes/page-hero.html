@@ -1,0 +1,31 @@
+{% comment %}
+  Expanded Aqua workstation directory header shared by the six top-level subpages.
+  Zero WebGL runtime: renders instantaneously with crisp 12px pixel chrome.
+{% endcomment %}
+<header class="page-hero">
+  <div class="page-hero__bar" aria-hidden="true">
+    <span class="win-dots"><i></i><i></i><i></i></span>
+    <span class="page-hero__path">/Kuo Li/{{ page.nav_id | escape }}/</span>
+    <span class="page-hero__code">[{{ page.glyph | default: 'KL' | escape }}]</span>
+  </div>
+  <div class="page-hero__body">
+    <div class="page-hero__copy">
+      {% if page.eyebrow %}<p class="eyebrow"><span class="eyebrow__dot" aria-hidden="true"></span>{{ page.eyebrow | escape }}</p>{% endif %}
+      <h1 class="page-hero__title">{{ page.title | escape }}</h1>
+      {% if page.summary %}<p class="page-hero__summary">{{ page.summary | escape }}</p>{% endif %}
+    </div>
+    <div class="page-hero__emblem" aria-hidden="true">
+      <svg viewBox="0 0 120 88" width="120" height="88" focusable="false">
+        <g fill="none" stroke="currentColor" stroke-width="1.2">
+          <polygon points="60,8 106,30 60,52 14,30" fill="rgba(120,214,251,0.22)"/>
+          <polygon points="14,30 60,52 60,78 14,56" fill="rgba(108,171,221,0.28)"/>
+          <polygon points="106,30 60,52 60,78 106,56" fill="rgba(36,93,168,0.22)"/>
+          <line x1="60" y1="8" x2="60" y2="52" stroke-dasharray="2 2"/>
+          <circle cx="60" cy="30" r="11"/>
+        </g>
+        <circle cx="60" cy="30" r="2.6" fill="#e0304e"/>
+      </svg>
+      <span class="page-hero__glyph">{{ page.glyph | default: 'KL' | escape }}</span>
+    </div>
+  </div>
+</header>

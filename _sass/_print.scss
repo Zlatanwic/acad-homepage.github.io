@@ -1,18 +1,53 @@
-/* ==========================================================================
-   PRINT STYLES
-   ========================================================================== */
-
-/*
-   Hide the following elements on print
-   ========================================================================== */
-
 @media print {
-  .masthead,
-  .toc,
-  .page__share,
-  .page__related,
-  .ads,
-  .page__footer {
-    display: none;
+  html,
+  body.site {
+    background: #ffffff !important;
+    color: #111111 !important;
+    font-size: 11pt;
+  }
+  #grade,
+  .site-header,
+  .site-footer__inner,
+  .stage,
+  .hero-stage,
+  .sanctuary,
+  .page-hero__emblem,
+  .page-hero__bar,
+  .clippings,
+  .blog-controls,
+  .post__toc,
+  .skip-link {
+    display: none !important;
+  }
+  .site-main,
+  .desk {
+    display: block !important;
+    max-width: none !important;
+    padding: 0 !important;
+  }
+  .desk__lane {
+    display: block !important;
+    margin: 0 !important;
+  }
+  .win,
+  .win__body,
+  .tile,
+  .player-card,
+  .game-card,
+  .portrait,
+  .post__layout,
+  .page-hero {
+    margin-bottom: 16pt;
+    background: #ffffff !important;
+    box-shadow: none !important;
+    border: 1px solid #cccccc !important;
+    transform: none !important;
+    break-inside: avoid;
+  }
+  a {
+    color: #111111 !important;
+  }
+  .section {
+    margin-top: 24pt;
   }
 }

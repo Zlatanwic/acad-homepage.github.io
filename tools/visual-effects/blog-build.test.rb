@@ -163,44 +163,62 @@ class BlogBuildTest < Minitest::Test
   end
 
   def assert_archive_navigation(document, current_path:)
-    navigation = document.at_css('.susun-series[aria-labelledby="dossier-directory-label"]')
-    refute_nil navigation, 'the archive index must be usable without JavaScript'
+    navigation = document.at_css('nav.site-nav')
+    refute_nil navigation, 'the primary navigation must be usable without JavaScript'
     ARCHIVE_ROUTES.each do |route|
-      assert navigation.at_css("a[href='#{BASE}#{route}']"), "archive navigation is missing #{route}"
+      assert navigation.at_css("a[href='#{BASE}#{route}']"), "navigation is missing #{route}"
     end
-    assert document.at_css("a[href='#{BASE}/']"), 'every archive must offer a native return to the homepage'
+    assert document.at_css(".brand[href='#{BASE}/']"), 'every page must offer a native return to the homepage'
     current = navigation.css('a[aria-current="page"]')
-    if current.empty? && current_path == '/blog/'
-      assert document.at_css(".susun-nav a[aria-current='page'][href='#{BASE}/blog/']"), 'posts mark Writing as current'
-    else
-      assert_equal 1, current.length, 'exactly one archive route is marked as the current page'
-      assert_equal "#{BASE}#{current_path}", current.first['href']
-    end
-    assert_empty navigation.css("a[href^='#']"), 'archive navigation must open independent pages, not scroll the old homepage'
+    assert_equal 1, current.length, 'exactly one route is marked as the current page'
+    assert_equal "#{BASE}#{current_path}", current.first['href']
+    assert_empty navigation.css("a[href^='#']"), 'navigation must open independent pages'
+  end
+
+  def script_sources(document)
+    document.css('script[src]').map { |script| script['src'] }
   end
 
   def assert_reading_page_is_static(document)
-    assert_empty document.css('[data-space-gateway], [data-compute-scene], [data-scene-chapter], .world-hero, canvas')
-    sources = document.css('script[src]').map { |script| script['src'] }
-    forbidden = %r{/(?:space-scene|space-gateway|compute-scene|homepage|motion|bits)\.js(?:\?|$)}
-    refute sources.any? { |source| source.match?(forbidden) }, 'reading pages must not load flight or scrolling-animation runtimes'
-    assert_empty document.css('[data-reveal], [data-bits-blur]'), 'archive content must be immediately visible without an animation controller'
+    assert_empty document.css('[data-scene], canvas, [data-space-gateway], [data-compute-scene]')
+    forbidden = %r{/(?:scene|space-scene|space-gateway|compute-scene|homepage|motion|bits)\.js(?:\?|$)}
+    refute script_sources(document).any? { |source| source.match?(forbidden) }, 'reading pages must not load the 3D runtime'
+    assert_empty document.css('[data-reveal], [data-bits-blur]'), 'content must be visible without an animation controller'
   end
-
-  def test_homepage_is_a_reading_page_with_six_independent_destinations
+  def test_homepage_has_one_title_navigation_and_a_progressive_3d_scene
     document = html('index.html', with_posts: false)
     assert_equal 1, document.css('h1').length
-    assert_empty document.css('[data-space-gateway]')
-    assert_empty document.css("a[href='#{BASE}/starmap/']")
+    assert_equal '/Kuo Li', document.at_css('.brand')&.text&.gsub(/\s+/, ' ')&.strip
+    assert document.at_css('button.glass[data-lang-toggle]'), 'homepage offers bilingual desk toggle'
+    assert document.at_css('button.glass[data-theme-toggle]'), 'homepage offers cyanotype/void theme toggle'
     ARCHIVE_ROUTES.each do |route|
-      assert document.at_css(".susun-series a[href='#{BASE}#{route}']"), "homepage navigation is missing #{route}"
+      assert document.at_css("nav.site-nav a[href='#{BASE}#{route}'][data-legacy-destination]"), "homepage navigation is missing #{route}"
     end
     assert_equal "#{ORIGIN}#{BASE}/", document.at_css("link[rel='canonical']")&.[]('href')
 
-    refute self.class.render(with_posts: false).key?('starmap/index.html'), 'flight deck must not be published'
-  end
+    scene = document.at_css('figure.scene.stage[data-scene]')
+    refute_nil scene, 'the homepage hosts the full-viewport architectural 3D stage'
+    assert_equal "#{BASE}/assets/js/scene.js", scene['data-scene-src']
+    assert_equal 'fallback', scene['data-scene-state']
+    assert scene.at_css('svg.scene__fallback[role="img"]'), 'a static cyanotype blueprint is shown before and without WebGL'
+    refute_empty scene.at_css('figcaption').text.strip
+    labels = scene.css('[data-scene-label]')
+    assert_equal %w[stadium spire kv gpu], labels.map { |label| label['data-scene-label'] }
+    assert labels.all? { |label| label['aria-hidden'] == 'true' }
+    assert_equal 6, document.css('#desk .win').length, 'homepage desk hosts six staggered Aqua workstation windows'
+    assert document.at_css('#sanctuary #back-top[href="#top"]'), 'homepage ends with the GPU sanctuary return-to-top cue'
+    assert_empty document.css('canvas'), 'the canvas is created only by JavaScript'
+    assert_equal ["#{BASE}/assets/js/site.js", "#{BASE}/assets/js/legacy-routes.js"], script_sources(document)
 
-  def test_dossiers_are_independent_accessible_documents_with_native_navigation
+    assert_empty document.css('[data-space-gateway]')
+    refute self.class.render(with_posts: false).key?('starmap/index.html'), 'flight deck must not be published'
+    refute self.class.render(with_posts: false).key?('README.md'), 'repository files must not be published'
+    css = output('assets/css/main.css', with_posts: false)
+    assert_includes css, '.tile'
+    assert_includes css, '.win'
+    refute_match(/fa-solid|academicons|susy/, css, 'legacy theme styles must not ship')
+  end
+  def test_pages_are_independent_accessible_documents_with_native_navigation
     expected_content = {
       '/profile/' => 'From models to systems.',
       '/research/' => 'LLM Training & Inference Systems',
@@ -220,14 +238,15 @@ class BlogBuildTest < Minitest::Test
       assert_equal ids.uniq, ids, "#{route} must not duplicate IDs when sections become pages"
       assert_archive_navigation(document, current_path: route)
       assert_reading_page_is_static(document)
-      assert_empty document.css('script[src]'), 'dossier navigation and content must work without an application runtime'
+      assert_equal ["#{BASE}/assets/js/site.js"], script_sources(document), 'pages only load the small enhancement script'
+      assert document.at_css('header.page-hero h1'), "#{route} uses the shared page title"
       document.css("a[href^='#']").each do |link|
         assert document.at_css("[id='#{link['href'].delete_prefix('#')}']"), "#{route} has a dangling local anchor: #{link['href']}"
       end
     end
   end
 
-  def test_dossier_split_preserves_profile_research_education_projects_and_interests
+  def test_pages_preserve_profile_research_education_projects_and_interests
     profile = html('profile/index.html', with_posts: false)
     refute profile.at_css("a[href='#{BASE}/files/Li_Kuo_CV.pdf']"), 'the CV must not be linked from the profile'
     refute self.class.render(with_posts: false).key?('files/Li_Kuo_CV.pdf'), 'the CV must not be published'
@@ -259,7 +278,7 @@ class BlogBuildTest < Minitest::Test
 
     interests = html('interests/index.html', with_posts: false)
     assert_equal 11, interests.css('#personal-interests img').length
-    assert_equal 1, interests.css('main details.dossier-credits').length
+    assert_equal 1, interests.css('main details.credits').length
     ['Erling Haaland', 'Kevin De Bruyne', 'Rodri', 'Grace Ashcroft', 'Arthur Morgan', 'Oasis', 'Stereophonics', 'Blur', 'Queen', "Guns N’ Roses", 'Suede'].each do |subject|
       assert interests.css('#personal-interests img').any? { |image| image['alt'].include?(subject) }, "interest photograph missing: #{subject}"
     end
@@ -268,13 +287,13 @@ class BlogBuildTest < Minitest::Test
   def test_shared_layout_keeps_reading_pages_and_navigation_available
     ARCHIVE_ROUTES.each do |route|
       document = html("#{route.delete_prefix('/')}index.html", with_posts: false)
-      assert document.at_css('body.susun-site'), "#{route} must share the reading layout"
-      assert document.at_css("link[rel='stylesheet'][href='#{BASE}/assets/css/susun.css']")
+      assert document.at_css('body.site'), "#{route} must share the site layout"
+      assert document.at_css("link[rel='stylesheet'][href='#{BASE}/assets/css/main.css']")
       assert_equal 1, document.css('h1').length
       assert_empty document.css("a[href='#{BASE}/starmap/']")
     end
     post = html("#{FIRST_PATH.delete_prefix('/')}index.html")
-    assert post.at_css(".susun-nav a[aria-current='page'][href='#{BASE}/blog/']")
+    assert post.at_css(".site-nav a[aria-current='page'][href='#{BASE}/blog/']")
   end
 
   def test_empty_blog_is_honest_and_drafts_are_not_published
@@ -338,11 +357,11 @@ class BlogBuildTest < Minitest::Test
   def test_nested_navigation_and_previous_next_links_keep_the_project_base_path
     [FIRST_PATH, SECOND_PATH].each do |path|
       document = html("#{path.delete_prefix('/')}index.html")
-      assert document.at_css(".susun-nav a[href='#{BASE}/blog/']"), 'Blog navigation must work from a dated article'
+      assert document.at_css(".site-nav a[href='#{BASE}/blog/']"), 'Blog navigation must work from a dated article'
       assert_archive_navigation(document, current_path: '/blog/')
       assert_reading_page_is_static(document)
       other = path == FIRST_PATH ? SECOND_PATH : FIRST_PATH
-      links = document.css('.post-pagination a').map { |link| link['href'] }
+      links = document.css('.post__pager a').map { |link| link['href'] }
       assert_includes links, "#{BASE}#{other}"
       refute_includes links, "#{BASE}#{path}"
       refute links.any? { |link| link.include?('future') || link.include?('unpublished') }

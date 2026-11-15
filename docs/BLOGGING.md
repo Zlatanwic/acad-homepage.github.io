@@ -71,7 +71,7 @@ $env:JEKYLL_NO_BUNDLER_REQUIRE='true'
 jekyll serve
 ```
 
-需要本机已装 `jekyll`、`jekyll-feed`、`jekyll-redirect-from`、`jekyll-gist`、`jekyll-sitemap`、`jekyll-paginate`（`gem install <名字>`）。这条路径只用于本地预览，线上始终由 GitHub Actions 构建。
+需要本机已装 `jekyll`、`jekyll-feed`、`jekyll-redirect-from`、`jekyll-sitemap`（`gem install <名字>`）。这条路径只用于本地预览，线上始终由 GitHub Actions 构建。
 
 ## 订阅与验证
 

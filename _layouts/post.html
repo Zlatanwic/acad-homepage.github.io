@@ -1,21 +1,29 @@
 ---
-layout: susun
+layout: default
 ---
-<article class="blog-article" aria-labelledby="post-title">
-  <header class="post-header">
-    <a class="blog-back mono" href="{{ '/blog/' | relative_url }}">← BACK TO THE JOURNAL</a>
-    <div class="post-meta mono"><time datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: '%B %d, %Y' }}</time><span>{{ page.author | default: site.author.name | escape }}</span>{% if page.category %}<span>{{ page.category | escape }}</span>{% endif %}</div>
-    <h1 id="post-title">{{ page.title | escape }}</h1>
-    {% if page.description %}<p class="post-deck">{{ page.description | escape }}</p>{% endif %}
-    {% if page.tags.size > 0 %}<ul class="blog-tags" aria-label="Post topics">{% for tag in page.tags %}<li><a href="{{ '/blog/' | relative_url }}?tag={{ tag | url_encode }}">{{ tag | escape }}</a></li>{% endfor %}</ul>{% endif %}
+<article class="post" aria-labelledby="post-title">
+  <header class="post__header">
+    <a class="post__back" href="{{ '/blog/' | relative_url }}">← All writing</a>
+    <p class="post__meta"><time datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: '%B %-d, %Y' }}</time>{% if page.category %}<span>{{ page.category | escape }}</span>{% endif %}</p>
+    <h1 id="post-title" class="post__title">{{ page.title | escape }}</h1>
+    {% if page.description %}<p class="post__deck">{{ page.description | escape }}</p>{% endif %}
+    {% if page.tags.size > 0 %}<ul class="chips" aria-label="Post topics">{% for tag in page.tags %}<li><a href="{{ '/blog/' | relative_url }}?tag={{ tag | url_encode }}">{{ tag | escape }}</a></li>{% endfor %}</ul>{% endif %}
   </header>
-  <div class="post-layout">
-    <div class="post-content" id="post-content">{{ content }}</div>
-    <aside class="post-sidebar" data-blog-toc hidden><nav class="post-toc" aria-labelledby="post-toc-title"><h2 class="mono" id="post-toc-title">ON THIS PAGE</h2><ol data-blog-toc-list></ol></nav><a class="blog-inline-link" href="#post-title">Back to top ↑</a></aside>
+  <div class="post__layout">
+    <div class="post__content prose" id="post-content">{{ content }}</div>
+    <aside class="post__toc" data-blog-toc hidden>
+      <nav aria-labelledby="post-toc-title"><h2 id="post-toc-title">On this page</h2><ol data-blog-toc-list></ol></nav>
+      <a href="#post-title">Back to top ↑</a>
+    </aside>
   </div>
-  <footer class="post-ending"><span class="mono">END OF NOTE</span><a href="{{ '/blog/feed.xml' | relative_url }}">Follow the next one via Atom ↗</a></footer>
-  <nav class="post-pagination" aria-label="More posts">
-    {% if page.previous %}<a href="{{ page.previous.url | relative_url }}"><span class="mono">← OLDER NOTE</span><strong>{{ page.previous.title | escape }}</strong></a>{% endif %}
-    {% if page.next %}<a href="{{ page.next.url | relative_url }}"><span class="mono">NEWER NOTE →</span><strong>{{ page.next.title | escape }}</strong></a>{% endif %}
+  <footer class="post__end">
+    <span>End of note</span>
+    <a href="{{ '/blog/feed.xml' | relative_url }}">Follow new notes via Atom ↗</a>
+  </footer>
+  {% if page.previous or page.next %}
+  <nav class="post__pager" aria-label="More posts">
+    {% if page.previous %}<a class="tile tile--link" href="{{ page.previous.url | relative_url }}"><span>← Older</span><strong>{{ page.previous.title | escape }}</strong></a>{% endif %}
+    {% if page.next %}<a class="tile tile--link post__pager-next" href="{{ page.next.url | relative_url }}"><span>Newer →</span><strong>{{ page.next.title | escape }}</strong></a>{% endif %}
   </nav>
+  {% endif %}
 </article>

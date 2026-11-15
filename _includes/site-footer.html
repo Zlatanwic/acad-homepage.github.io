@@ -1,0 +1,21 @@
+<footer class="site-footer{% if page.url == '/' %} site-footer--home{% endif %}">
+  <div class="site-footer__inner">
+    <div class="site-footer__note">
+      <p class="site-footer__title">
+        <span data-en>Let's talk systems.</span>
+        <span data-zh lang="zh-CN">欢迎交流系统与算力架构。</span>
+      </p>
+      <p>
+        <span data-en>Inference infrastructure, kernels, agent runtimes, or the weekend's City result.</span>
+        <span data-zh lang="zh-CN">推理基础设施、高性能算子、Agent 运行时，或者周末的曼城比赛。</span>
+      </p>
+    </div>
+    <ul class="site-footer__links">
+      <li><a href="mailto:{{ site.author.email }}">{{ site.author.email }}</a></li>
+      {% if site.author.email_secondary %}<li><a href="mailto:{{ site.author.email_secondary }}">{{ site.author.email_secondary }}</a></li>{% endif %}
+      <li><a href="https://github.com/{{ site.author.github }}" target="_blank" rel="noopener noreferrer">GitHub / {{ site.author.github }} <span aria-hidden="true">↗</span></a></li>
+      <li><a href="{{ '/blog/feed.xml' | relative_url }}">Atom feed</a></li>
+    </ul>
+  </div>
+  <p class="site-footer__fine">© {{ site.time | date: '%Y' }} Kuo Li · Shanghai → Tsinghua MADSys · Blue Moon &amp; Oasis on repeat.</p>
+</footer>

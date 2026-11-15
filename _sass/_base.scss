@@ -1,322 +1,187 @@
-/* ==========================================================================
-   BASE ELEMENTS
-   ========================================================================== */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
 html {
-  /* sticky footer fix */
+  background-color: var(--gbg, var(--void));
+  color: var(--ink);
+  font: 400 16px/1.68 var(--sans);
+  scroll-behavior: smooth;
+  text-size-adjust: 100%;
+  -webkit-font-smoothing: antialiased;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  html {
+    cursor: var(--xcur);
+  }
+  a,
+  button,
+  summary,
+  select,
+  [role="button"] {
+    cursor: var(--xcur-link);
+  }
+}
+
+// Bilingual toggle on the homepage desk (EN default, ZH when data-lang="zh")
+html:not([data-lang="zh"]) [data-zh] {
+  display: none !important;
+}
+
+html[data-lang="zh"] [data-en] {
+  display: none !important;
+}
+
+body.site {
   position: relative;
-  min-height: 100%;
-}
-
-body {
+  min-height: 100vh;
   margin: 0;
-  padding: 0;
-  padding-bottom: 0em;
-  color: $text-color;
-  font-family: $global-font-family;
-  line-height: 1.5;
-
-  &.overflow--hidden {
-    /* when primary navigation is visible, the content in the background won't scroll */
-    overflow: hidden;
-  }
+  overflow-x: clip;
+  background-color: var(--bg-page);
+  background-image:
+    linear-gradient(to right, rgba(63, 176, 242, 0.08) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(63, 176, 242, 0.08) 1px, transparent 1px);
+  background-size: 24px 24px;
+  color: var(--ink);
 }
 
-h1, h2, h3, h4, h5, h6 {
-  margin: 1em 0 0.5em;
-  line-height: 1.2;
-  font-family: $header-font-family;
-  font-weight: bold;
+// Homepage lets the fixed 3D WebGL stage own the background from top to bottom
+body.site--home {
+  background: transparent;
 }
 
-h1 {
-  // margin: 4em 0 0.5em;
-  margin-top: 1em;
-  font-size: $type-size-3;
+// Single plain-alpha composited grade overlay (paper grain + fine scanline + soft vignette).
+// Zero mix-blend-mode so scrolling stays locked on the GPU compositor at 60/120fps.
+#grade {
+  position: fixed;
+  inset: 0;
+  z-index: 45;
+  pointer-events: none;
+  background-image:
+    repeating-linear-gradient(
+      0deg,
+      rgba(10, 42, 120, 0.022) 0px,
+      rgba(10, 42, 120, 0.022) 1px,
+      transparent 1px,
+      transparent 3px
+    ),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.04 0 0 0 0 0.16 0 0 0 0 0.45 0 0 0 0.035 0'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)'/%3E%3C/svg%3E"),
+    radial-gradient(120% 95% at 50% 48%, transparent 64%, rgba(10, 42, 120, 0.10) 100%);
 }
 
-h2 {
-  font-size: $type-size-4;
+html[data-theme="dark"] #grade {
+  background-image:
+    repeating-linear-gradient(
+      0deg,
+      rgba(120, 214, 251, 0.024) 0px,
+      rgba(120, 214, 251, 0.024) 1px,
+      transparent 1px,
+      transparent 3px
+    ),
+    radial-gradient(120% 95% at 50% 48%, transparent 58%, rgba(1, 4, 12, 0.42) 100%);
 }
 
-h3 {
-  font-size: $type-size-5;
+img,
+svg {
+  display: block;
+  max-width: 100%;
+  height: auto;
 }
 
+h1,
+h2,
+h3,
 h4 {
-  font-size: $type-size-6;
+  margin: 0 0 0.42em;
+  color: var(--ink);
+  font-family: var(--serif);
+  font-weight: 650;
+  line-height: 1.18;
+  letter-spacing: -0.012em;
 }
 
-h5 {
-  font-size: $type-size-6;
-}
-
-h6 {
-  font-size: $type-size-6;
-}
-
-small, .small {
-  font-size: $type-size-6;
-}
-
-p {
-  margin-bottom: 0.5em;
-}
-
-u,
-ins {
-  text-decoration: none;
-  border-bottom: 1px solid $text-color;
-  a {
-    color: inherit;
-  }
-}
-
-ul {
-  padding-inline-start: 2em;
-  margin-block-start: 0.5em;
-}
-
-del a {
-  color: inherit;
-}
-
-/* reduce orphans and widows when printing */
-
-p, pre, blockquote, ul, ol, dl, figure, table, fieldset {
-  orphans: 3;
-  widows: 3;
-}
-
-/* abbreviations */
-
-abbr[title],
-abbr[data-original-title] {
-  text-decoration: none;
-  cursor: help;
-  border-bottom: 1px dotted $text-color;
-}
-
-/* blockquotes */
-
+p,
+ul,
+ol,
+dl,
+figure,
 blockquote {
-  margin: 2em 1em 2em 0;
-  padding-left: 1em;
-  padding-right: 1em;
-  font-style: italic;
-  border-left: 0.25em solid $primary-color;
-
-  cite {
-    font-style: italic;
-
-    &:before {
-      content: "\2014";
-      padding-right: 5px;
-    }
-  }
+  margin: 0 0 1em;
 }
 
-/* links */
+p:last-child,
+ul:last-child,
+ol:last-child,
+dl:last-child {
+  margin-bottom: 0;
+}
 
 a {
-  
-  &:focus {
-    @extend %tab-focus;
-  }
-
-  &:hover,
-  &:active {
-    outline: 0;
-  }
+  color: var(--link);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.18em;
+  transition: color 0.18s ease, background-color 0.18s ease, border-color 0.18s ease;
 }
 
-/* code */
-
-tt, code, kbd, samp, pre {
-  font-family: $monospace;
+a:hover {
+  color: var(--crimson);
 }
 
-pre {
-  overflow-x: auto; /* add scrollbars to wide code blocks*/
+:focus-visible {
+  outline: 2px solid var(--crimson);
+  outline-offset: 3px;
 }
 
-p > code,
-a > code,
-li > code,
-figcaption > code,
-td > code {
-  padding-top: 0.1rem;
-  padding-bottom: 0.1rem;
-  font-size: $type-size-6;
-  background: $code-background-color;
-  border: 1px solid $lighter-gray;
-  border-radius: $border-radius;
-  box-shadow: $box-shadow;
-
-  &:before, &:after {
-    letter-spacing: -0.2em;
-    content: "\00a0"; /* non-breaking space*/
-  }
+::selection {
+  background: var(--aqua);
+  color: #06205c;
 }
 
-/* horizontal rule */
-
-hr {
-  display: block;
-  margin: 1em 0;
-  border: 0;
-  border-top: 1px solid $border-color;
+[id] {
+  scroll-margin-top: 88px;
 }
 
-/* lists */
-
-ul li,
-ol li {
-  margin-bottom: 0.5em;
-}
-
-li ul,
-li ol {
-  margin-top: 0.5em;
-}
-
-/*
-   Media and embeds
-   ========================================================================== */
-
-/* Figures and images */
-
-figure {
-  display: -webkit-box;
-  display: flex;
-  -webkit-box-pack: justify;
-          justify-content: space-between;
-  -webkit-box-align: start;
-          align-items: flex-start;
-  flex-wrap: wrap;
-  margin: 2em 0;
-
-  img,
-  iframe,
-  .fluid-width-video-wrapper {
-    margin-bottom: 1em;
-  }
-
-  img {
-    width: 100%;
-    border-radius: $border-radius;
-    -webkit-transition: $global-transition;
-    transition: $global-transition;
-  }
-
-  > a {
-    display: block;
-  }
-
-  &.half {
-    > a,
-    > img {
-      @include breakpoint($small) {
-        width: calc(50% - 0.5em);
-      }
-    }
-
-    figcaption {
-      width: 100%;
-    }
-  }
-
-  &.third {
-    > a,
-    > img {
-      @include breakpoint($small) {
-        width: calc(33.3333% - 0.5em);
-      }
-    }
-
-    figcaption {
-      width: 100%;
-    }
-  }
-}
-
-/* Figure captions */
-
-figcaption {
-  margin-bottom: 0.5em;
-  color: mix(#fff, $text-color, 25%);
-  font-family: $caption-font-family;
-  font-size: $type-size-6;
-
-  a {
-    color: inherit;
-    text-decoration: none;
-    border-bottom: 1px solid $light-gray;
-    -webkit-transition: $global-transition;
-    transition: $global-transition;
-
-    &:hover {
-      color: #000;
-      border-bottom-color: #000;
-    }
-  }
-}
-
-
-/* Fix IE9 SVG bug */
-
-svg:not(:root) {
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
   overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
 }
 
-
-/*
-   Navigation lists
-   ========================================================================== */
-
-/**
- * Removes margins, padding, and bullet points from navigation lists
- *
- * Example usage:
- * <nav>
- *    <ul>
- *      <li><a href="#link-1">Link 1</a></li>
- *      <li><a href="#link-2">Link 2</a></li>
- *      <li><a href="#link-3">Link 3</a></li>
- *    </ul>
- *  </nav>
- */
-
-nav {
-  ul {
-    margin: 0;
-    padding: 0;
-  }
-
-  li {
-    list-style: none;
-  }
-
-  a {
-    text-decoration: none;
-  }
-
-  /* override white-space for nested lists */
-  ul li,
-  ol li {
-    margin-bottom: 0;
-  }
-
-  li ul,
-  li ol {
-    margin-top: 0;
-  }
+.skip-link {
+  position: fixed;
+  top: 10px;
+  left: 12px;
+  z-index: 90;
+  padding: 8px 14px;
+  border: 1px solid var(--line-strong);
+  background: var(--pale);
+  color: var(--deep);
+  font: 12px/1.2 var(--pixel);
+  text-decoration: none;
+  box-shadow: 4px 4px 0 var(--sh2);
+  transform: translateY(-160%);
+  transition: transform 0.2s var(--ease);
 }
 
-/*
-   Global animation transition
-   ========================================================================== */
+.skip-link:focus {
+  transform: none;
+}
 
-b, i, strong, em, blockquote, p, q, span, figure, img, h1, h2, header, input, a, tr, td, form button, input[type="submit"], .btn, .highlight, .archive__item-teaser {
-  -webkit-transition: $global-transition;
-  transition: $global-transition;
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
 }

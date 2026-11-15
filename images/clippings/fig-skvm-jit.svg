@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 128" fill="none">
+  <rect x="1" y="1" width="178" height="126" fill="#f1fbff" stroke="#3fb0f2" stroke-width="1.5"/>
+  <!-- DAG nodes -->
+  <rect x="14" y="48" width="28" height="28" fill="#0a2a78"/>
+  <rect x="64" y="20" width="32" height="22" fill="#245da8"/>
+  <rect x="64" y="51" width="32" height="22" fill="#6cabdd"/>
+  <rect x="64" y="82" width="32" height="22" fill="#245da8"/>
+  <rect x="122" y="34" width="42" height="24" fill="#0a2a78"/>
+  <rect x="122" y="68" width="42" height="24" fill="#bdebf8" stroke="#0a2a78" stroke-width="1.4"/>
+  <!-- Edges -->
+  <g stroke="#0a2a78" stroke-width="1.5">
+    <path d="M42 56 64 31M42 62h22M42 68 64 93"/>
+    <path d="M96 31 122 44M96 62 122 48M96 62 122 78M96 93 122 82"/>
+  </g>
+  <circle cx="42" cy="62" r="3" fill="#e0304e"/>
+  <path d="M14 112h150" stroke="#3fb0f2" stroke-width="1" stroke-dasharray="3 2"/>
+</svg>

@@ -1,26 +1,24 @@
 import { build } from 'esbuild';
-import { copyFile, stat } from 'node:fs/promises';
+import { stat } from 'node:fs/promises';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
+// Bundles assets/js/src/scene.js into the checked-in zero-dependency browser
+// module assets/js/scene.js. GitHub Pages never runs Node.
 const here = dirname(fileURLToPath(import.meta.url));
 const root = resolve(here, '../..');
-for (const scene of ['compute-scene']) {
-  const output = resolve(root, `assets/js/${scene}.js`);
-  const title = 'compute scene';
-  await build({
-    entryPoints: [resolve(root, `assets/js/src/${scene}.js`)],
-    outfile: output,
-    nodePaths: [resolve(here, 'node_modules')],
-    bundle: true,
-    minify: true,
-    format: 'esm',
-    platform: 'browser',
-    target: ['es2020'],
-    legalComments: 'inline',
-    banner: { js: `/* Optional ${title}. Three.js MIT license: ${scene}.LICENSE.txt */` }
-  });
+const output = resolve(root, 'assets/js/scene.js');
 
-  await copyFile(resolve(here, 'node_modules/three/LICENSE'), resolve(root, `assets/js/${scene}.LICENSE.txt`));
-  console.log(`Built assets/js/${scene}.js (${(await stat(output)).size} bytes).`);
-}
+await build({
+  entryPoints: [resolve(root, 'assets/js/src/scene.js')],
+  outfile: output,
+  bundle: true,
+  minify: true,
+  format: 'esm',
+  platform: 'browser',
+  target: ['es2020'],
+  legalComments: 'none',
+  banner: { js: '/* Paper-plane architecture, Etihad Stadium & axial GPU foundry WebGL scene. */' }
+});
+
+console.log(`Built assets/js/scene.js (${(await stat(output)).size} bytes).`);

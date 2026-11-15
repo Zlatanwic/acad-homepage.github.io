@@ -1,0 +1,303 @@
+// Top navigation chrome: pixel /Kuo Li brand on the left, compact directory
+// links in the middle, and pure-CSS conic-specular .glass keys on the right.
+
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  padding: 12px clamp(14px, 3vw, 28px);
+  transition: opacity 0.35s var(--ease), transform 0.35s var(--ease);
+}
+
+body.site--home .site-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  pointer-events: none;
+}
+
+body.site--home .site-header__inner > * {
+  pointer-events: auto;
+}
+
+.site-header__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  max-width: 1380px;
+  margin: 0 auto;
+}
+
+// Top-left pixel brand: /Kuo Li
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  padding: 6px 12px;
+  border: 1px solid var(--line);
+  background: var(--pale);
+  color: var(--deep);
+  font: 18px/1 var(--pixel);
+  letter-spacing: 0.02em;
+  text-decoration: none;
+  box-shadow: 3px 3px 0 var(--sh2);
+  transition: transform 0.18s var(--spring), box-shadow 0.18s var(--ease), background-color 0.18s ease;
+}
+
+.brand__slash {
+  color: var(--crimson);
+  font-weight: 700;
+  margin-right: 1px;
+}
+
+.brand:hover,
+.brand:focus-visible {
+  color: var(--deep);
+  background: var(--aqua);
+  transform: translate(-1px, -1px);
+  box-shadow: 4px 4px 0 var(--sh2);
+}
+
+.brand:active {
+  transform: translate(2px, 2px);
+  box-shadow: 1px 1px 0 var(--sh2);
+}
+
+// Primary directory navigation strip
+.site-nav {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  padding: 3px;
+  border: 1px solid var(--line);
+  background: var(--header-bg);
+  box-shadow: 3px 3px 0 var(--sh1);
+  transition: opacity 0.35s var(--ease), transform 0.35s var(--ease);
+}
+
+@supports (backdrop-filter: blur(8px)) {
+  .site-nav {
+    backdrop-filter: blur(8px) saturate(1.2);
+  }
+}
+
+// During the Act IV blade passage & heatsink canyon, let center nav gently step aside
+html.in-sanctuary body.site--home .site-nav {
+  opacity: 0.16;
+}
+
+html.in-sanctuary body.site--home .site-nav:hover,
+html.in-sanctuary body.site--home .site-nav:focus-within {
+  opacity: 1;
+}
+
+.site-nav a {
+  padding: 6px 11px;
+  color: var(--ink);
+  font: 12px/1.1 var(--pixel);
+  letter-spacing: 0.03em;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+body.site--home .site-nav a {
+  color: var(--deep);
+}
+
+html[data-theme="dark"] body.site--home .site-nav a {
+  color: var(--ink);
+}
+
+.site-nav a:hover {
+  background: rgba(120, 214, 251, 0.32);
+  color: var(--deep);
+}
+
+html[data-theme="dark"] .site-nav a:hover {
+  color: #ffffff;
+}
+
+.site-nav a[aria-current="page"] {
+  background: var(--aqua);
+  color: #06205c;
+  box-shadow: inset 0 0 0 1px var(--line-strong);
+}
+
+// Top-right pure-CSS specular .glass buttons (文/A + ☾/☀)
+.site-prefs {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.glass {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 38px;
+  height: 36px;
+  padding: 0 10px;
+  border: 1px solid rgba(120, 214, 251, 0.72);
+  border-radius: 999px;
+  background:
+    linear-gradient(155deg, rgba(255, 255, 255, 0.78), rgba(194, 238, 253, 0.36)) padding-box,
+    conic-gradient(
+      from 135deg,
+      rgba(255, 255, 255, 0.95),
+      rgba(63, 176, 242, 0.55),
+      rgba(255, 255, 255, 0.92),
+      rgba(10, 42, 120, 0.35),
+      rgba(255, 255, 255, 0.95)
+    ) border-box;
+  color: var(--glass-ink);
+  font: 12px/1 var(--pixel);
+  box-shadow:
+    0 3px 10px rgba(10, 42, 120, 0.14),
+    inset 0 1px 0 rgba(255, 255, 255, 0.88);
+  transition: transform 0.28s var(--spring), box-shadow 0.22s var(--ease), background-color 0.2s ease;
+}
+
+html[data-theme="dark"] .glass {
+  border-color: rgba(111, 210, 251, 0.52);
+  background:
+    linear-gradient(155deg, rgba(22, 52, 106, 0.82), rgba(7, 19, 44, 0.72)) padding-box,
+    conic-gradient(
+      from 135deg,
+      rgba(155, 226, 253, 0.9),
+      rgba(36, 93, 168, 0.4),
+      rgba(255, 255, 255, 0.75),
+      rgba(16, 53, 110, 0.5),
+      rgba(155, 226, 253, 0.9)
+    ) border-box;
+  box-shadow:
+    0 4px 14px rgba(0, 0, 0, 0.45),
+    inset 0 1px 0 rgba(194, 238, 253, 0.32);
+}
+
+@supports (backdrop-filter: blur(10px)) {
+  .glass {
+    backdrop-filter: blur(10px) saturate(1.35);
+  }
+}
+
+.glass:hover,
+.glass:focus-visible {
+  transform: translateY(-1px) scale(1.05);
+}
+
+.glass:active {
+  transform: scale(0.92);
+}
+
+.glass__glyph {
+  letter-spacing: 0.02em;
+}
+
+.glass__icon--sun {
+  display: none;
+}
+
+html[data-theme="dark"] .glass__icon--moon {
+  display: none;
+}
+
+html[data-theme="dark"] .glass__icon--sun {
+  display: block;
+}
+
+// Main container: constrained directory container on subpages, full-bleed on homepage
+.site-main {
+  position: relative;
+  z-index: 10;
+  max-width: var(--max);
+  margin: 0 auto;
+  padding: 16px clamp(16px, 4vw, 40px) 84px;
+}
+
+body.site--home .site-main {
+  max-width: none;
+  padding: 0;
+}
+
+// Footer
+.site-footer {
+  position: relative;
+  z-index: 10;
+  max-width: var(--max);
+  margin: 0 auto;
+  padding: 28px clamp(16px, 4vw, 40px) 52px;
+  border-top: 1px solid var(--line);
+  color: var(--muted);
+  font-size: 0.92rem;
+}
+
+.site-footer--home {
+  max-width: 1080px;
+  margin-bottom: 20px;
+  padding: 16px 22px 18px;
+  border: 1px solid rgba(120, 214, 251, 0.44);
+  background: rgba(5, 16, 46, 0.88);
+  color: rgba(223, 244, 255, 0.90);
+  box-shadow: 5px 5px 0 rgba(2, 8, 24, 0.50);
+}
+
+.site-footer--home .site-footer__title,
+.site-footer--home a {
+  color: #eefbff;
+}
+
+.site-footer--home a:hover {
+  color: var(--aqua);
+}
+
+.site-footer__inner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 20px 36px;
+}
+
+.site-footer__title {
+  margin-bottom: 4px;
+  color: var(--ink);
+  font: 14px/1.3 var(--pixel);
+}
+
+.site-footer__links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 18px;
+  padding: 0;
+  list-style: none;
+  font: 12px/1.5 var(--pixel);
+}
+
+.site-footer__fine {
+  margin-top: 20px;
+  font: 12px/1.5 var(--pixel);
+  letter-spacing: 0.02em;
+}
+
+@media (max-width: 860px) {
+  .site-header__inner {
+    flex-wrap: wrap;
+    row-gap: 8px;
+  }
+  .site-nav {
+    order: 3;
+    width: 100%;
+    justify-content: flex-start;
+    overflow-x: auto;
+    flex-wrap: nowrap;
+    scrollbar-width: none;
+  }
+  .site-nav::-webkit-scrollbar {
+    display: none;
+  }
+}

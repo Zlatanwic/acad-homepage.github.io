@@ -8,7 +8,7 @@
 
 <title>{% if page.title and page.title != "" %}{{ page.title | escape }} - {% endif %}{{ site.title | escape }}</title>
 
-{% assign seo_description = page.description | default: page.excerpt | default: site.description %}
+{% assign seo_description = page.description | default: page.summary | default: page.excerpt | default: site.description %}
 {% if seo_description %}
   {% assign seo_description = seo_description | markdownify | strip_html | strip_newlines | escape_once %}
 {% endif %}
@@ -27,7 +27,7 @@
   {% assign seo_author_twitter = seo_author_twitter | replace: "@", "" %}
 {% endif %}
 
-<meta property="og:locale" content="{{ page.lang | default: 'en' | escape }}">
+<meta property="og:locale" content="{{ page.lang | default: site.locale | default: 'en-US' | replace: '-', '_' | escape }}">
 <meta property="og:site_name" content="{{ site.title | escape }}">
 {% if page.title and page.title != "" %}<meta property="og:title" content="{{ page.title | escape }}">{% else %}<meta property="og:title" content="{{ site.title | escape }}">{% endif %}
 {% if page.collection == 'posts' %}<meta property="og:type" content="article"><meta property="article:published_time" content="{{ page.date | date_to_xmlschema }}">{% else %}<meta property="og:type" content="website">{% endif %}

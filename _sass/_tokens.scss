@@ -1,0 +1,112 @@
+// Self-hosted open-source typography (SIL OFL 1.1):
+// 1. Fusion Pixel 12px Proportional SC — crisp 12px/18px/24px Latin + CJK pixel UI
+// 2. Source Serif 4 — editorial serif for long-form reading & blog articles
+
+@font-face {
+  font-family: "Fusion Pixel";
+  src: url("../fonts/fusion-pixel.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Source Serif 4";
+  src: url("../fonts/source-serif-4.woff2") format("woff2");
+  font-weight: 400 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Source Serif 4";
+  src: url("../fonts/source-serif-4-italic.woff2") format("woff2");
+  font-weight: 400 700;
+  font-style: italic;
+  font-display: swap;
+}
+
+:root {
+  // Typography stacks
+  --pixel: "Fusion Pixel", ui-monospace, "SFMono-Regular", Menlo, Consolas, "PingFang SC", "Microsoft YaHei", monospace;
+  --sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+  --serif: "Source Serif 4", "Iowan Old Style", "Songti SC", Georgia, serif;
+  --mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+
+  // Light Mode — "Sky-Blue Cyanotype Paper" (99% unified blue-aqua ramp + 1% crimson focus)
+  --void: #ffffff;
+  --gbg: #ffffff;
+  --bg-page: #f2faff;
+  --aqua: #78d6fb;
+  --aqua-hi: #a9e6fe;
+  --panel: #c2eefd;
+  --pale: #eefbff;
+  --card: #f5fcff;
+  --card-quiet: #e6f7fe;
+  --line: #3fb0f2;
+  --line-strong: #1b6ec2;
+  --deep: #0a2a78;
+  --ink: #0a2a78;
+  --ink-2: #1c448e;
+  --mute: #3a68ad;
+  --muted: #3a68ad;
+  --link: #0d4fb8;
+  --sky: #6cabdd;
+  --sky-soft: #d9f2fc;
+  --crimson: #e0304e;
+
+  // Crisp pixel offset drop shadows (zero blur on floating desk windows for 60/120fps)
+  --sh1: rgba(10, 42, 120, 0.15);
+  --sh2: rgba(10, 42, 120, 0.26);
+  --shadow-pixel: 6px 6px 0 var(--sh2);
+  --shadow-pixel-sm: 4px 4px 0 var(--sh1);
+  --shadow: 5px 5px 0 var(--sh1);
+  --shadow-lift: 8px 8px 0 var(--sh2);
+
+  // Header & glass tokens
+  --header-bg: rgba(238, 251, 255, 0.84);
+  --glass-fill: rgba(255, 255, 255, 0.56);
+  --glass-ink: #0a2a78;
+
+  // 1-bit pixel CAD crosshair cursor
+  --xcur: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='17' height='17' shape-rendering='crispEdges'%3E%3Cpath d='M7 0h3v6H7zM7 11h3v6H7zM0 7h6v3H0zM11 7h6v3h-6z' fill='%23ffffff'/%3E%3Cpath d='M8 1h1v5H8zM8 11h1v5H8zM1 8h5v1H1zM11 8h5v1h-5zM8 8h1v1H8z' fill='%230a2a78'/%3E%3C/svg%3E") 8 8, crosshair;
+  --xcur-link: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='17' height='17' shape-rendering='crispEdges'%3E%3Cpath d='M6 0h5v6H6zM6 11h5v6H6zM0 6h6v5H0zM11 6h6v5h-6z' fill='%23ffffff'/%3E%3Cpath d='M8 1h1v5H8zM8 11h1v5H8zM1 8h5v1H1zM11 8h5v1h-5z' fill='%230a2a78'/%3E%3Crect x='7' y='7' width='3' height='3' fill='%23e0304e'/%3E%3C/svg%3E") 8 8, pointer;
+
+  --max: 1180px;
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --spring: cubic-bezier(0.3, 1.8, 0.45, 1);
+}
+
+// Dark Mode — "Midnight Compute Void"
+// Keeps signature luminous aqua workstation windows floating crisply above deep space,
+// while subpages shift into a serene deep-navy blueprint terminal palette.
+html[data-theme="dark"] {
+  --void: #030711;
+  --gbg: #030711;
+  --bg-page: #050d1f;
+  --aqua: #66cef8;
+  --aqua-hi: #9be2fd;
+  --panel: #b5e9fc;
+  --pale: #e6f8ff;
+  --card: #0b1936;
+  --card-quiet: #08132a;
+  --line: #39a7eb;
+  --line-strong: #6fd2fb;
+  --deep: #082366;
+  --ink: #dff4ff;
+  --ink-2: #a8d4f0;
+  --mute: #72a8d4;
+  --muted: #72a8d4;
+  --link: #78d6fb;
+  --sky: #5cc3f2;
+  --sky-soft: rgba(92, 195, 242, 0.16);
+  --crimson: #ef3b5b;
+
+  --sh1: rgba(2, 8, 24, 0.55);
+  --sh2: rgba(56, 178, 246, 0.28);
+  --header-bg: rgba(6, 16, 38, 0.80);
+  --glass-fill: rgba(11, 28, 62, 0.68);
+  --glass-ink: #dff4ff;
+
+  --xcur: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='17' height='17' shape-rendering='crispEdges'%3E%3Cpath d='M7 0h3v6H7zM7 11h3v6H7zM0 7h6v3H0zM11 7h6v3h-6z' fill='%23030711'/%3E%3Cpath d='M8 1h1v5H8zM8 11h1v5H8zM1 8h5v1H1zM11 8h5v1h-5zM8 8h1v1H8z' fill='%2378d6fb'/%3E%3C/svg%3E") 8 8, crosshair;
+}

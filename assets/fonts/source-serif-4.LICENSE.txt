@@ -1,0 +1,4 @@
+Source Serif 4 (source-serif-4.woff2, source-serif-4-italic.woff2)
+Copyright 2014-2021 Adobe (http://www.adobe.com/), with Reserved Font Name 'Source'.
+Licensed under the SIL Open Font License, Version 1.1.
+https://openfontlicense.org

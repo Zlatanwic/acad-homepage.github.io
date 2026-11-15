@@ -1,137 +1,245 @@
-// Local photos reuse the existing reveal, tilt, pause and visibility lifecycle.
-.immersive-home {
-  .interests-chapter .chapter-heading > p { color: #49616f; }
-  .interests-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 22px; }
-  .interest-card { display: flex; flex-direction: column; min-width: 0; border: 1px solid #b3c6d0; border-radius: 2px; background: #f4f7f6; color: #112e40; box-shadow: none; padding: 25px; }
-  .interest-card::before { height: 2px; background: #79cafa; }
-  .interest-card > :not(.card-sheen) { position: relative; z-index: 1; }
-  .interest-topline { display: flex; justify-content: space-between; gap: 10px; color: #49616f; font-size: 8px; }
-  .interest-topline > span:last-child { text-align: right; }
-  .interest-art { width: 100%; height: 280px; margin: 22px 0 26px; perspective: 850px; isolation: isolate; }
-  .interest-copy h3 { font-size: clamp(23px, 2.1vw, 33px); line-height: 1.15; letter-spacing: -.04em; margin-bottom: 16px; }
-  .interest-copy p { color: #49616f; font-size: 13px; line-height: 1.8; margin: 0 0 15px; }
-  .interest-copy .interest-note { color: #226283; font: italic 24px/1.4 Georgia, serif; margin-top: 22px; }
-  .interest-favorites { display: flex; flex-wrap: wrap; gap: 7px; margin: 0 0 24px; padding: 0; list-style: none; }
-  .interest-favorites li { margin: 0; padding: 5px 8px; border: 1px solid #c5d4da; color: #345469; background: #ebf1f3; font: 10px/1.6 ui-monospace, Consolas, monospace; max-width: 100%; }
-  .interest-footer { margin-top: auto; padding-top: 19px; border-top: 1px solid #c2d1d7; color: #4c6879; font-size: 8px; }
+// Off the clock (/interests/): Aqua-framed City trading cards, widescreen open-world
+// frames, and interactive 3D Britpop vinyl sleeves.
 
-  .photo-print { display: block; position: relative; min-width: 0; overflow: hidden; background: #17364a; border: 1px solid #527f99; box-shadow: 0 10px 20px rgba(20, 49, 65, .14); text-decoration: none; }
-  .photo-print img { display: block; width: 100%; height: 100%; max-width: none; object-fit: cover; }
-  .photo-print::after { content: ""; position: absolute; inset: 0; pointer-events: none; background: linear-gradient(180deg, transparent 42%, rgba(4, 15, 23, .35) 65%, #07121d 100%); }
-  .photo-caption { position: absolute; z-index: 1; bottom: 14px; left: 10px; right: 7px; color: #fff; }
-  .photo-caption small { display: block; margin-bottom: 7px; color: #c8eafa; font-size: 7px; letter-spacing: .04em; }
-  .photo-caption strong { display: block; font-size: clamp(12px, 1.1vw, 18px); font-weight: 500; line-height: 1.2; letter-spacing: -.025em; overflow-wrap: anywhere; }
-  .interest-art a:focus-visible { z-index: 5; outline: 3px solid #226283; outline-offset: 4px; }
-  .football-gallery { display: flex; align-items: stretch; gap: 6px; }
-  .player-photo { flex: 1 1 0; }
-  .player-photo:nth-child(1) { margin-bottom: 16px; }
-  .player-photo:nth-child(2) { margin-top: 16px; }
-  .player-photo:nth-child(3) { margin-top: 8px; margin-bottom: 8px; }
-  .player-photo img { object-position: 50% 22%; }
-
-  .gaming-gallery::before { content: ""; position: absolute; inset: 25px 0; border: 1px solid #b0c7d1; border-radius: 50%; transform: rotate(-20deg); }
-  .game-photo { position: absolute; width: 55%; height: 86%; top: 7%; border: 4px solid #f4f7f6; outline: 1px solid #9eafb8; }
-  .game-photo--grace { left: 1%; transform: rotate(-7deg); }
-  .game-photo--grace img { object-position: 65% 30%; }
-  .game-photo--arthur { right: 1%; transform: rotate(7deg); }
-  .game-photo--arthur img { object-position: 51% 30%; }
-  .game-photo .photo-caption { left: 10px; bottom: 14px; }
-  .game-photo .photo-caption strong { font-size: clamp(17px, 1.4vw, 23px); }
-  .game-photo .photo-caption small { font-size: 7px; line-height: 1.4; }
-  .game-photo:focus-visible { z-index: 5; }
-
-  .album-gallery { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); align-content: center; gap: 12px 9px; padding: 10px 4px; }
-  .album-cover { display: block; position: relative; min-width: 0; aspect-ratio: 1; text-decoration: none; background: #d4dfe3; box-shadow: 1px 3px 0 #9bafb9, 0 7px 12px rgba(20, 49, 65, .16); }
-  .album-cover:nth-child(3n + 1) { transform: rotate(-5deg); }
-  .album-cover:nth-child(3n + 3) { transform: rotate(5deg); }
-  .album-cover img { display: block; position: relative; width: 100%; height: 100%; aspect-ratio: 1; object-fit: cover; }
-  .album-caption { position: absolute; bottom: calc(100% + 8px); left: 50%; width: max-content; max-width: 140px; transform: translateX(-50%); z-index: 2; padding: 8px 10px; background: #112e40; color: #fff; font-size: 10px; line-height: 1.35; opacity: 0; visibility: hidden; overflow-wrap: anywhere; box-shadow: 0 4px 10px rgba(20, 49, 65, .15); }
-  .album-caption::after { content: ""; position: absolute; left: 0; right: 0; bottom: -8px; height: 8px; }
-  .album-cover:nth-child(3n + 1) .album-caption { left: 0; transform: none; }
-  .album-cover:nth-child(3n) .album-caption { left: auto; right: 0; transform: none; }
-  .album-caption small { display: block; margin-top: 2px; color: #c8eafa; font-size: 9px; }
-  .album-cover:focus-visible .album-caption { opacity: 1; visibility: visible; }
-  .album-record { position: absolute; width: 90%; height: 90%; right: -9%; top: 5%; border-radius: 50%; border: 1px solid #4a6070; background: repeating-radial-gradient(circle, #102534 0 2px, #2e4554 3px 4px); }
-  .album-record::before { content: ""; position: absolute; inset: 31%; border-radius: 50%; border: 6px solid #82c8ef; background: #164465; }
-  .album-record::after { content: ""; position: absolute; inset: 0; border-radius: 50%; background: conic-gradient(from 25deg, transparent, rgba(255, 255, 255, .35) 50deg, transparent 85deg, transparent 200deg, rgba(255, 255, 255, .25) 240deg, transparent 275deg); }
-
-  .interest-gallery-note { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px 30px; padding: 22px 0 12px; color: #49616f; font-size: 8px; }
-  .interest-credits { border-top: 1px solid #b3c6d0; margin-top: 14px; color: #49616f; }
-  .interest-credits summary { cursor: pointer; width: fit-content; padding: 14px 0; min-height: 44px; font-size: 11px; }
-  .interest-credits summary:focus-visible { outline: 2px solid #226283; outline-offset: 3px; }
-  .interest-credit-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 26px; padding: 12px 0; }
-  .interest-credit-grid h3 { margin-bottom: 12px; font-size: 13px; }
-  .interest-credit-grid p { margin-bottom: 12px; font-size: 11px; line-height: 1.8; overflow-wrap: anywhere; }
-  .interest-credit-grid a { text-decoration: underline; text-underline-offset: 3px; }
+.player-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(#{"min(100%, 220px)"}, 1fr));
+  gap: 24px;
 }
 
-// Keyboard focus gets the same emphasis as hover. Touch keeps every image visible.
-@media (hover: hover) and (pointer: fine) {
-  .immersive-home .player-photo:hover { flex-grow: 1.8; }
-  .immersive-home .game-photo:hover { z-index: 5; }
-  .immersive-home .album-cover:hover { z-index: 5; }
-  .immersive-home .album-cover:hover .album-caption { opacity: 1; visibility: visible; }
+.player-card,
+.game-card {
+  position: relative;
+  display: block;
+  border: 1px solid var(--line);
+  background: var(--card);
+  color: var(--ink);
+  text-decoration: none;
+  box-shadow: var(--shadow-pixel);
+  transform: perspective(1000px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
+  transition: transform 0.45s var(--ease), box-shadow 0.35s var(--ease);
 }
-.immersive-home .player-photo:focus-visible { flex-grow: 1.8; }
 
-@media (prefers-reduced-motion: no-preference) {
-  html[data-motion="on"] .immersive-home {
-    .player-photo { transition: flex-grow 500ms cubic-bezier(.2, .8, .2, 1), transform 500ms ease; }
-    .game-photo, .album-cover { transition: transform 450ms cubic-bezier(.2, .8, .2, 1), box-shadow 450ms ease; }
-    .album-caption { transition: opacity 200ms ease; }
-    .interest-card.is-inview .player-photo img { animation: interest-photo-breathe 9s ease-in-out infinite alternate; }
-    .interest-card.is-inview .game-photo img { animation: interest-photo-breathe 12s ease-in-out infinite alternate; }
-    .interest-card.is-inview .album-record { animation: interest-record-spin 12s linear infinite; }
-    .game-photo:focus-visible { transform: translateY(-8px) rotate(0deg) scale(1.04); }
-    .album-cover:focus-visible { transform: translateY(-8px) rotate(0deg) scale(1.12); }
+.player-card.is-tilting,
+.game-card.is-tilting {
+  transition: transform 0.1s linear, box-shadow 0.25s;
+}
+
+.player-card {
+  padding: 8px 8px 0;
+}
+
+.player-card::before {
+  content: "MCFC // SKY BLUES";
+  display: block;
+  margin: -8px -8px 8px;
+  padding: 4px 10px;
+  border-bottom: 1px solid var(--line);
+  background: linear-gradient(90deg, var(--aqua), var(--panel));
+  color: #06205c;
+  font: 11px/1.2 var(--pixel);
+}
+
+.player-card img {
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  border: 1px solid var(--line);
+  object-fit: cover;
+  object-position: 50% 18%;
+}
+
+.player-card__label {
+  display: block;
+  padding: 12px 4px 14px;
+}
+
+.player-card__label small {
+  display: block;
+  color: var(--muted);
+  font: 11px/1.4 var(--pixel);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.player-card__label strong {
+  color: var(--ink);
+  font: 650 1.22rem/1.25 var(--serif);
+}
+
+.player-card::after,
+.game-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(280px circle at var(--mx, 50%) var(--my, 0%), rgba(120, 214, 251, 0.32), transparent 48%),
+    linear-gradient(115deg, transparent 35%, rgba(255, 255, 255, 0.16) 48%, transparent 60%);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s;
+}
+
+.player-card:hover,
+.player-card:focus-visible,
+.game-card:hover,
+.game-card:focus-visible {
+  color: var(--ink);
+  border-color: var(--line-strong);
+  box-shadow: var(--shadow-lift);
+}
+
+.player-card.is-tilting::after,
+.game-card.is-tilting::after,
+.player-card:focus-visible::after,
+.game-card:focus-visible::after {
+  opacity: 1;
+}
+
+.game-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(#{"min(100%, 320px)"}, 1fr));
+  gap: 24px;
+  margin-top: 24px;
+}
+
+.game-card {
+  overflow: hidden;
+  background: #081226;
+  color: #eefbff;
+}
+
+.game-card img {
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  object-fit: cover;
+}
+
+.game-card__label {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 36px 18px 16px;
+  background: linear-gradient(transparent, rgba(4, 12, 30, 0.88));
+}
+
+.game-card__label small {
+  display: block;
+  color: var(--aqua);
+  font: 11px/1.4 var(--pixel);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.game-card__label strong {
+  color: #ffffff;
+  font: 650 1.32rem/1.25 var(--serif);
+}
+
+.game-card:hover,
+.game-card:focus-visible {
+  color: #ffffff;
+}
+
+// Vinyl crate with sliding 33-RPM discs
+.crate {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 42px 54px;
+  padding: 10px 48px 10px 0;
+  perspective: 1400px;
+}
+
+.record-sleeve {
+  position: relative;
+  display: block;
+  color: var(--ink);
+  text-decoration: none;
+  transform-style: preserve-3d;
+}
+
+.record-sleeve img {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  aspect-ratio: 1;
+  border: 1px solid var(--line);
+  object-fit: cover;
+  box-shadow: 5px 5px 0 var(--sh2);
+  transform: rotateY(14deg);
+  transform-origin: left center;
+  transition: transform 0.6s var(--ease), box-shadow 0.6s var(--ease);
+}
+
+.record-sleeve__disc {
+  position: absolute;
+  z-index: 1;
+  top: 3%;
+  left: 3%;
+  width: 94%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background:
+    conic-gradient(from 20deg, transparent 0 18%, rgba(120, 214, 251, 0.22) 23%, transparent 28% 68%, rgba(255, 255, 255, 0.14) 73%, transparent 78%),
+    radial-gradient(circle, #eefbff 0 2.4%, var(--label, var(--crimson)) 2.8% 17%, #081226 17.5% 19%, transparent 19.5%),
+    repeating-radial-gradient(circle, #0d1628 0 1.5px, #1a2944 1.5px 3px);
+  box-shadow: 0 10px 20px -10px rgba(4, 12, 30, 0.65);
+  transition: transform 0.65s var(--ease);
+}
+
+.record-sleeve__label {
+  display: block;
+  margin-top: 14px;
+}
+
+.record-sleeve__label strong {
+  display: block;
+  font: 650 1.05rem/1.3 var(--serif);
+}
+
+.record-sleeve__label small {
+  color: var(--muted);
+  font: 12px/1.4 var(--pixel);
+}
+
+.record-sleeve:hover img,
+.record-sleeve:focus-visible img {
+  transform: rotateY(0deg) translateZ(16px);
+  box-shadow: 7px 7px 0 var(--sh2);
+}
+
+.record-sleeve:hover .record-sleeve__disc,
+.record-sleeve:focus-visible .record-sleeve__disc {
+  transform: translateX(42%) rotate(160deg);
+}
+
+.credits {
+  margin-top: 64px;
+}
+
+.credits summary {
+  color: var(--link);
+  font: 13px/1.4 var(--pixel);
+}
+
+.credits h3 {
+  margin-top: 18px;
+  font-size: 1.05rem;
+}
+
+.credits p {
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.credits__wide {
+  grid-column: 1 / -1;
+}
+
+@media (max-width: 760px) {
+  .crate {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 34px 40px;
+    padding-right: 28px;
   }
-  @media (hover: hover) and (pointer: fine) {
-    html[data-motion="on"] .immersive-home {
-      .player-photo:hover { transform: translateY(-5px); }
-      .game-photo:hover { transform: translateY(-8px) rotate(0deg) scale(1.04); }
-      .album-cover:hover { transform: translateY(-8px) rotate(0deg) scale(1.12); }
-    }
-  }
-}
-@keyframes interest-photo-breathe { from { transform: scale(1); } to { transform: scale(1.045); } }
-@keyframes interest-record-spin { to { transform: rotate(360deg); } }
-
-@media (max-width: 1100px) {
-  .immersive-home .interests-grid { gap: 15px; }
-  .immersive-home .interest-card { padding: 22px 18px; }
-  .immersive-home .interest-topline { font-size: 7px; }
-  .immersive-home .interest-art { height: 245px; }
-  .immersive-home .photo-caption { left: 7px; right: 4px; }
-  .immersive-home .photo-caption small { font-size: 6px; }
-}
-@media (max-width: 960px) {
-  .immersive-home .interests-grid { grid-template-columns: 1fr; gap: 22px; }
-  .immersive-home .interest-card { display: grid; grid-template-columns: minmax(190px, 1fr) minmax(0, 1fr); gap: 0 30px; padding: 26px; }
-  .immersive-home .interest-topline { grid-column: 1 / -1; font-size: 8px; }
-  .immersive-home .interest-art { grid-column: 1; grid-row: 2; align-self: center; height: 280px; margin: 22px 0; }
-  .immersive-home .interest-copy { grid-column: 2; grid-row: 2; padding: 27px 0 10px; }
-  .immersive-home .interest-copy h3 { font-size: 29px; }
-  .immersive-home .photo-caption strong { font-size: 15px; }
-  .immersive-home .interest-footer { grid-column: 1 / -1; }
-  .immersive-home .interest-credit-grid { grid-template-columns: 1fr; gap: 12px; }
-}
-@media (max-width: 560px) {
-  .immersive-home .interest-card { display: flex; padding: 25px; }
-  .immersive-home .interest-copy { padding: 0; }
-  .immersive-home .interest-copy h3 { font-size: 30px; }
-  .immersive-home .interest-art { flex-shrink: 0; height: 280px; margin: 22px 0 26px; }
-  .immersive-home .interest-footer { margin-top: 12px; }
-}
-@media (max-width: 360px) {
-  .immersive-home .interest-card { padding: 22px 18px; }
-  .immersive-home .interest-topline { font-size: 7px; }
-  .immersive-home .interest-copy h3 { font-size: 27px; }
-  .immersive-home .photo-caption strong { font-size: 13px; }
-  .immersive-home .interest-art { height: 250px; }
-}
-@media print {
-  .immersive-home .interests-grid { display: block; }
-  .immersive-home .interest-art, .immersive-home .interest-topline, .immersive-home .interest-footer, .immersive-home .interest-gallery-note { display: none; }
-  .immersive-home .interest-card { display: block; background: #fff; border: 1px solid #aaa; break-inside: avoid; padding: 16px; margin-bottom: 12px; }
-  .immersive-home .interest-copy { padding: 0; }
 }

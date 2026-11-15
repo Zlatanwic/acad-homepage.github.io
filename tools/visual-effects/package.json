@@ -7,7 +7,6 @@
     "test": "node --test *.test.mjs"
   },
   "devDependencies": {
-    "esbuild": "0.28.2",
-    "three": "0.186.0"
+    "esbuild": "0.28.2"
   }
 }

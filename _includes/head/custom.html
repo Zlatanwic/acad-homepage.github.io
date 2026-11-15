@@ -3,9 +3,25 @@
 <link rel="icon" type="image/png" sizes="16x16" href="{{ '/images/stadium-icon-16.png' | relative_url }}">
 <link rel="manifest" href="{{ '/images/site.webmanifest' | relative_url }}">
 
-<meta name="msapplication-TileColor" content="#000000">
-<meta name="theme-color" content="#081a32">
-<link rel="stylesheet" href="{{ '/assets/css/academicons.css' | relative_url }}"/>
+<meta name="theme-color" content="#ffffff">
+
+<script>
+  (function () {
+    var root = document.documentElement;
+    var theme = null;
+    var lang = 'en';
+    try {
+      theme = localStorage.getItem('kl-theme');
+      if (localStorage.getItem('kl-lang') === 'zh') lang = 'zh';
+    } catch (e) {}
+    if (theme !== 'dark' && theme !== 'light') {
+      theme = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    }
+    root.setAttribute('data-theme', theme);
+    root.setAttribute('data-lang', lang);
+    root.style.setProperty('--gbg', theme === 'dark' ? '#030711' : '#ffffff');
+  })();
+</script>
 
 {% if page.mathjax %}
 <script type="text/x-mathjax-config"> MathJax.Hub.Config({ TeX: { equationNumbers: { autoNumber: "all" } } }); </script>

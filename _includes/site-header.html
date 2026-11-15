@@ -1,0 +1,31 @@
+<header class="site-header">
+  <div class="site-header__inner">
+    <a class="brand" href="{{ '/' | relative_url }}"{% if page.url == '/' %} aria-current="page"{% endif %}>
+      <span class="brand__slash" aria-hidden="true">/</span><span class="brand__name">Kuo Li</span>
+    </a>
+    <nav class="site-nav" aria-label="Primary">
+      {% for item in site.data.navigation.main %}
+      {% assign current = false %}
+      {% if page.nav_id == item.id %}{% assign current = true %}{% endif %}
+      {% if item.id == 'blog' and page.blog %}{% assign current = true %}{% endif %}
+      <a href="{{ item.url | relative_url }}" data-legacy-destination="{{ item.id }}"{% if current %} aria-current="page"{% endif %}>{{ item.title | escape }}</a>
+      {% endfor %}
+    </nav>
+    <div class="site-prefs" id="prefs">
+      {% if page.url == '/' %}
+      <button class="glass glass--lang" type="button" data-lang-toggle aria-pressed="false" aria-label="切换桌面窗口为中文">
+        <span class="glass__glyph" aria-hidden="true">文/A</span>
+      </button>
+      {% endif %}
+      <button class="glass glass--theme" type="button" data-theme-toggle aria-pressed="false" aria-label="Switch to midnight compute mode">
+        <svg class="glass__icon glass__icon--moon" viewBox="0 0 16 16" width="15" height="15" aria-hidden="true" focusable="false">
+          <path d="M10.8 2.1a5.8 5.8 0 1 0 3.1 10.5A5.2 5.2 0 0 1 10.8 2.1Z" fill="currentColor"/>
+        </svg>
+        <svg class="glass__icon glass__icon--sun" viewBox="0 0 16 16" width="15" height="15" aria-hidden="true" focusable="false">
+          <circle cx="8" cy="8" r="3.1" fill="currentColor"/>
+          <path d="M8 1.2v2.1M8 12.7v2.1M1.2 8h2.1M12.7 8h2.1M3.2 3.2l1.5 1.5M11.3 11.3l1.5 1.5M12.8 3.2l-1.5 1.5M4.7 11.3l-1.5 1.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="square"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+</header>

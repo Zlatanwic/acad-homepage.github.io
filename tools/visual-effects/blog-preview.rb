@@ -36,16 +36,16 @@ rendered.each do |relative, generated|
   File.write(target, generated, encoding: 'UTF-8')
 end
 
-# Keep the shared assets local. Homepage runtime files are included as well, so
-# following a homepage link from an article does not produce missing resources.
-%w[blog.js motion.js legacy-routes.js].each do |filename|
+# Keep the shared assets local, including the homepage scene, so following a
+# homepage link from an article does not produce missing resources.
+%w[site.js scene.js blog.js legacy-routes.js].each do |filename|
   original = File.join(BlogBuildTest::ROOT, 'assets', 'js', filename)
   target = File.join(site_directory, 'assets', 'js', filename)
   FileUtils.mkdir_p(File.dirname(target))
   FileUtils.cp(original, target)
 end
 
-%w[images assets/images assets/fonts files].each do |relative|
+%w[images files].each do |relative|
   original = File.join(BlogBuildTest::ROOT, relative)
   next unless File.directory?(original)
 

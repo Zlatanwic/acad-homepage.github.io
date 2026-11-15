@@ -1,47 +1,47 @@
 ---
-layout: susun
 permalink: /projects/
-title: "Selected projects"
-archive_id: projects
-file_code: KL-04
-subtitle: "Engineering dossier"
+title: "Projects"
+nav_id: projects
+eyebrow: "Selected work"
+glyph: "</>"
 summary: "Ideas, in execution. Prototypes across LLM serving and agent runtimes."
 ---
 
-<section id="projects" aria-labelledby="projects-heading">
-  <p class="dossier-label">Selected work</p>
-  <h2 id="projects-heading">Built to make it work.</h2>
-  <div class="dossier-grid">
-    <article class="dossier-panel dossier-project" id="project-semserve">
-      <div class="dossier-project-banner" aria-hidden="true"><span>01</span>{% include dossier-emblem.html kind='projects' %}<small>SERVING / PROTOTYPE</small></div>
-      <p class="dossier-label">01 / LLM serving</p>
+<section class="section" id="projects" aria-labelledby="projects-heading">
+  <div class="section__head">
+    <h2 id="projects-heading">Built to make it work.</h2>
+  </div>
+  <div class="grid grid--2">
+    <article class="tile project" id="project-semserve" data-tilt>
+      <p class="kicker">01 · LLM serving</p>
       <h3>SemServe</h3>
       <p>An online inference system prototype that co-designs semantic priority and KV cache storage precision.</p>
       <ul>
         <li>Automatic SLO-aware tuning of semantic priorities.</li>
         <li>Tiered storage across FP16, INT8, and CPU offload.</li>
       </ul>
-      <div class="dossier-pipeline" role="group" aria-label="SemServe components"><span>Semantic priority</span><b aria-hidden="true">+</b><span>KV cache precision</span><b aria-hidden="true">→</b><span>Online inference</span></div>
-      <ul class="dossier-tags" aria-label="SemServe technologies"><li>PyTorch</li><li>Transformers</li><li>Qwen</li></ul>
+      <div class="flow" role="group" aria-label="SemServe components"><span>Semantic priority</span><b aria-hidden="true">+</b><span>KV cache precision</span><b aria-hidden="true">→</b><span>Online inference</span></div>
+      <ul class="chips" aria-label="SemServe technologies"><li>PyTorch</li><li>Transformers</li><li>Qwen</li></ul>
     </article>
-    <article class="dossier-panel dossier-project" id="project-skvm">
-      <div class="dossier-project-banner" aria-hidden="true"><span>02</span>{% include dossier-emblem.html kind='research' %}<small>COMPILATION / RUNTIME</small></div>
-      <p class="dossier-label">02 / Agent runtime</p>
+    <article class="tile project" id="project-skvm" data-tilt>
+      <p class="kicker">02 · Agent runtime</p>
       <h3>SkVM</h3>
       <p>A skill compilation and runtime system for heterogeneous LLMs and agent harnesses.</p>
       <ul>
         <li>Containerized execution for Terminal-Bench.</li>
         <li>Parallelism classification and multi-role optimization across AOT and JIT stages.</li>
       </ul>
-      <div class="dossier-pipeline" role="group" aria-label="SkVM components"><span>Skills</span><b aria-hidden="true">→</b><span>AOT / JIT</span><b aria-hidden="true">→</b><span>Agent runtime</span></div>
-      <ul class="dossier-tags" aria-label="SkVM technologies"><li>TypeScript</li><li>Bun</li><li>Docker</li></ul>
+      <div class="flow" role="group" aria-label="SkVM components"><span>Skills</span><b aria-hidden="true">→</b><span>AOT / JIT</span><b aria-hidden="true">→</b><span>Agent runtime</span></div>
+      <ul class="chips" aria-label="SkVM technologies"><li>TypeScript</li><li>Bun</li><li>Docker</li></ul>
     </article>
   </div>
 </section>
 
-<section class="dossier-panel" id="publications" aria-labelledby="publications-heading">
-  <p class="dossier-label">Publication record</p>
-  <h2 id="publications-heading">Publications</h2>
-  <p>Publication updates to come. In the meantime, explore the selected projects above.</p>
-  <a class="dossier-link" href="https://github.com/Zlatanwic" target="_blank" rel="noopener noreferrer">Find me on GitHub <span aria-hidden="true">↗</span></a>
+<section class="tile tile--quiet callout" id="publications" aria-labelledby="publications-heading">
+  <div>
+    <p class="kicker">Publication record</p>
+    <h2 id="publications-heading">Publications</h2>
+    <p>Publication updates to come. In the meantime, explore the selected projects above.</p>
+  </div>
+  <a class="btn btn--ghost" href="https://github.com/{{ site.author.github }}" target="_blank" rel="noopener noreferrer">Find me on GitHub <span aria-hidden="true">↗</span></a>
 </section>

@@ -1,13 +1,21 @@
+# Primary navigation. `id` matches `nav_id` in each page's front matter and is
+# used by assets/js/legacy-routes.js to resolve old homepage bookmarks.
 main:
-  - title: "Profile"
-    url: "/profile/"
-  - title: "Research"
-    url: "/research/"
-  - title: "Education & Experience"
-    url: "/education/"
-  - title: "Projects"
-    url: "/projects/"
-  - title: "Beyond Research"
-    url: "/interests/"
-  - title: "Blog"
-    url: "/blog/"
+  - id: profile
+    title: About
+    url: /profile/
+  - id: research
+    title: Research
+    url: /research/
+  - id: education
+    title: Path
+    url: /education/
+  - id: projects
+    title: Projects
+    url: /projects/
+  - id: interests
+    title: Off the clock
+    url: /interests/
+  - id: blog
+    title: Writing
+    url: /blog/

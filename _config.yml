@@ -1,118 +1,52 @@
-# Welcome to Jekyll!
-#
-# This config file is meant for settings that affect your entire site, values
-# which you are expected to set up once and rarely need to edit after that.
-# For technical reasons, this file is *NOT* reloaded automatically when you use
-# `jekyll serve`. If you change this file, please restart the server process.
+# Site settings. Restart `jekyll serve` after editing this file.
+title       : "Kuo Li"
+description : "Kuo Li builds systems for intelligent models: LLM inference, GPU kernels, compilers, and agent infrastructure. Incoming Ph.D. student at Tsinghua University."
+locale      : "en-US"
+repository  : "Zlatanwic/acad-homepage.github.io"
+url         : "https://zlatanwic.github.io"
+baseurl     : "/acad-homepage.github.io"
 
-# Site Settings
-title                    : "Kuo Li | Academic Homepage"
-description              : "Kuo Li is an undergraduate student at Tongji University working on MLSys and AI infrastructure."
-locale                   : "en-US"
-repository               : "Zlatanwic/acad-homepage.github.io"
-url                      : "https://zlatanwic.github.io"
-baseurl                  : "/acad-homepage.github.io"
-google_scholar_stats_use_cdn : true
+# Optional services (leave empty to disable)
+google_analytics_id      :
+google_site_verification :
+bing_site_verification   :
+baidu_site_verification  :
 
-# google analytics
-google_analytics_id      :  # get google_analytics_id from https://analytics.google.com/analytics/
-
-# SEO Related
-google_site_verification :  # get google_site_verification from https://search.google.com/search-console/about
-bing_site_verification   :  # get bing_site_verification from https://www.bing.com/webmasters/about
-baidu_site_verification  :  # get baidu_site_verification from https://ziyuan.baidu.com/login/index?u=/site/index
-
-# Site Author
 author:
-  name             : "Kuo Li"
-  avatar           : "/images/kuo-li-profile.jpg"
-  bio              : "MLSys / AI Infrastructure"
-  location         : "Shanghai, China"
-  employer         : "Tongji University"
-  pubmed           : 
-  googlescholar    :
-  email            : "2353113@tongji.edu.cn"
-  email_secondary  : "rodebiau9320@gmail.com"
-  researchgate     :  # e.g., "https://www.researchgate.net/profile/yourprofile"
-  uri              :
-  bitbucket        :
-  codepen          :
-  dribbble         :
-  flickr           :
-  facebook         :
-  foursquare       :
-  github           : "Zlatanwic"
-  google_plus      :
-  keybase          :
-  instagram        :
-  impactstory      : # e.g., "https://profiles.impactstory.org/u/xxxx-xxxx-xxxx-xxxx"
-  lastfm           :
-  linkedin         : # e.g., "linkedin username"
-  dblp             : # e.g., "https://dblp.org/pid/xx/xxxx.html"
-  orcid            : # e.g., "https://orcid.org/xxxx"
-  pinterest        :
-  soundcloud       :
-  stackoverflow    : # http://stackoverflow.com/users/123456/username
-  steam            :
-  tumblr           :
-  twitter          : 
-  vine             :
-  weibo            :
-  xing             :
-  youtube          :
-  wikipedia        :
+  name            : "Kuo Li"
+  avatar          : "/images/kuo-li-profile.jpg"
+  location        : "Shanghai, China"
+  email           : "2353113@tongji.edu.cn"
+  email_secondary : "rodebiau9320@gmail.com"
+  github          : "Zlatanwic"
 
-
-# Reading Files
+# Reading files
 include:
-  - .htaccess
   - _pages
   - files
 exclude:
+  - README.md
+  - Gemfile
+  - Gemfile.lock
+  - LICENSE
+  - run_server.sh
   - docs
   - google_scholar_crawler
-  - "*.sublime-project"
-  - "*.sublime-workspace"
-  - .asset-cache
-  - .bundle
-  - .jekyll-assets-cache
-  - .sass-cache
   - .github
-  - CHANGELOG
-  - Capfile
-  - Gemfile
-  - Gruntfile.js
-  - LICENSE
-  - README
-  - Rakefile
-  - assets/js/_main.js
-  - assets/js/plugins
-  - assets/js/vendor
+  - .sass-cache
+  - .jekyll-cache
   - assets/js/src
-  - tools/visual-effects
-  - config
-  - gulpfile.js
-  - log
+  - tools
   - node_modules
-  - package.json
   - tmp
   - vendor
-keep_files:
-  - .git
-  - .svn
 encoding: "utf-8"
 markdown_ext: "markdown,mkdown,mkdn,mkd,md"
-
 
 # Conversion
 markdown: kramdown
 highlighter: rouge
-lsi: false
 excerpt_separator: "\n\n"
-incremental: false
-
-
-# Markdown Processing
 kramdown:
   input: GFM
   hard_wrap: false
@@ -121,60 +55,38 @@ kramdown:
   entity_output: as_char
   toc_levels: 1..6
   smart_quotes: lsquo,rsquo,ldquo,rdquo
-  enable_coderay: false
 
-# Defaults
 defaults:
-  # _pages
   - scope:
       path: ""
       type: pages
     values:
       layout: default
-      author_profile: true
-
   # Markdown blog posts (drafts are never published by default).
   - scope:
       path: ""
       type: posts
     values:
       layout: post
-      author_profile: false
       blog: true
       lang: en
       permalink: /blog/:year/:month/:day/:title/
 
-
-# Sass/SCSS
 sass:
   sass_dir: _sass
-  style: compressed # http://sass-lang.com/documentation/file.SASS_REFERENCE.html#output_style
+  style: compressed
+  # Dart Sass (local Jekyll 4) only; GitHub Pages' converter ignores this key.
+  silence_deprecations: [import]
 
-
-# Outputting
 permalink: /:categories/:title/
-timezone: Asia/Shanghai # http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+timezone: Asia/Shanghai
 
-
-# Plugins
 plugins:
-  - jekyll-paginate
   - jekyll-sitemap
-  - jekyll-gist
   - jekyll-feed
   - jekyll-redirect-from
 # mimic GitHub Pages with --safe
 whitelist:
-  - jekyll-paginate
   - jekyll-sitemap
-  - jekyll-gist
   - jekyll-feed
-  - jemoji
-
-
-# HTML Compression
-# - http://jch.penibelst.de/
-compress_html:
-  clippings: all
-  ignore:
-    envs: development
+  - jekyll-redirect-from

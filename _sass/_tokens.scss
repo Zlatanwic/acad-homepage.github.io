@@ -68,10 +68,6 @@
   --glass-fill: rgba(255, 255, 255, 0.56);
   --glass-ink: #0a2a78;
 
-  // 1-bit pixel CAD crosshair cursor
-  --xcur: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='17' height='17' shape-rendering='crispEdges'%3E%3Cpath d='M7 0h3v6H7zM7 11h3v6H7zM0 7h6v3H0zM11 7h6v3h-6z' fill='%23ffffff'/%3E%3Cpath d='M8 1h1v5H8zM8 11h1v5H8zM1 8h5v1H1zM11 8h5v1h-5zM8 8h1v1H8z' fill='%230a2a78'/%3E%3C/svg%3E") 8 8, crosshair;
-  --xcur-link: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='17' height='17' shape-rendering='crispEdges'%3E%3Cpath d='M6 0h5v6H6zM6 11h5v6H6zM0 6h6v5H0zM11 6h6v5h-6z' fill='%23ffffff'/%3E%3Cpath d='M8 1h1v5H8zM8 11h1v5H8zM1 8h5v1H1zM11 8h5v1h-5z' fill='%230a2a78'/%3E%3Crect x='7' y='7' width='3' height='3' fill='%23e0304e'/%3E%3C/svg%3E") 8 8, pointer;
-
   --max: 1180px;
   --ease: cubic-bezier(0.22, 1, 0.36, 1);
   --spring: cubic-bezier(0.3, 1.8, 0.45, 1);
@@ -107,6 +103,4 @@ html[data-theme="dark"] {
   --header-bg: rgba(6, 16, 38, 0.80);
   --glass-fill: rgba(11, 28, 62, 0.68);
   --glass-ink: #dff4ff;
-
-  --xcur: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='17' height='17' shape-rendering='crispEdges'%3E%3Cpath d='M7 0h3v6H7zM7 11h3v6H7zM0 7h6v3H0zM11 7h6v3h-6z' fill='%23030711'/%3E%3Cpath d='M8 1h1v5H8zM8 11h1v5H8zM1 8h5v1H1zM11 8h5v1h-5zM8 8h1v1H8z' fill='%2378d6fb'/%3E%3C/svg%3E") 8 8, crosshair;
 }

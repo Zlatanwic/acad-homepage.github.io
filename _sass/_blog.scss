@@ -16,12 +16,13 @@
 }
 
 .blog-aside h2 {
-  font-size: 1.3rem;
+  font-size: 16px;
 }
 
 .blog-aside p:not(.kicker) {
   color: var(--ink-2);
-  font-size: 0.94rem;
+  font-size: 13px;
+  line-height: 1.68;
 }
 
 .blog-controls {
@@ -50,8 +51,7 @@
   border: 1px solid var(--line);
   background: var(--card);
   color: var(--ink);
-  font: inherit;
-  font-size: 0.94rem;
+  font: 400 13px/1.4 var(--pixel);
   box-shadow: 3px 3px 0 var(--sh1);
 }
 
@@ -81,7 +81,7 @@
 
 .blog-card__title {
   margin: 0 0 10px;
-  font-size: 1.48rem;
+  font: 400 18px/1.35 var(--pixel);
 }
 
 .blog-card__title a {
@@ -101,6 +101,8 @@
 
 .blog-card p {
   color: var(--ink-2);
+  font-size: 13.5px;
+  line-height: 1.7;
 }
 
 .blog-card .chips {
@@ -159,17 +161,23 @@
 .post__title {
   margin: 0 0 16px;
   font-family: var(--serif);
+  font-weight: 650;
   font-size: clamp(2.2rem, 4.8vw, 3.4rem);
   line-height: 1.08;
   letter-spacing: -0.02em;
   overflow-wrap: anywhere;
+  font-synthesis: weight style;
+  -webkit-font-smoothing: antialiased;
 }
 
 .post__deck {
   color: var(--ink-2);
   font-family: var(--serif);
+  font-weight: 400;
   font-size: 1.2rem;
   line-height: 1.55;
+  font-synthesis: weight style;
+  -webkit-font-smoothing: antialiased;
 }
 
 .post__layout {
@@ -245,7 +253,7 @@
 }
 
 .post__pager strong {
-  font: 650 1.1rem/1.35 var(--serif);
+  font: 400 15px/1.4 var(--pixel);
 }
 
 .post__pager-next {
@@ -259,6 +267,25 @@
   font-size: 1.09rem;
   line-height: 1.82;
   overflow-wrap: anywhere;
+  font-synthesis: weight style;
+  -webkit-font-smoothing: antialiased;
+}
+
+.prose strong,
+.prose b {
+  font-weight: 650;
+  color: inherit;
+}
+
+.prose h2,
+.prose h3,
+.prose h4 {
+  font-family: var(--serif);
+  font-weight: 650;
+  line-height: 1.2;
+  letter-spacing: -0.012em;
+  font-synthesis: weight style;
+  -webkit-font-smoothing: antialiased;
 }
 
 .prose h2 {

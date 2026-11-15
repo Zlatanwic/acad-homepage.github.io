@@ -7,10 +7,13 @@
 html {
   background-color: var(--gbg, var(--void));
   color: var(--ink);
-  font: 400 16px/1.68 var(--sans);
+  font: 400 14px/1.72 var(--pixel);
+  font-variant-ligatures: none;
+  font-feature-settings: "liga" 0, "calt" 0;
+  font-synthesis: none;
+  -webkit-font-smoothing: none;
   scroll-behavior: smooth;
   text-size-adjust: 100%;
-  -webkit-font-smoothing: antialiased;
 }
 
 // 1-bit pixel CAD crosshair cursors declared directly on standard CSS properties
@@ -102,10 +105,21 @@ h3,
 h4 {
   margin: 0 0 0.42em;
   color: var(--ink);
-  font-family: var(--serif);
-  font-weight: 650;
-  line-height: 1.18;
-  letter-spacing: -0.012em;
+  font-family: var(--pixel);
+  font-weight: 400;
+  line-height: 1.26;
+  letter-spacing: 0.01em;
+}
+
+strong,
+b {
+  font-weight: 400;
+  color: var(--ink);
+}
+
+body.site--home .win strong,
+body.site--home .win b {
+  color: var(--deep);
 }
 
 p,

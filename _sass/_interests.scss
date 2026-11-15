@@ -63,7 +63,7 @@
 
 .player-card__label strong {
   color: var(--ink);
-  font: 650 1.22rem/1.25 var(--serif);
+  font: 400 16px/1.32 var(--pixel);
 }
 
 .player-card::after,
@@ -133,7 +133,7 @@
 
 .game-card__label strong {
   color: #ffffff;
-  font: 650 1.32rem/1.25 var(--serif);
+  font: 400 17px/1.32 var(--pixel);
 }
 
 .game-card:hover,
@@ -194,7 +194,7 @@
 
 .record-sleeve__label strong {
   display: block;
-  font: 650 1.05rem/1.3 var(--serif);
+  font: 400 15px/1.35 var(--pixel);
 }
 
 .record-sleeve__label small {
@@ -224,12 +224,13 @@
 
 .credits h3 {
   margin-top: 18px;
-  font-size: 1.05rem;
+  font-size: 15px;
 }
 
 .credits p {
   color: var(--muted);
-  font-size: 0.9rem;
+  font-size: 12.5px;
+  line-height: 1.68;
 }
 
 .credits__wide {

@@ -1,0 +1,192 @@
+﻿Copyright (c) 2022, Idrees Hassan (https://gi
+thub.com/IdreesInc/Monocraft)
+
+This Font Soft
+ware is licensed under the SIL Open Font Lice
+nse, Version 1.1.
+This license is copied belo
+w, and is also available with a FAQ at:
+http:
+//scripts.sil.org/OFL
+
+
+---------------------
+--------------------------------------
+SIL OP
+EN FONT LICENSE Version 1.1 - 26 February 200
+7
+-------------------------------------------
+----------------
+
+PREAMBLE
+The goals of the O
+pen Font License (OFL) are to stimulate world
+wide
+development of collaborative font projec
+ts, to support the font creation
+efforts of a
+cademic and linguistic communities, and to pr
+ovide a free and
+open framework in which font
+s may be shared and improved in partnership
+w
+ith others.
+
+The OFL allows the licensed font
+s to be used, studied, modified and
+redistrib
+uted freely as long as they are not sold by t
+hemselves. The
+fonts, including any derivativ
+e works, can be bundled, embedded,
+redistribu
+ted and/or sold with any software provided th
+at any reserved
+names are not used by derivat
+ive works. The fonts and derivatives,
+however
+, cannot be released under any other type of 
+license. The
+requirement for fonts to remain 
+under this license does not apply
+to any docu
+ment created using the fonts or their derivat
+ives.
+
+DEFINITIONS
+"Font Software" refers to 
+the set of files released by the Copyright
+Ho
+lder(s) under this license and clearly marked
+ as such. This may
+include source files, buil
+d scripts and documentation.
+
+"Reserved Font 
+Name" refers to any names specified as such a
+fter the
+copyright statement(s).
+
+"Original V
+ersion" refers to the collection of Font Soft
+ware components as
+distributed by the Copyrig
+ht Holder(s).
+
+"Modified Version" refers to a
+ny derivative made by adding to, deleting,
+or
+ substituting -- in part or in whole -- any o
+f the components of the
+Original Version, by 
+changing formats or by porting the Font Softw
+are to a
+new environment.
+
+"Author" refers to
+ any designer, engineer, programmer, technica
+l
+writer or other person who contributed to t
+he Font Software.
+
+PERMISSION & CONDITIONS
+Pe
+rmission is hereby granted, free of charge, t
+o any person obtaining
+a copy of the Font Sof
+tware, to use, study, copy, merge, embed, mod
+ify,
+redistribute, and sell modified and unmo
+dified copies of the Font
+Software, subject t
+o the following conditions:
+
+1) Neither the F
+ont Software nor any of its individual compon
+ents,
+in Original or Modified Versions, may b
+e sold by itself.
+
+2) Original or Modified Ve
+rsions of the Font Software may be bundled,
+r
+edistributed and/or sold with any software, p
+rovided that each copy
+contains the above cop
+yright notice and this license. These can be
+
+included either as stand-alone text files, hu
+man-readable headers or
+in the appropriate ma
+chine-readable metadata fields within text or
+
+binary files as long as those fields can be 
+easily viewed by the user.
+
+3) No Modified Ve
+rsion of the Font Software may use the Reserv
+ed Font
+Name(s) unless explicit written permi
+ssion is granted by the corresponding
+Copyrig
+ht Holder. This restriction only applies to t
+he primary font name as
+presented to the user
+s.
+
+4) The name(s) of the Copyright Holder(s)
+ or the Author(s) of the Font
+Software shall 
+not be used to promote, endorse or advertise 
+any
+Modified Version, except to acknowledge t
+he contribution(s) of the
+Copyright Holder(s)
+ and the Author(s) or with their explicit wri
+tten
+permission.
+
+5) The Font Software, modif
+ied or unmodified, in part or in whole,
+must 
+be distributed entirely under this license, a
+nd must not be
+distributed under any other li
+cense. The requirement for fonts to
+remain un
+der this license does not apply to any docume
+nt created
+using the Font Software.
+
+TERMINAT
+ION
+This license becomes null and void if any
+ of the above conditions are
+not met.
+
+DISCLA
+IMER
+THE FONT SOFTWARE IS PROVIDED "AS IS", W
+ITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLI
+ED, INCLUDING BUT NOT LIMITED TO ANY WARRANTI
+ES OF
+MERCHANTABILITY, FITNESS FOR A PARTICUL
+AR PURPOSE AND NONINFRINGEMENT
+OF COPYRIGHT, 
+PATENT, TRADEMARK, OR OTHER RIGHT. IN NO EVEN
+T SHALL THE
+COPYRIGHT HOLDER BE LIABLE FOR AN
+Y CLAIM, DAMAGES OR OTHER LIABILITY,
+INCLUDIN
+G ANY GENERAL, SPECIAL, INDIRECT, INCIDENTAL,
+ OR CONSEQUENTIAL
+DAMAGES, WHETHER IN AN ACTI
+ON OF CONTRACT, TORT OR OTHERWISE, ARISING
+FR
+OM, OUT OF THE USE OR INABILITY TO USE THE FO
+NT SOFTWARE OR FROM
+OTHER DEALINGS IN THE FON
+T SOFTWARE.
+
+

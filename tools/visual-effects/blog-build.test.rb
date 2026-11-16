@@ -2,7 +2,8 @@
 
 # Run from any directory with: ruby tools/visual-effects/blog-build.test.rb
 # Fixtures are created only in a disposable OS temporary directory. No test post
-# is ever written into the real site's _posts or _site directories.
+# is ever written into the real site's _posts or _site directories. This is an
+# integration smoke test; CI's production-parity job enforces Gemfile.lock.
 ENV['JEKYLL_NO_BUNDLER_REQUIRE'] = 'true'
 
 require 'fileutils'
@@ -133,8 +134,6 @@ class BlogBuildTest < Minitest::Test
         'source' => source,
         'destination' => destination,
         'config' => File.join(source, '_config.yml'),
-        'plugins' => [],
-        'whitelist' => [],
         'quiet' => true,
         'disable_disk_cache' => true,
         # Silence the legacy theme's Sass migration warnings, not build errors.
@@ -185,12 +184,23 @@ class BlogBuildTest < Minitest::Test
     refute script_sources(document).any? { |source| source.match?(forbidden) }, 'reading pages must not load the 3D runtime'
     assert_empty document.css('[data-reveal], [data-bits-blur]'), 'content must be visible without an animation controller'
   end
+  def test_configured_jekyll_plugins_are_active
+    files = self.class.render(with_posts: false)
+    assert files.key?('sitemap.xml'), 'jekyll-sitemap must generate the sitemap'
+    assert files.key?('feed.xml'), 'jekyll-feed must generate the compatibility Atom feed'
+    assert files.key?('redirects.json'), 'jekyll-redirect-from must generate the redirect map'
+  end
+
   def test_homepage_has_one_title_navigation_and_a_progressive_3d_scene
     document = html('index.html', with_posts: false)
     assert_equal 1, document.css('h1').length
     assert_equal '/Kuo Li', document.at_css('.brand')&.text&.gsub(/\s+/, ' ')&.strip
     assert document.at_css('button.glass[data-lang-toggle]'), 'homepage offers bilingual desk toggle'
     assert document.at_css('button.glass[data-theme-toggle]'), 'homepage offers cyanotype/void theme toggle'
+    assert_equal 'Chinese desk copy', document.at_css('[data-lang-toggle]')&.[]('aria-label')
+    assert_equal 'Midnight compute mode', document.at_css('[data-theme-toggle]')&.[]('aria-label')
+    assert_equal 'false', document.at_css('[data-lang-toggle]')&.[]('aria-pressed')
+    assert_equal 'false', document.at_css('[data-theme-toggle]')&.[]('aria-pressed')
     ARCHIVE_ROUTES.each do |route|
       assert document.at_css("nav.site-nav a[href='#{BASE}#{route}'][data-legacy-destination]"), "homepage navigation is missing #{route}"
     end
@@ -203,10 +213,13 @@ class BlogBuildTest < Minitest::Test
     assert scene.at_css('svg.scene__fallback[role="img"]'), 'a static cyanotype blueprint is shown before and without WebGL'
     refute_empty scene.at_css('figcaption').text.strip
     labels = scene.css('[data-scene-label]')
-    assert_equal %w[stadium spire kv gpu], labels.map { |label| label['data-scene-label'] }
+    assert_equal %w[etihad turntable corridor tensor], labels.map { |label| label['data-scene-label'] }
     assert labels.all? { |label| label['aria-hidden'] == 'true' }
+    assert_equal '33 RPM Motif', document.at_css('[data-scene-label="turntable"]')&.text&.strip
+    assert_includes scene.at_css('figcaption').text, 'bullet-time', 'the platter is described as a stylized motif, not a physical 33 RPM simulation'
+    assert document.at_css('button.stage-motion-btn[data-scene-motion][hidden]'), 'homepage includes progressive 3D pause control'
     assert_equal 6, document.css('#desk .win').length, 'homepage desk hosts six staggered Aqua workstation windows'
-    assert document.at_css('#sanctuary #back-top[href="#top"]'), 'homepage ends with the GPU sanctuary return-to-top cue'
+    assert document.at_css('#tensor-core #back-top[href="#top"]'), 'homepage ends with the 3D Tensor Core return-to-top cue'
     assert_empty document.css('canvas'), 'the canvas is created only by JavaScript'
     assert_equal ["#{BASE}/assets/js/site.js", "#{BASE}/assets/js/legacy-routes.js"], script_sources(document)
 
@@ -216,6 +229,8 @@ class BlogBuildTest < Minitest::Test
     css = output('assets/css/main.css', with_posts: false)
     assert_includes css, '.tile'
     assert_includes css, '.win'
+    assert_match(/\.blog-controls\[hidden\]\s*\{[^}]*display:\s*none/, css, 'hidden blog filters must stay hidden despite display: grid')
+    assert_match(/html\.is-scrolled \.hero-stage__hud:not\(:focus-within\):not\(\.has-motion-control\)/, css, 'the animating Pause 3D control must remain reachable after scrolling')
     refute_match(/fa-solid|academicons|susy/, css, 'legacy theme styles must not ship')
   end
   def test_pages_are_independent_accessible_documents_with_native_navigation

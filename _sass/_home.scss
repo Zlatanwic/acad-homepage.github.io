@@ -1,6 +1,7 @@
-// Homepage: Full-viewport 3D WebGL stage (#gl), Act I architectural panorama,
-// Acts II-III two-lane staggered Aqua workstation windows (#desk), tilted
-// cyanotype clippings, and Act IV phase-locked GPU blade flythrough (#sanctuary).
+// Homepage: Full-viewport 3D WebGL stage (#gl), Act I Etihad Stadium interior
+// pitch panorama, Acts II-III two-lane staggered Aqua workstation windows (#desk)
+// framing the 33 RPM-styled bullet-time turntable, Tsinghua Old Gate & Roofline monument, and
+// Act IV phase-locked GPU blade flythrough into the 3D Tensor Core (#tensor-core).
 
 .stage {
   position: fixed;
@@ -58,10 +59,10 @@ html.glon .scene-label {
   transition: opacity 0.35s ease;
 }
 
-.scene-label[data-scene-label="stadium"] { left: 14%; top: 34%; }
-.scene-label[data-scene-label="spire"] { right: 20%; top: 18%; }
-.scene-label[data-scene-label="kv"] { left: 26%; bottom: 26%; }
-.scene-label[data-scene-label="gpu"] { right: 26%; bottom: 16%; }
+.scene-label[data-scene-label="etihad"] { left: 16%; top: 32%; }
+.scene-label[data-scene-label="turntable"] { right: 16%; top: 22%; }
+.scene-label[data-scene-label="corridor"] { left: 22%; bottom: 24%; }
+.scene-label[data-scene-label="tensor"] { right: 22%; bottom: 16%; }
 
 // If JS is disabled, make the stage an inline banner above the two-lane desk
 html.no-js .stage {
@@ -72,24 +73,27 @@ html.no-js .stage {
 
 html.no-js .hero-stage {
   min-height: auto;
+  margin-bottom: 0;
   padding: 24px 20px 12px;
 }
 
-html.no-js .sanctuary {
+html.no-js .tensor-core {
   min-height: auto;
   padding: 28px 20px;
 }
 
-// Act I: Unobstructed Architectural Panorama Spacer
+// Act I: Etihad Stadium Pitch Skim & North Roof Soar Spacer
 .hero-stage {
   position: relative;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-  min-height: 92svh;
+  min-height: 100vh;
+  min-height: 100dvh;
   max-width: 1380px;
-  margin: 0 auto;
-  padding: 96px clamp(16px, 3vw, 32px) 28px;
+  margin: 0 auto 16vh;
+  margin-bottom: 16dvh;
+  padding: 96px clamp(16px, 3vw, 32px) 24px;
   pointer-events: none;
 }
 
@@ -101,7 +105,13 @@ html.no-js .sanctuary {
   color: var(--deep);
   box-shadow: 4px 4px 0 var(--sh1);
   pointer-events: auto;
-  transition: opacity 0.3s ease, transform 0.3s ease;
+  transition: opacity 0.3s ease;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .hero-stage__hud {
+    transition: opacity 0.3s ease, transform 0.3s ease;
+  }
 }
 
 html[data-theme="dark"] .hero-stage__hud {
@@ -109,10 +119,25 @@ html[data-theme="dark"] .hero-stage__hud {
   color: #dff4ff;
 }
 
-html.is-scrolled .hero-stage__hud {
+// Keep the HUD pointer-reachable while its Pause 3D control is shown; the
+// fixed WebGL stage remains visible and animating after the hero scrolls away.
+html.is-scrolled .hero-stage__hud:not(:focus-within):not(.has-motion-control) {
   opacity: 0;
-  transform: translateY(-8px);
   pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html.is-scrolled .hero-stage__hud:not(:focus-within):not(.has-motion-control) {
+    transform: translateY(-8px);
+  }
+}
+
+.hero-stage__bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
 }
 
 .hero-stage__tag {
@@ -130,6 +155,44 @@ html.is-scrolled .hero-stage__hud {
   background: var(--crimson);
 }
 
+.stage-motion-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-block-size: 24px;
+  min-inline-size: 24px;
+  padding: 3px 9px;
+  border: 1px solid var(--line);
+  background: var(--pale);
+  color: var(--deep);
+  font: 11px/1.2 var(--pixel);
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  box-shadow: 2px 2px 0 var(--sh1);
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.stage-motion-btn[hidden] {
+  display: none;
+}
+
+.stage-motion-btn:hover,
+.stage-motion-btn:focus-visible {
+  background: var(--aqua);
+  color: #06205c;
+}
+
+html[data-theme="dark"] .stage-motion-btn {
+  background: rgba(14, 34, 74, 0.92);
+  color: #dff4ff;
+}
+
+html[data-theme="dark"] .stage-motion-btn:hover,
+html[data-theme="dark"] .stage-motion-btn:focus-visible {
+  background: var(--aqua);
+  color: #06205c;
+}
+
 .hero-stage__sub {
   margin: 4px 0 0;
   color: var(--mute);
@@ -142,6 +205,8 @@ html.is-scrolled .hero-stage__hud {
   flex-direction: column;
   align-items: center;
   gap: 3px;
+  min-block-size: 24px;
+  min-inline-size: 24px;
   margin-top: 16px;
   padding: 6px 14px;
   border: 1px solid var(--line);
@@ -153,8 +218,13 @@ html.is-scrolled .hero-stage__hud {
   text-transform: uppercase;
   box-shadow: 3px 3px 0 var(--sh2);
   pointer-events: auto;
-  animation: cue-bob 2.2s ease-in-out infinite;
   transition: opacity 0.25s ease;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .scroll-cue {
+    animation: cue-bob 2.2s ease-in-out infinite;
+  }
 }
 
 .scroll-cue b {
@@ -163,7 +233,7 @@ html.is-scrolled .hero-stage__hud {
   line-height: 1;
 }
 
-html.is-scrolled .scroll-cue {
+html.is-scrolled .scroll-cue:not(:focus-visible) {
   opacity: 0;
   pointer-events: none;
 }
@@ -174,8 +244,8 @@ html.is-scrolled .scroll-cue {
 }
 
 // Acts II & III: Asymmetric Two-Lane Aqua Workstation Desk
-// Leaves a generous center sightline corridor so the Spire, Etihad stay-cables,
-// crimson pendulum, and GPU intake fan remain unobstructed between window lanes.
+// Leaves a generous center sightline corridor so the 33 RPM-styled bullet-time Turntable, Tsinghua Old Gate,
+// Roofline Monument, and GPU intake fan remain unobstructed between window lanes.
 .desk {
   position: relative;
   display: grid;
@@ -192,11 +262,13 @@ html.is-scrolled .scroll-cue {
 .desk__lane {
   display: grid;
   gap: clamp(64px, 11vh, 118px);
+  gap: clamp(64px, 11dvh, 118px);
 }
 
 // Stagger the right lane downward so windows alternate Left -> Right -> Left -> Right
 .desk__lane--right {
   margin-top: clamp(130px, 20vh, 210px);
+  margin-top: clamp(130px, 20dvh, 210px);
 }
 
 // Opaque Aqua Workstation Window (.win) — zero backdrop-filter, hard pixel shadow
@@ -342,6 +414,8 @@ html.is-scrolled .scroll-cue {
   display: inline-flex;
   align-items: center;
   gap: 6px;
+  min-block-size: 24px;
+  min-inline-size: 24px;
   padding: 6px 10px;
   border: 1px solid var(--line);
   background: #ffffff;
@@ -349,14 +423,26 @@ html.is-scrolled .scroll-cue {
   font: 12px/1.1 var(--pixel);
   text-decoration: none;
   box-shadow: 2px 2px 0 rgba(10, 42, 120, 0.18);
-  transition: transform 0.15s var(--spring), background-color 0.15s ease;
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .pixel-key {
+    transition: transform 0.15s var(--spring), background-color 0.15s ease, color 0.15s ease;
+  }
 }
 
 .pixel-key:hover,
 .pixel-key:focus-visible {
   background: var(--aqua);
   color: #06205c;
-  transform: translate(-1px, -1px);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .pixel-key:hover,
+  .pixel-key:focus-visible {
+    transform: translate(-1px, -1px);
+  }
 }
 
 .pixel-key--primary {
@@ -448,7 +534,7 @@ html.is-scrolled .scroll-cue {
   font: 12px/1.4 var(--pixel);
 }
 
-.log-list__body strong {
+.log-list__body > strong {
   display: block;
   color: var(--deep);
   font: 400 13px/1.38 var(--pixel);
@@ -499,6 +585,10 @@ html.is-scrolled .scroll-cue {
 }
 
 .win__more {
+  display: inline-flex;
+  align-items: center;
+  min-block-size: 24px;
+  min-inline-size: 24px;
   padding: 4px 9px;
   border: 1px solid var(--line);
   background: var(--aqua);
@@ -554,37 +644,45 @@ html.is-scrolled .scroll-cue {
   filter: grayscale(1) contrast(1.12) brightness(1.04) sepia(0.85) hue-rotate(172deg) saturate(2.35);
 }
 
-// Act IV: Phase-Locked GPU Fan Flythrough & Silicon Die Climax Runway
-.sanctuary {
+// Act IV: Phase-Locked GPU Fan Flythrough & 3D Tensor Core MMA Runway
+.tensor-core {
   position: relative;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
   align-items: center;
-  min-height: 235svh;
+  min-height: 235vh;
+  min-height: 235dvh;
   padding: 40px 20px 28px;
   pointer-events: none;
 }
 
-.sanctuary__hud {
+.tensor-core__hud {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 12px;
   text-align: center;
   opacity: 0;
-  transform: translateY(10px);
-  transition: opacity 0.4s var(--ease), transform 0.4s var(--ease);
+  transition: opacity 0.4s var(--ease);
 }
 
-html.at-climax .sanctuary__hud,
-html.no-js .sanctuary__hud {
+@media (prefers-reduced-motion: no-preference) {
+  .tensor-core__hud {
+    transform: translateY(10px);
+    transition: opacity 0.4s var(--ease), transform 0.4s var(--ease);
+  }
+}
+
+html.at-climax .tensor-core__hud,
+html.no-js .tensor-core__hud,
+.tensor-core__hud:focus-within {
   opacity: 1;
   transform: none;
   pointer-events: auto;
 }
 
-.sanctuary__caption {
+.tensor-core__caption {
   margin: 0;
   padding: 4px 12px;
   border: 1px solid rgba(120, 214, 251, 0.45);
@@ -598,6 +696,8 @@ html.no-js .sanctuary__hud {
   display: inline-flex;
   align-items: center;
   gap: 6px;
+  min-block-size: 24px;
+  min-inline-size: 24px;
   padding: 7px 16px;
   border: 1px solid var(--aqua);
   background: rgba(238, 251, 255, 0.90);
@@ -614,7 +714,13 @@ html.no-js .sanctuary__hud {
 .back-top:focus-visible {
   background: var(--aqua);
   color: #06205c;
-  transform: translateY(-2px);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .back-top:hover,
+  .back-top:focus-visible {
+    transform: translateY(-2px);
+  }
 }
 
 @media (max-width: 1020px) {
@@ -653,7 +759,8 @@ html.no-js .sanctuary__hud {
   .clip {
     width: 31%;
   }
-  .sanctuary {
-    min-height: 190svh;
+  .tensor-core {
+    min-height: 190vh;
+    min-height: 190dvh;
   }
 }

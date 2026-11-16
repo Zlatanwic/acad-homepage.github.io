@@ -26,6 +26,7 @@ function element(attributes = {}, rect = { left: 0, top: 0, bottom: 100, width: 
       removeProperty: (name) => properties.delete(name)
     },
     setAttribute(name, value) { this.attributes[name] = String(value); },
+    removeAttribute(name) { delete this.attributes[name]; },
     getAttribute(name) { return this.attributes[name] ?? null; },
     addEventListener(name, listener) { events.set(name, listener); },
     getBoundingClientRect: () => rect
@@ -50,8 +51,14 @@ function setup({ reduce = false, fine = true, dark = false, saveData = false, sc
   const storage = new Map();
   const root = Object.assign(element(), { scrollHeight: 3000 });
   const themeMeta = element({ name: 'theme-color', content: '#ffffff' });
-  const themeBtn = element();
-  const langBtn = element();
+  const themeBtn = element({ 'aria-pressed': 'false', 'aria-label': 'Midnight compute mode' });
+  const langBtn = element({ 'aria-pressed': 'false', 'aria-label': 'Chinese desk copy' });
+  const hud = element();
+  const motionBtn = Object.assign(element({ hidden: '' }), {
+    hidden: true,
+    textContent: 'Pause 3D',
+    closest: (selector) => selector === '.hero-stage__hud' ? hud : null
+  });
   const card = element();
   const winA = element({}, { left: 0, top: 40, bottom: 240, width: 320, height: 200 });
   const winB = element({}, { left: 0, top: 340, bottom: 540, width: 320, height: 200 });
@@ -73,13 +80,14 @@ function setup({ reduce = false, fine = true, dark = false, saveData = false, sc
   const loaded = module ?? {
     createScene: (target, options) => { calls.push(['create', target, options]); return controller; }
   };
-  let resolveImport;
+  const importResolvers = [];
   const document = {
     readyState: 'complete',
     hidden: false,
     documentElement: root,
     querySelector: (selector) => {
       if (selector === '[data-scene]') return host;
+      if (selector === '[data-scene-motion]') return motionBtn;
       if (selector === 'meta[name="theme-color"]') return themeMeta;
       return null;
     },
@@ -118,21 +126,26 @@ function setup({ reduce = false, fine = true, dark = false, saveData = false, sc
     Promise,
     __import: (url) => {
       imports.push(url);
-      return new Promise((resolve) => { resolveImport = () => resolve(loaded); });
+      return new Promise((resolve) => { importResolvers.push(() => resolve(loaded)); });
     }
   };
   runInNewContext(source, sandbox);
   return {
-    root, themeMeta, themeBtn, langBtn, storage, card, winA, winB, host, document, window,
-    frames, imports, calls, queries, documentEvents, windowEvents,
+    root, themeMeta, themeBtn, langBtn, motionBtn, hud, storage, card, winA, winB, host, document, window,
+    frames, imports, calls, queries, documentEvents, windowEvents, controller,
     intersect: (value) => observerCallback([{ isIntersecting: value }]),
-    resolve: async () => { resolveImport(); await flush(); }
+    resolve: async () => {
+      const resolvers = importResolvers.splice(0);
+      resolvers.forEach((resolve) => resolve());
+      await flush();
+    }
   };
 }
 
-test('the scene module is requested once visible and steady gate sets html.glon + --gbg', async () => {
+test('the scene module is requested once visible and steady gate sets html.glon + --gbg + pause button', async () => {
   const run = setup();
   assert.deepEqual(run.imports, []);
+  assert.equal(run.motionBtn.hidden, true);
   run.intersect(false);
   assert.deepEqual(run.imports, []);
   run.intersect(true);
@@ -142,14 +155,28 @@ test('the scene module is requested once visible and steady gate sets html.glon 
   assert.equal(run.calls[0][0], 'create');
   assert.equal(run.calls[0][1], run.host);
   assert.deepEqual(run.calls.at(-1), ['active', true]);
+  assert.equal(run.motionBtn.hidden, true);
 
   // Trigger onSteady callback from scene controller
   run.calls[0][2].onSteady('#dff4fd');
   assert.equal(run.root.classList.contains('glon'), true);
   assert.equal(run.root.properties.get('--gbg'), '#dff4fd');
+  assert.equal(run.motionBtn.hidden, false);
+  assert.equal(run.motionBtn.textContent, 'Pause 3D');
+  assert.equal(run.motionBtn.getAttribute('aria-pressed'), null);
+
+  // Pause / Play toggle switches label without setting aria-pressed
+  run.motionBtn.events.get('click')();
+  assert.deepEqual(run.calls.at(-1), ['active', false]);
+  assert.equal(run.motionBtn.textContent, 'Play 3D');
+  assert.equal(run.motionBtn.getAttribute('aria-pressed'), null);
+
+  run.motionBtn.events.get('click')();
+  assert.deepEqual(run.calls.at(-1), ['active', true]);
+  assert.equal(run.motionBtn.textContent, 'Pause 3D');
 });
 
-test('scroll progress drives scene camera, sanctuary classes, and mobile center-window shadow', async () => {
+test('scroll progress drives scene camera, core classes, and mobile center-window shadow', async () => {
   const run = setup();
   run.intersect(true);
   await run.resolve();
@@ -162,7 +189,7 @@ test('scroll progress drives scene camera, sanctuary classes, and mobile center-
 
   assert.deepEqual(run.calls.at(-1), ['scroll', 0.95]);
   assert.equal(run.root.classList.contains('is-scrolled'), true);
-  assert.equal(run.root.classList.contains('in-sanctuary'), true);
+  assert.equal(run.root.classList.contains('in-core'), true);
   assert.equal(run.root.classList.contains('at-climax'), true);
   assert.equal(run.winB.classList.contains('is-center'), true);
   assert.equal(run.winA.classList.contains('is-center'), false);
@@ -188,7 +215,7 @@ test('theme and bilingual desk buttons persist choices and notify the 3D scene',
   assert.equal(run.langBtn.getAttribute('aria-pressed'), 'true');
 });
 
-test('scrolling away, hiding the tab, or preferring reduced motion pauses the scene', async () => {
+test('scrolling away or hiding the tab pauses the scene', async () => {
   const run = setup();
   run.intersect(true);
   await run.resolve();
@@ -201,17 +228,74 @@ test('scrolling away, hiding the tab, or preferring reduced motion pauses the sc
   run.document.hidden = false;
   run.documentEvents.get('visibilitychange')();
   assert.deepEqual(run.calls.at(-1), ['active', true]);
-  run.queries['(prefers-reduced-motion: reduce)'].matches = true;
-  run.queries['(prefers-reduced-motion: reduce)'].fire();
-  assert.deepEqual(run.calls.at(-1), ['active', false]);
 });
 
-test('reduced motion still loads the 3D architecture as a scroll-responsive still frame', async () => {
+test('reduced motion keeps the static blueprint and never downloads WebGL', async () => {
   const run = setup({ reduce: true });
   run.intersect(true);
   await run.resolve();
-  assert.equal(run.calls[0][0], 'create');
-  assert.deepEqual(run.calls.at(-1), ['active', false]);
+  assert.deepEqual(run.imports, []);
+  assert.deepEqual(run.calls, []);
+  assert.equal(run.root.classList.contains('glon'), false);
+  assert.equal(run.motionBtn.hidden, true);
+});
+
+test('enabling reduced motion disposes an active scene and restores the static ground', async () => {
+  const run = setup();
+  run.intersect(true);
+  await run.resolve();
+  run.calls[0][2].onSteady('#dff4fd');
+  assert.equal(run.root.classList.contains('glon'), true);
+
+  run.queries['(prefers-reduced-motion: reduce)'].matches = true;
+  run.queries['(prefers-reduced-motion: reduce)'].fire();
+  assert.equal(run.root.classList.contains('glon'), false);
+  assert.equal(run.motionBtn.hidden, true);
+  assert.equal(run.root.properties.get('--gbg'), '#ffffff');
+  assert.deepEqual(run.calls.at(-1), ['dispose']);
+});
+
+test('a disposed reduced-motion scene does not overwrite the static ground later', async () => {
+  const run = setup();
+  run.intersect(true);
+  await run.resolve();
+  run.calls[0][2].onSteady('#dff4fd');
+  run.queries['(prefers-reduced-motion: reduce)'].matches = true;
+  run.queries['(prefers-reduced-motion: reduce)'].fire();
+
+  run.themeBtn.events.get('click')();
+  assert.equal(run.root.properties.get('--gbg'), '#030711');
+  run.window.scrollY = 1000;
+  run.windowEvents.get('scroll')();
+  run.frames.shift()();
+  assert.equal(run.root.properties.get('--gbg'), '#030711');
+});
+
+test('disabling reduced motion reloads the scene when the stage is visible', async () => {
+  const run = setup({ reduce: true });
+  run.intersect(true);
+  await run.resolve();
+  assert.deepEqual(run.imports, []);
+
+  run.queries['(prefers-reduced-motion: reduce)'].matches = false;
+  run.queries['(prefers-reduced-motion: reduce)'].fire();
+  assert.equal(run.imports.length, 1);
+  await run.resolve();
+  assert.deepEqual(run.calls.at(-1), ['active', true]);
+});
+
+test('a rapid reduced-motion toggle does not create two controllers from stale imports', async () => {
+  const run = setup();
+  run.intersect(true);
+  assert.equal(run.imports.length, 1);
+  run.queries['(prefers-reduced-motion: reduce)'].matches = true;
+  run.queries['(prefers-reduced-motion: reduce)'].fire();
+  run.queries['(prefers-reduced-motion: reduce)'].matches = false;
+  run.queries['(prefers-reduced-motion: reduce)'].fire();
+  assert.equal(run.imports.length, 2);
+
+  await run.resolve();
+  assert.equal(run.calls.filter((call) => call[0] === 'create').length, 1);
 });
 
 test('data saver keeps the static drawing and never downloads the module', () => {
@@ -272,4 +356,93 @@ test('touch, coarse pointers and reduced motion never tilt cards', () => {
   const touch = setup({ scene: false });
   touch.card.events.get('pointermove')({ pointerType: 'touch', clientX: 20, clientY: 20 });
   assert.equal(touch.frames.length, 0);
+});
+
+test('the HUD keeps the Pause 3D control reachable while the scene is animating', async () => {
+  const run = setup();
+  run.intersect(true);
+  await run.resolve();
+  const options = run.calls[0][2];
+
+  assert.equal(run.hud.classList.contains('has-motion-control'), false);
+  options.onSteady('#dff4fd');
+  assert.equal(run.motionBtn.hidden, false);
+  assert.equal(run.hud.classList.contains('has-motion-control'), true);
+
+  run.queries['(prefers-reduced-motion: reduce)'].matches = true;
+  run.queries['(prefers-reduced-motion: reduce)'].fire();
+  assert.equal(run.motionBtn.hidden, true);
+  assert.equal(run.hud.classList.contains('has-motion-control'), false);
+});
+
+test('theme and language toggle labels remain stable while aria-pressed reports state', () => {
+  const run = setup({ scene: false });
+  run.themeBtn.events.get('click')();
+  assert.equal(run.themeBtn.getAttribute('aria-label'), 'Midnight compute mode');
+  assert.equal(run.themeBtn.getAttribute('aria-pressed'), 'true');
+  run.langBtn.events.get('click')();
+  assert.equal(run.langBtn.getAttribute('aria-label'), 'Chinese desk copy');
+  assert.equal(run.langBtn.getAttribute('aria-pressed'), 'true');
+});
+
+test('ground colors follow the active scene after every rendered frame', async () => {
+  const run = setup();
+  run.intersect(true);
+  await run.resolve();
+  const options = run.calls[0][2];
+
+  options.onSteady('#dff4fd');
+  run.window.scrollY = 1995;
+  run.windowEvents.get('scroll')();
+  run.frames.shift()();
+  run.controller.setActive(true);
+  const themeCalls = run.calls.filter((call) => call[0] === 'theme').length;
+  assert.equal(themeCalls, 0);
+
+  run.themeBtn.events.get('click')();
+  assert.equal(run.root.properties.get('--gbg'), '#050d20');
+  assert.equal(run.themeMeta.attributes.content, '#050d20');
+
+  options.onGroundChange('#0b256b');
+  assert.equal(run.root.properties.get('--gbg'), '#0b256b');
+  assert.equal(run.themeMeta.attributes.content, '#0b256b');
+});
+
+test('a synchronous createScene failure is not retained as the active controller', async () => {
+  const run = setup({
+    module: {
+      createScene: (target, options) => {
+        options.onFailure(new Error('WebGL unavailable'));
+        return {
+          setActive: (value) => run.calls.push(['failed-active', value]),
+          setTheme: (value) => run.calls.push(['failed-theme', value]),
+          getGroundColor: () => '#000000',
+          dispose: () => run.calls.push(['failed-dispose'])
+        };
+      }
+    }
+  });
+  run.intersect(true);
+  await run.resolve();
+
+  assert.equal(run.themeMeta.attributes.content, '#ffffff');
+  assert.equal(run.root.properties.get('--gbg'), '#ffffff');
+  run.themeBtn.events.get('click')();
+  assert.equal(run.themeMeta.attributes.content, '#030711');
+  assert.equal(run.root.properties.get('--gbg'), '#030711');
+  assert.deepEqual(run.calls, []);
+});
+
+test('enabling reduced motion immediately clears an active tilt', () => {
+  const run = setup({ scene: false });
+  run.card.events.get('pointermove')({ pointerType: 'mouse', clientX: 200, clientY: 0 });
+  assert.equal(run.card.classList.contains('is-tilting'), true);
+
+  run.queries['(prefers-reduced-motion: reduce)'].matches = true;
+  run.queries['(prefers-reduced-motion: reduce)'].fire();
+  run.frames.shift()();
+
+  assert.equal(run.card.classList.contains('is-tilting'), false);
+  assert.equal(run.card.properties.has('--rx'), false);
+  assert.equal(run.card.properties.has('--ry'), false);
 });

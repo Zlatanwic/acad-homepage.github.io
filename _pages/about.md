@@ -8,7 +8,8 @@ redirect_from:
 ---
 
 <figure class="scene stage" data-scene data-scene-src="{{ '/assets/js/scene.js' | relative_url }}" data-scene-state="fallback">
-  <svg class="scene__fallback stage__fallback" viewBox="0 0 1200 760" preserveAspectRatio="xMidYMid slice" role="img" aria-labelledby="scene-caption">
+  <svg class="scene__fallback stage__fallback" viewBox="0 0 1200 760" preserveAspectRatio="xMidYMid slice" role="img" aria-labelledby="scene-svg-title scene-caption">
+    <title id="scene-svg-title">Cyanotype 3D architectural stage: Etihad Stadium pitch, 33 RPM-styled bullet-time turntable, Tsinghua-Roofline corridor, and 3D Tensor Core</title>
     <defs>
       <linearGradient id="cy-sky" x1="0" y1="0" x2="0" y2="1">
         <stop offset="0%" stop-color="#f6fcff"/>
@@ -16,88 +17,111 @@ redirect_from:
       </linearGradient>
     </defs>
     <rect width="1200" height="760" fill="url(#cy-sky)"/>
-    <!-- Luminous Moon Disc & Wireframe Polyhedra -->
-    <circle cx="945" cy="148" r="54" fill="#ffffff" opacity="0.92"/>
-    <g fill="none" stroke="#3fb0f2" stroke-width="1.2" opacity="0.72">
-      <polygon points="860,210 886,192 908,216 882,236"/>
-      <line x1="860" y1="210" x2="908" y2="216"/>
-      <line x1="886" y1="192" x2="882" y2="236"/>
+    <!-- Serene Blue Moon Disc & TileLang 2x2x2 Lattice Wireframe -->
+    <circle cx="215" cy="128" r="46" fill="#ffffff" opacity="0.92"/>
+    <ellipse cx="215" cy="128" rx="64" ry="16" transform="rotate(-14 215 128)" fill="none" stroke="#3fb0f2" stroke-width="1.2"/>
+    <g fill="none" stroke="#245da8" stroke-width="1.2" opacity="0.76">
+      <rect x="888" y="346" width="38" height="38"/>
+      <line x1="907" y1="346" x2="907" y2="384"/>
+      <line x1="888" y1="365" x2="926" y2="365"/>
     </g>
-    <!-- Left Wing: Etihad Stadium Saddle Canopy & Cable-Stayed Masts -->
+    <!-- Act I Center-Left: Etihad Pitch View, 12 Stay-Cable Masts, Pep Guardiola Stand & 93:20 -->
     <g stroke="#245da8" stroke-width="1.3" fill="none">
-      <ellipse cx="330" cy="430" rx="220" ry="74" fill="#bcebf7" stroke="#3fb0f2"/>
-      <ellipse cx="330" cy="430" rx="128" ry="42" fill="#6cabdd" stroke="#245da8"/>
-      <ellipse cx="330" cy="434" rx="88" ry="26" fill="#eefbff" stroke="#ffffff"/>
-      <line x1="152" y1="432" x2="152" y2="278"/>
-      <line x1="232" y1="372" x2="232" y2="246"/>
-      <line x1="330" y1="356" x2="330" y2="262"/>
-      <line x1="428" y1="372" x2="428" y2="246"/>
-      <line x1="508" y1="432" x2="508" y2="278"/>
-      <!-- Fanning Stay-Cables -->
-      <path d="M152 278 L208 416 M152 278 L112 448 M232 246 L278 392 M232 246 L186 402 M330 262 L330 388 M428 246 L382 392 M428 246 L474 402 M508 278 L452 416 M508 278 L548 448" stroke="#3fb0f2" stroke-width="1"/>
+      <polygon points="108,452 572,452 512,338 168,338" fill="#6cabdd" opacity="0.88"/>
+      <polygon points="146,452 534,452 492,368 188,368" fill="#bcebf7"/>
+      <ellipse cx="340" cy="410" rx="58" ry="15" stroke="#ffffff" stroke-width="1.5"/>
+      <!-- 93:20 Crimson Championship Shot Trajectory -->
+      <polyline points="356,418 312,396 374,382" stroke="#ffffff" stroke-width="1.5"/>
+      <line x1="374" y1="382" x2="354" y2="366" stroke="#e0304e" stroke-width="2.4"/>
+      <!-- The Pep Guardiola Stand ("Blue Wall" + Sky Bar + 93:20 Scoreboard) -->
+      <polygon points="196,338 484,338 468,266 212,266" fill="#245da8"/>
+      <rect x="248" y="316" width="184" height="16" fill="#0a2a78"/>
+      <rect x="296" y="248" width="88" height="24" fill="#0a2a78" stroke="#bcebf7" stroke-width="1.2"/>
+      <line x1="296" y1="273" x2="384" y2="273" stroke="#e0304e" stroke-width="2"/>
+      <!-- Cigar-Shaped Stay-Cable Masts & Saddle-Wave Canopy -->
+      <path d="M126 338 Q230 296 340 264 Q450 296 554 338" fill="#dff4fd" stroke="#245da8" stroke-width="1.5"/>
+      <line x1="138" y1="436" x2="138" y2="212" stroke="#0a2a78" stroke-width="2.2"/>
+      <line x1="226" y1="358" x2="226" y2="176" stroke="#0a2a78" stroke-width="2.4"/>
+      <line x1="454" y1="358" x2="454" y2="176" stroke="#0a2a78" stroke-width="2.4"/>
+      <line x1="542" y1="436" x2="542" y2="212" stroke="#0a2a78" stroke-width="2.2"/>
+      <path d="M138 212 L198 326 M138 212 L94 448 M226 176 L286 286 M226 176 L174 316 M454 176 L394 286 M454 176 L506 316 M542 212 L482 326 M542 212 L586 448" stroke="#3fb0f2" stroke-width="1.1"/>
     </g>
-    <!-- Right-Center: Fluted Blue Moon Spire, Turntable Truss & 1% Crimson Pendulum -->
-    <g stroke="#245da8" stroke-width="1.3">
-      <polygon points="736,156 792,156 806,448 722,448" fill="#bcebf7"/>
-      <polygon points="764,156 792,156 806,448 764,448" fill="#6cabdd"/>
-      <circle cx="764" cy="112" r="34" fill="#6cabdd"/>
-      <ellipse cx="764" cy="112" rx="64" ry="15" transform="rotate(-16 764 112)" fill="none" stroke="#0a2a78" stroke-width="2"/>
-      <ellipse cx="764" cy="272" rx="112" ry="24" fill="none" stroke="#245da8" stroke-width="1.6"/>
-      <!-- 1% Crimson Pendulum Focus -->
-      <line x1="690" y1="282" x2="684" y2="364" stroke="#e0304e" stroke-width="2"/>
-      <rect x="670" y="364" width="28" height="6" fill="#e0304e" stroke="none"/>
+    <!-- Act II Upper-Right: Cantilevered 33 RPM-Styled Bullet-Time Vinyl Turntable & Ruby Stylus Tonearm -->
+    <g transform="translate(860,214)">
+      <ellipse cx="0" cy="8" rx="146" ry="44" fill="#bcebf7" stroke="#0a2a78" stroke-width="1.5"/>
+      <ellipse cx="0" cy="0" rx="136" ry="38" fill="#0a2a78" stroke="#3fb0f2" stroke-width="1.3"/>
+      <ellipse cx="0" cy="0" rx="104" ry="28" fill="none" stroke="#3fb0f2" stroke-width="0.9"/>
+      <ellipse cx="0" cy="0" rx="74" ry="20" fill="none" stroke="#3fb0f2" stroke-width="0.9"/>
+      <ellipse cx="0" cy="0" rx="40" ry="11" fill="#eefbff"/>
+      <ellipse cx="0" cy="0" rx="26" ry="7" fill="#e0304e"/>
+      <!-- Gimbal Counterweight & Tonearm with 1% Crimson Cartridge -->
+      <circle cx="148" cy="16" r="14" fill="#bcebf7" stroke="#0a2a78" stroke-width="1.4"/>
+      <line x1="168" y1="22" x2="64" y2="-8" stroke="#eefbff" stroke-width="3.2"/>
+      <rect x="50" y="-13" width="18" height="8" fill="#e0304e"/>
     </g>
-    <!-- Lower Center: Monumental Axial GPU Shroud & 9-Blade Intake Fan -->
-    <g transform="translate(600,608)">
-      <rect x="-210" y="-96" width="420" height="176" fill="#6cabdd" stroke="#0a2a78" stroke-width="1.5"/>
-      <circle cx="0" cy="-8" r="76" fill="#0a2a66" stroke="#bcebf7" stroke-width="2"/>
-      <g stroke="#bcebf7" stroke-width="4" stroke-linecap="round">
-        <line x1="0" y1="-8" x2="0" y2="-74"/>
-        <line x1="0" y1="-8" x2="42" y2="-58"/>
-        <line x1="0" y1="-8" x2="65" y2="-19"/>
-        <line x1="0" y1="-8" x2="57" y2="25"/>
-        <line x1="0" y1="-8" x2="22" y2="54"/>
-        <line x1="0" y1="-8" x2="-22" y2="54"/>
-        <line x1="0" y1="-8" x2="-57" y2="25"/>
-        <line x1="0" y1="-8" x2="-65" y2="-19"/>
-        <line x1="0" y1="-8" x2="-42" y2="-58"/>
+    <!-- Act III Midground: Tsinghua Triple-Arch Old Gate & Roofline Compute Monument -->
+    <g stroke="#0a2a78" stroke-width="1.3">
+      <rect x="336" y="486" width="144" height="58" fill="#dff4fd"/>
+      <rect x="378" y="462" width="60" height="24" fill="#eefbff"/>
+      <path d="M352 544 V512 A12 12 0 0 1 376 512 V544 M390 544 V504 A18 18 0 0 1 426 504 V544 M440 544 V512 A12 12 0 0 1 464 512 V544" fill="#245da8"/>
+      <!-- Roofline Slope + Compute Plateau + Ridge-Point Crimson Beacon -->
+      <polygon points="738,544 856,436 986,436 986,450 860,450 754,544" fill="#bcebf7"/>
+      <rect x="850" y="418" width="12" height="18" fill="#e0304e" stroke="none"/>
+    </g>
+    <!-- Act IV Lower Center: Axial GPU Intake Fan & 3D Tensor Core Preview -->
+    <g transform="translate(600,624)">
+      <rect x="-198" y="-88" width="396" height="162" fill="#6cabdd" stroke="#0a2a78" stroke-width="1.5"/>
+      <circle cx="0" cy="-6" r="72" fill="#0a2a66" stroke="#bcebf7" stroke-width="2"/>
+      <g stroke="#bcebf7" stroke-width="3.8" stroke-linecap="round">
+        <line x1="0" y1="-6" x2="0" y2="-68"/>
+        <line x1="0" y1="-6" x2="40" y2="-54"/>
+        <line x1="0" y1="-6" x2="61" y2="-17"/>
+        <line x1="0" y1="-6" x2="54" y2="25"/>
+        <line x1="0" y1="-6" x2="21" y2="52"/>
+        <line x1="0" y1="-6" x2="-21" y2="52"/>
+        <line x1="0" y1="-6" x2="-54" y2="25"/>
+        <line x1="0" y1="-6" x2="-61" y2="-17"/>
+        <line x1="0" y1="-6" x2="-40" y2="-54"/>
       </g>
-      <circle cx="0" cy="-8" r="18" fill="#bcebf7" stroke="#0a2a78" stroke-width="1.5"/>
-      <circle cx="5" cy="-12" r="4" fill="#e0304e"/>
+      <rect x="-13" y="-19" width="26" height="26" fill="#eefbff" stroke="#0a2a78" stroke-width="1.4"/>
+      <rect x="3" y="-19" width="10" height="10" fill="#e0304e" stroke="none"/>
     </g>
   </svg>
-  <span class="scene-label" data-scene-label="stadium" aria-hidden="true">Etihad Stadium</span>
-  <span class="scene-label" data-scene-label="spire" aria-hidden="true">Blue Moon Spire</span>
-  <span class="scene-label" data-scene-label="kv" aria-hidden="true">KV-Cache Village</span>
-  <span class="scene-label" data-scene-label="gpu" aria-hidden="true">Axial GPU Foundry</span>
-  <figcaption id="scene-caption" class="visually-hidden">Paper-plane cyanotype 3D architecture uniting Manchester City's cable-stayed Etihad Stadium, a fluted Blue Moon spire with a Britpop turntable pendulum, a Tsinghua triple-arch gatehouse and KV-cache village, and a monumental axial GPU fan opening into a heatsink canyon and glowing silicon die.</figcaption>
+  <span class="scene-label" data-scene-label="etihad" aria-hidden="true">Etihad Pitch · 93:20</span>
+  <span class="scene-label" data-scene-label="turntable" aria-hidden="true">33 RPM Motif</span>
+  <span class="scene-label" data-scene-label="corridor" aria-hidden="true">Tsinghua · Roofline</span>
+  <span class="scene-label" data-scene-label="tensor" aria-hidden="true">3D Tensor Core</span>
+  <figcaption id="scene-caption" class="visually-hidden">Paper-plane cyanotype 3D world starting on the grass inside Manchester City's Etihad Stadium facing the 12 stay-cable masts, wave roof, Pep Guardiola Stand, and 93:20 scoreboard, soaring out past a cantilevered 33 RPM-styled bullet-time Britpop vinyl turntable, a Shanghai-to-Beijing Tsinghua Old Gate corridor, and a Roofline compute monument before flying between spinning axial GPU fan blades into an HBM3e skyline and floating 3D Tensor Core cube.</figcaption>
 </figure>
 
-<!-- Act I: Unobstructed Architectural Panorama -->
-<section class="hero-stage" id="hero" aria-label="Architectural stage">
+<!-- Act I: Pitch-Level Etihad Panorama & North Stand Roof Climb -->
+<div class="hero-stage" id="hero">
   <div class="hero-stage__hud">
-    <p class="hero-stage__tag">
-      <span class="hero-stage__dot" aria-hidden="true"></span>
-      <span data-en>MLSYS · LLM INFERENCE · GPU KERNELS · AGENT INFRA</span>
-      <span data-zh lang="zh-CN">机器学习系统 · 大模型推理 · GPU 算子编译 · 智能体底座</span>
-    </p>
+    <div class="hero-stage__bar">
+      <p class="hero-stage__tag">
+        <span class="hero-stage__dot" aria-hidden="true"></span>
+        <span data-en>MLSYS · LLM INFERENCE · GPU KERNELS · AGENT INFRA</span>
+        <span data-zh lang="zh-CN">机器学习系统 · 大模型推理 · GPU 算子编译 · 智能体底座</span>
+      </p>
+      <button class="stage-motion-btn" type="button" data-scene-motion hidden>Pause 3D</button>
+    </div>
     <p class="hero-stage__sub">
-      <span data-en>Etihad Stay-Cables × Blue Moon Spire × Axial GPU Foundry</span>
-      <span data-zh lang="zh-CN">伊蒂哈德斜拉索 × 蓝月观测塔 × 轴流显卡机芯</span>
+      <span data-en>Etihad Pitch (93:20) × 33 RPM Motif &amp; Tsinghua Roofline × 3D Tensor Core</span>
+      <span data-zh lang="zh-CN">伊蒂哈德内场 (93:20) × 33 转黑胶母题慢镜与京沪清华 Roofline × 3D 张量核心</span>
     </p>
   </div>
   <a class="scroll-cue" id="cue" href="#desk">
-    <span data-en>Scroll to fly in</span>
-    <span data-zh lang="zh-CN">向下滚动 · 飞入桌面与显卡机芯</span>
+    <span data-en>Scroll to skim the pitch</span>
+    <span data-zh lang="zh-CN">向下滚动 · 掠过草坪飞入算力机芯</span>
     <b aria-hidden="true">▾</b>
   </a>
-</section>
+</div>
 
 <!-- Acts II & III: Staggered Two-Lane Aqua Workstation Desk -->
 <div class="desk" id="desk">
   <div class="desk__lane desk__lane--left">
     <!-- Left 1: About / Identity -->
-    <section class="win win--about" id="win-about" aria-labelledby="hero-title">
+    <section class="win win--about" id="win-about">
       <header class="win__bar">
         <span class="win-dots" aria-hidden="true"><i></i><i></i><i></i></span>
         <span class="win__title">
@@ -120,28 +144,28 @@ redirect_from:
           <span data-en>I build the systems that <em>intelligent models</em> run on — working across LLM serving &amp; KV-cache scheduling, high-performance CUDA/Triton/TileLang kernels, deep-learning compilers, and agent runtimes.</span>
           <span data-zh lang="zh-CN">我致力于构建驱动<em>智能模型</em>高速运转的系统底座——研究横跨大模型推理服务与 KV 缓存调度、CUDA / Triton / TileLang 高性能算子与编译器，以及智能体运行时基础设施。</span>
         </p>
-        <ul class="pixel-tags" aria-label="Affiliations">
+        <ul class="pixel-tags" role="list">
           <li>Tsinghua MADSys '27</li>
           <li>Tongji CS (4/40)</li>
           <li>Approaching.AI</li>
           <li>SJTU Research</li>
         </ul>
         <div class="key-row" role="group" aria-label="Direct links">
-          <a class="pixel-key" href="mailto:{{ site.author.email }}" title="{{ site.author.email }}" aria-label="Email {{ site.author.email }}">
+          <a class="pixel-key" href="mailto:{{ site.author.email }}" aria-label="Tongji Mail ({{ site.author.email }})">
             <svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path d="M1.5 3.5h13v9h-13v-9Zm1.2 1.2L8 8.6l5.3-3.9" fill="none" stroke="currentColor" stroke-width="1.3"/></svg>
             <span>Tongji Mail</span>
           </a>
           {% if site.author.email_secondary %}
-          <a class="pixel-key" href="mailto:{{ site.author.email_secondary }}" title="{{ site.author.email_secondary }}" aria-label="Email {{ site.author.email_secondary }}">
+          <a class="pixel-key" href="mailto:{{ site.author.email_secondary }}" aria-label="Gmail ({{ site.author.email_secondary }})">
             <svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path d="M2 4h12v8H2V4Zm1 1 5 3.6L13 5" fill="none" stroke="currentColor" stroke-width="1.3"/></svg>
             <span>Gmail</span>
           </a>
           {% endif %}
-          <a class="pixel-key" href="https://github.com/{{ site.author.github }}" target="_blank" rel="noopener noreferrer" aria-label="GitHub {{ site.author.github }}">
+          <a class="pixel-key" href="https://github.com/{{ site.author.github }}" target="_blank" rel="noopener noreferrer" aria-label="GitHub ({{ site.author.github }})">
             <svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path d="M8 1.4a6.6 6.6 0 0 0-2.1 12.9c.3.1.4-.1.4-.3v-1.2c-1.8.4-2.2-.8-2.2-.8-.3-.7-.7-.9-.7-.9-.6-.4 0-.4 0-.4.6.1 1 .6 1 .6.6 1 1.5.7 1.9.5.1-.4.2-.7.4-.9-1.5-.2-3-.7-3-3.2 0-.7.3-1.3.7-1.8-.1-.2-.3-.8.1-1.7 0 0 .6-.2 1.8.7a6.2 6.2 0 0 1 3.4 0c1.2-.9 1.8-.7 1.8-.7.4.9.2 1.5.1 1.7.4.5.7 1.1.7 1.8 0 2.5-1.5 3-3 3.2.2.2.4.6.4 1.2v1.8c0 .2.1.4.4.3A6.6 6.6 0 0 0 8 1.4Z" fill="currentColor"/></svg>
             <span>GitHub</span>
           </a>
-          <a class="pixel-key" href="{{ '/blog/feed.xml' | relative_url }}" aria-label="Atom feed">
+          <a class="pixel-key" href="{{ '/blog/feed.xml' | relative_url }}" aria-label="RSS Atom feed">
             <svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><circle cx="3.6" cy="12.4" r="1.4" fill="currentColor"/><path d="M2.2 7.8a6 6 0 0 1 6 6M2.2 3.4a10.4 10.4 0 0 1 10.4 10.4" fill="none" stroke="currentColor" stroke-width="1.4"/></svg>
             <span>RSS</span>
           </a>
@@ -154,7 +178,7 @@ redirect_from:
     </section>
 
     <!-- Left 2: Selected Systems -->
-    <section class="win win--split" id="win-projects" aria-labelledby="win-projects-title">
+    <section class="win win--split" id="win-projects">
       <header class="win__bar">
         <span class="win-dots" aria-hidden="true"><i></i><i></i><i></i></span>
         <h2 id="win-projects-title" class="win__title">
@@ -165,7 +189,7 @@ redirect_from:
       </header>
       <div class="win__body win__body--split">
         <div class="win__main">
-          <ul class="win-rows">
+          <ul class="win-rows" role="list">
             <li>
               <a class="win-row" href="{{ '/projects/#project-semserve' | relative_url }}">
                 <span class="win-row__top">
@@ -193,7 +217,7 @@ redirect_from:
               <span data-zh lang="zh-CN">论文发表进展持续更新中</span>
             </span>
             <a class="win__more" href="{{ '/projects/' | relative_url }}">
-              <span data-en>More ▸</span>
+              <span data-en>Projects ▸</span>
               <span data-zh lang="zh-CN">全部项目 ▸</span>
             </a>
           </div>
@@ -210,7 +234,7 @@ redirect_from:
     </section>
 
     <!-- Left 3: Writing / Notebook -->
-    <section class="win" id="win-writing" aria-labelledby="win-writing-title">
+    <section class="win" id="win-writing">
       <header class="win__bar">
         <span class="win-dots" aria-hidden="true"><i></i><i></i><i></i></span>
         <h2 id="win-writing-title" class="win__title">
@@ -221,7 +245,7 @@ redirect_from:
       </header>
       <div class="win__body">
         {% if site.posts.size > 0 %}
-        <ul class="win-rows">
+        <ul class="win-rows" role="list">
           {% for post in site.posts limit: 4 %}
           {% if post.description %}{% assign post_summary = post.description %}{% else %}{% assign post_summary = post.excerpt | strip_html | normalize_whitespace %}{% endif %}
           <li>
@@ -257,7 +281,7 @@ redirect_from:
 
   <div class="desk__lane desk__lane--right">
     <!-- Right 1: Research Directions -->
-    <section class="win win--split" id="win-research" aria-labelledby="win-research-title">
+    <section class="win win--split" id="win-research">
       <header class="win__bar">
         <span class="win-dots" aria-hidden="true"><i></i><i></i><i></i></span>
         <h2 id="win-research-title" class="win__title">
@@ -268,7 +292,7 @@ redirect_from:
       </header>
       <div class="win__body win__body--split">
         <div class="win__main">
-          <ul class="win-rows">
+          <ul class="win-rows" role="list">
             <li>
               <a class="win-row" href="{{ '/research/#research-systems' | relative_url }}">
                 <span class="win-row__top">
@@ -317,7 +341,7 @@ redirect_from:
           <div class="win__foot">
             <span class="win__note">Cluster → Kernel → Agent</span>
             <a class="win__more" href="{{ '/research/' | relative_url }}">
-              <span data-en>More ▸</span>
+              <span data-en>Research ▸</span>
               <span data-zh lang="zh-CN">全部方向 ▸</span>
             </a>
           </div>
@@ -337,7 +361,7 @@ redirect_from:
     </section>
 
     <!-- Right 2: Path & Timeline -->
-    <section class="win" id="win-path" aria-labelledby="win-path-title">
+    <section class="win" id="win-path">
       <header class="win__bar">
         <span class="win-dots" aria-hidden="true"><i></i><i></i><i></i></span>
         <h2 id="win-path-title" class="win__title">
@@ -347,7 +371,7 @@ redirect_from:
         <span class="win__code">TRACE</span>
       </header>
       <div class="win__body">
-        <ol class="log-list">
+        <ol class="log-list" role="list">
           <li class="log-list__item log-list__item--highlight">
             <span class="log-list__when">2027 →</span>
             <div class="log-list__body">
@@ -396,7 +420,7 @@ redirect_from:
     </section>
 
     <!-- Right 3: Off the Clock -->
-    <section class="win win--split win--media-left" id="win-interests" aria-labelledby="win-interests-title">
+    <section class="win win--split win--media-left" id="win-interests">
       <header class="win__bar">
         <span class="win-dots" aria-hidden="true"><i></i><i></i><i></i></span>
         <h2 id="win-interests-title" class="win__title">
@@ -418,7 +442,7 @@ redirect_from:
           </figure>
         </div>
         <div class="win__main">
-          <ul class="win-rows">
+          <ul class="win-rows" role="list">
             <li>
               <a class="win-row" href="{{ '/interests/#football-heading' | relative_url }}">
                 <span class="win-row__top">
@@ -466,12 +490,12 @@ redirect_from:
   </div>
 </div>
 
-<!-- Act IV: Phase-Locked GPU Fan Passage & Heatsink / Silicon Die Sanctuary -->
-<section class="sanctuary" id="sanctuary" aria-label="Axial GPU interior flythrough">
-  <div class="sanctuary__hud">
-    <p class="sanctuary__caption">
-      <span data-en>SM / TENSOR CORE DIE · HBM3e STACKS · PHASE-LOCKED AXIAL INTAKE</span>
-      <span data-zh lang="zh-CN">SM / 张量计算裸片 · HBM3e 显存阵列 · 相位锁定涡轮风道</span>
+<!-- Act IV: Phase-Locked GPU Fan Passage & Floating 3D Tensor Core MMA Matrix -->
+<div class="tensor-core" id="tensor-core">
+  <div class="tensor-core__hud">
+    <p class="tensor-core__caption">
+      <span data-en>3D TENSOR CORE MMA · HBM3e TSV SKYLINE · 8×8 SM SILICON DIE</span>
+      <span data-zh lang="zh-CN">3D 张量计算魔方 · HBM3e 显存高塔 · 8×8 SM 硅裸片阵列</span>
     </p>
     <a class="back-top" id="back-top" href="#top">
       <span aria-hidden="true">↑</span>
@@ -479,4 +503,4 @@ redirect_from:
       <span data-zh lang="zh-CN">回到顶部</span>
     </a>
   </div>
-</section>
+</div>

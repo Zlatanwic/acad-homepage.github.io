@@ -85,13 +85,13 @@ body.site--home .site-header__inner > * {
   }
 }
 
-// During the Act IV blade passage & heatsink canyon, let center nav gently step aside
-html.in-sanctuary body.site--home .site-nav {
+// During the Act IV blade passage & 3D Tensor Core canyon, let center nav gently step aside
+html.in-core body.site--home .site-nav {
   opacity: 0.16;
 }
 
-html.in-sanctuary body.site--home .site-nav:hover,
-html.in-sanctuary body.site--home .site-nav:focus-within {
+html.in-core body.site--home .site-nav:hover,
+html.in-core body.site--home .site-nav:focus-within {
   opacity: 1;
 }
 

@@ -103,7 +103,8 @@ function setup({
   theme = 'light',
   scroll = 0,
   initFailure = false,
-  shaderFailure = false
+  shaderFailure = false,
+  resizeObserver = true
 } = {}) {
   const stats = {
     frames: 0,
@@ -149,21 +150,23 @@ function setup({
     },
     requestAnimationFrame: (callback) => { queued.set(++frameId, callback); return frameId; },
     cancelAnimationFrame: (id) => queued.delete(id),
-    ResizeObserver: class {
+    ResizeObserver: resizeObserver ? class {
       constructor(callback) { stats.resize = callback; }
       observe() {}
       disconnect() { stats.resizeDisconnected = true; }
-    }
+    } : undefined
   };
 
   runInNewContext(compiled.outputFiles[0].text, sandbox);
   const api = sandbox.module.exports;
   const failures = [];
   const steadyEvents = [];
+  const groundEvents = [];
   const controller = api.createScene(host, {
     theme,
     scroll,
     onSteady: (hex) => steadyEvents.push(hex),
+    onGroundChange: (hex) => groundEvents.push(hex),
     onFailure: (err) => failures.push(err)
   });
 
@@ -173,7 +176,7 @@ function setup({
     for (const cb of callbacks) cb(timestamp);
   }
 
-  return { api, controller, stats, host, fallback, failures, steadyEvents, queued, frame, window: fakeWindow };
+  return { api, controller, stats, host, fallback, failures, steadyEvents, groundEvents, queued, frame, window: fakeWindow };
 }
 
 test('creation renders frame 1, schedules steady frame 2, and preserves SVG fallback', () => {
@@ -204,6 +207,17 @@ test('sub-native pixel buffer scales crisply for desktop and touch screens', () 
   assert.ok(mScale > 0.85 && mScale < 0.95);
   assert.ok(dw > 1600 && dw < 1750 && dh > 1000);
   assert.ok(mw > 330 && mw < 380 && mh > 720);
+});
+
+test('the platter is explicitly a 33 RPM-styled bullet-time motif', () => {
+  const { api } = setup();
+  const realRadPerSec = (100 / 3) * 2 * Math.PI / 60;
+  assert.ok(api.TURNTABLE_DISPLAY_RAD_PER_SEC > 0);
+  assert.ok(api.TURNTABLE_DISPLAY_RAD_PER_SEC < realRadPerSec * 0.15);
+  assert.ok(Math.abs(api.TURNTABLE_DISPLAY_RAD_PER_SEC - 0.42) < 1e-9);
+  const world = { state: {} };
+  api.pose(world, 10, 0);
+  assert.equal(world.state.turntableYaw, -10 * api.TURNTABLE_DISPLAY_RAD_PER_SEC);
 });
 
 test('phase-locked 9-blade axial GPU fan guarantees collision-free camera passage at any timestamp', () => {
@@ -246,23 +260,50 @@ test('phase-locked 9-blade axial GPU fan guarantees collision-free camera passag
   }
 });
 
-test('scroll spline advances continuously from panorama through fan gap into heatsink sanctuary', () => {
+test('scroll spline skims Etihad pitch, clears Pep Guardiola North Stand roof, and enters 3D Tensor Core', () => {
   const run = setup();
   const { api } = run;
   const start = api.cameraAt(0, 1.6);
+  const roofCrest = api.cameraAt(0.24, 1.6);
+  const turntable = api.cameraAt(0.36, 1.6);
   const intake = api.cameraAt(0.68, 1.6);
   const gap = api.cameraAt(0.84, 1.6);
-  const die = api.cameraAt(1.0, 1.6);
+  const core = api.cameraAt(1.0, 1.6);
 
-  assert.ok(start.eye[2] > intake.eye[2]);
+  // Act I starts low inside the Etihad pitch facing North
+  assert.ok(start.eye[2] > 22 && start.eye[2] < 24, `camera starts inside South pitch: z=${start.eye[2]}`);
+  assert.ok(start.eye[1] > 0.9 && start.eye[1] < 2.0, `camera starts at grass-skim height: y=${start.eye[1]}`);
+  assert.ok(start.target[2] < start.eye[2], 'camera faces North toward The Pep Guardiola Stand & 93:20');
+
+  // Narrow mobile aspect at s=0 widens FOV without backing through the South Stand wall
+  const mobileStart = api.cameraAt(0, 0.46);
+  assert.ok(mobileStart.eye[2] < 23.6, `narrow mobile stays inside South Stand wall: z=${mobileStart.eye[2]}`);
+  assert.ok(mobileStart.fovRad > start.fovRad);
+
+  // Soaring over the North Stand roof clears ETIHAD_NORTH_ROOF_TOP across desktop & mobile
+  for (const aspect of [1.77, 1.0, 0.46]) {
+    for (let s = 0.19; s <= 0.28; s += 0.01) {
+      const cam = api.cameraAt(s, aspect);
+      if (cam.eye[2] >= 8.2 && cam.eye[2] <= 10.9) {
+        assert.ok(
+          cam.eye[1] > api.ETIHAD_NORTH_ROOF_TOP + 0.5,
+          `North Stand roof clearance violated at s=${s.toFixed(2)}: y=${cam.eye[1].toFixed(2)}`
+        );
+      }
+    }
+  }
+
+  assert.ok(start.eye[2] > roofCrest.eye[2]);
+  assert.ok(roofCrest.eye[2] > turntable.eye[2]);
+  assert.ok(turntable.eye[2] > intake.eye[2]);
   assert.ok(intake.eye[2] > gap.eye[2]);
-  assert.ok(gap.eye[2] > die.eye[2]);
+  assert.ok(gap.eye[2] > core.eye[2]);
   assert.equal(gap.eye[2], api.FAN_HUB_CENTER[2]);
   assert.ok(Math.abs(gap.eye[1] - (api.FAN_HUB_CENTER[1] + api.FAN_PASS_RADIUS)) < 1e-6);
   assert.equal(start.interiorBlend, 0);
-  assert.equal(die.interiorBlend, 1);
+  assert.equal(core.interiorBlend, 1);
 
-  // Updating scroll while paused re-renders and switches ground color in the GPU sanctuary
+  // Updating scroll while paused re-renders and switches ground color in the 3D Tensor Core
   const before = run.stats.frames;
   run.controller.setScroll(0.96);
   assert.equal(run.stats.frames, before + 1);
@@ -271,6 +312,16 @@ test('scroll spline advances continuously from panorama through fan gap into hea
   // Switching theme updates uniforms and ground color
   run.controller.setTheme('dark');
   assert.equal(run.controller.getGroundColor(), '#03091b');
+  run.controller.dispose();
+});
+
+test('draw publishes ground-color changes for scroll and theme transitions', () => {
+  const run = setup();
+  assert.deepEqual(run.groundEvents, ['#dff4fd']);
+  run.controller.setScroll(0.96);
+  assert.equal(run.groundEvents.at(-1), '#0b256b');
+  run.controller.setTheme('dark');
+  assert.equal(run.groundEvents.at(-1), '#03091b');
   run.controller.dispose();
 });
 
@@ -323,6 +374,25 @@ test('dispose, init failure, shader failure, and context loss clean up and keep 
   assert.deepEqual(clean.host.children, [clean.fallback]);
 });
 
+test('window resize and DPR changes refresh the framebuffer without ResizeObserver', () => {
+  const run = setup({ resizeObserver: false, dpr: 1 });
+  const initial = [...run.stats.viewport];
+  const canvas = run.host.children[1];
+  run.window.devicePixelRatio = 2;
+  run.window.events.get('resize')();
+
+  const [expectedWidth, expectedHeight] = run.api.computeBufferSize(1280, 800, 2, true);
+  assert.deepEqual(run.stats.viewport, [expectedWidth, expectedHeight]);
+  assert.notDeepEqual(run.stats.viewport, initial);
+  assert.ok(run.stats.viewport[0] > initial[0]);
+  assert.equal(canvas.width, expectedWidth);
+  assert.equal(canvas.height, expectedHeight);
+  assert.ok(run.stats.frames > 1);
+
+  run.controller.dispose();
+  assert.equal(run.window.events.has('resize'), false);
+});
+
 test('the checked-in zero-dependency bundle matches the current source and stays compact', async () => {
   const checkedIn = await readFile(resolve(here, '../../assets/js/scene.js'), 'utf8');
   const fresh = await build({
@@ -334,7 +404,7 @@ test('the checked-in zero-dependency bundle matches the current source and stays
     platform: 'browser',
     target: ['es2020'],
     legalComments: 'none',
-    banner: { js: '/* Paper-plane architecture, Etihad Stadium & axial GPU foundry WebGL scene. */' }
+    banner: { js: '/* Etihad pitch, 33 RPM-styled bullet-time turntable, Tsinghua-Roofline corridor & 3D Tensor Core WebGL scene. */' }
   });
   assert.equal(checkedIn, fresh.outputFiles[0].text);
   assert.ok(Buffer.byteLength(checkedIn, 'utf8') < 60000, 'scene bundle must stay lightweight (< 60 KB)');

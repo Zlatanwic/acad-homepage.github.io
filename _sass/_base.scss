@@ -12,8 +12,13 @@ html {
   font-feature-settings: "liga" 0, "calt" 0;
   font-synthesis: none;
   -webkit-font-smoothing: none;
-  scroll-behavior: smooth;
   text-size-adjust: 100%;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
 }
 
 // 1-bit pixel CAD crosshair cursors declared directly on standard CSS properties
@@ -46,6 +51,7 @@ html[data-lang="zh"] [data-en] {
 body.site {
   position: relative;
   min-height: 100vh;
+  min-height: 100dvh;
   margin: 0;
   overflow-x: clip;
   background-color: var(--bg-page);
@@ -193,14 +199,7 @@ a:hover {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  html {
-    scroll-behavior: auto;
-  }
-  *,
-  *::before,
-  *::after {
-    animation-duration: 0.001ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.001ms !important;
+  .skip-link {
+    transition: none;
   }
 }

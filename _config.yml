@@ -35,6 +35,7 @@ exclude:
   - .github
   - .sass-cache
   - .jekyll-cache
+  - .playwright-mcp
   - assets/js/src
   - tools
   - node_modules

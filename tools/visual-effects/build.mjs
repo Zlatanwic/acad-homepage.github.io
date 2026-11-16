@@ -18,7 +18,7 @@ await build({
   platform: 'browser',
   target: ['es2020'],
   legalComments: 'none',
-  banner: { js: '/* Paper-plane architecture, Etihad Stadium & axial GPU foundry WebGL scene. */' }
+  banner: { js: '/* Etihad pitch, 33 RPM-styled bullet-time turntable, Tsinghua-Roofline corridor & 3D Tensor Core WebGL scene. */' }
 });
 
 console.log(`Built assets/js/scene.js (${(await stat(output)).size} bytes).`);

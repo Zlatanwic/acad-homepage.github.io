@@ -1,4 +1,6 @@
 _site/
+.jekyll-cache/
+.playwright-mcp/
 push.sh
 .DS_Store
 tools/visual-effects/node_modules/

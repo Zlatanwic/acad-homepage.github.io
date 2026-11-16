@@ -70,7 +70,6 @@
     Array.prototype.forEach.call(buttons, function (btn) {
       if (typeof btn.setAttribute === 'function') {
         btn.setAttribute('aria-pressed', normalized === 'dark' ? 'true' : 'false');
-        btn.setAttribute('aria-label', normalized === 'dark' ? 'Switch to cyanotype day mode' : 'Switch to midnight compute mode');
       }
     });
   }
@@ -105,7 +104,6 @@
     Array.prototype.forEach.call(buttons, function (btn) {
       if (typeof btn.setAttribute === 'function') {
         btn.setAttribute('aria-pressed', normalized === 'zh' ? 'true' : 'false');
-        btn.setAttribute('aria-label', normalized === 'zh' ? 'Switch desk copy to English' : '切换桌面窗口为中文');
       }
     });
   }
@@ -122,14 +120,24 @@
 
   // Tactile tilt for subpage cards. Fine pointers only, never with reduced motion.
   function initTilt() {
+    var tilts = [];
     var cards = doc.querySelectorAll ? doc.querySelectorAll('[data-tilt]') : [];
     Array.prototype.forEach.call(cards, function (card) {
       var frame = 0;
       var pending = null;
 
+      function reset() {
+        pending = null;
+        if (frame) win.cancelAnimationFrame(frame);
+        frame = 0;
+        card.classList.remove('is-tilting');
+        card.style.removeProperty('--rx');
+        card.style.removeProperty('--ry');
+      }
+
       function apply() {
         frame = 0;
-        if (!pending) return;
+        if (!pending || reducedMotion.matches || !finePointer.matches) return;
         var rect = card.getBoundingClientRect();
         if (!rect.width || !rect.height) return;
         var x = Math.min(1, Math.max(0, (pending.clientX - rect.left) / rect.width));
@@ -146,14 +154,11 @@
         card.classList.add('is-tilting');
         if (!frame) frame = win.requestAnimationFrame(apply);
       });
-      card.addEventListener('pointerleave', function () {
-        pending = null;
-        if (frame) win.cancelAnimationFrame(frame);
-        frame = 0;
-        card.classList.remove('is-tilting');
-        card.style.removeProperty('--rx');
-        card.style.removeProperty('--ry');
-      });
+      card.addEventListener('pointerleave', reset);
+      tilts.push(reset);
+    });
+    listen(reducedMotion, function () {
+      if (reducedMotion.matches) tilts.forEach(function (reset) { reset(); });
     });
   }
 
@@ -167,7 +172,8 @@
   }
 
   // Full-viewport 3D stage + scroll camera choreography on the homepage.
-  // Never downloads on data-saver connections; keeps SVG blueprint fallback on failure.
+  // Never downloads WebGL on data-saver connections or with reduced motion;
+  // keeps the SVG blueprint fallback on failure.
   function initScene() {
     var host = doc.querySelector ? doc.querySelector('[data-scene]') : null;
     if (!host) return;
@@ -181,8 +187,8 @@
       if (root && root.classList) {
         if (p > 0.03) root.classList.add('is-scrolled');
         else root.classList.remove('is-scrolled');
-        if (p > 0.74) root.classList.add('in-sanctuary');
-        else root.classList.remove('in-sanctuary');
+        if (p > 0.74) root.classList.add('in-core');
+        else root.classList.remove('in-core');
         if (p > 0.91) root.classList.add('at-climax');
         else root.classList.remove('at-climax');
       }
@@ -228,38 +234,112 @@
 
     var controller = null;
     var loading = false;
+    var loadGeneration = 0;
+    var sceneFailed = false;
     var visible = false;
     var stopped = false;
+    var sceneSteady = false;
+    var userPaused = false;
+    var motionBtn = doc.querySelector ? doc.querySelector('[data-scene-motion]') : null;
+    var hud = motionBtn && typeof motionBtn.closest === 'function'
+      ? motionBtn.closest('.hero-stage__hud')
+      : null;
+
+    function syncMotionBtn() {
+      if (!motionBtn) return;
+      var show = Boolean(sceneSteady && controller && !reducedMotion.matches && !stopped);
+      motionBtn.hidden = !show;
+      if (show) {
+        if (typeof motionBtn.removeAttribute === 'function') motionBtn.removeAttribute('hidden');
+      } else if (typeof motionBtn.setAttribute === 'function') {
+        motionBtn.setAttribute('hidden', '');
+      }
+      if (hud && hud.classList) {
+        if (show) hud.classList.add('has-motion-control');
+        else hud.classList.remove('has-motion-control');
+      }
+      motionBtn.textContent = userPaused ? 'Play 3D' : 'Pause 3D';
+    }
+
+    if (motionBtn && typeof motionBtn.addEventListener === 'function') {
+      motionBtn.addEventListener('click', function () {
+        userPaused = !userPaused;
+        update();
+      });
+    }
 
     function update() {
-      if (controller) controller.setActive(visible && !doc.hidden && !reducedMotion.matches);
+      if (controller) controller.setActive(visible && !doc.hidden && !reducedMotion.matches && !userPaused);
+      syncMotionBtn();
+    }
+
+    function staticGroundColor() {
+      return currentTheme() === 'dark' ? '#030711' : '#ffffff';
+    }
+
+    function disableForReducedMotion() {
+      loadGeneration += 1; // invalidate any in-flight dynamic import
+      loading = false;
+      if (controller) {
+        controller.dispose();
+        controller = null;
+        activeSceneController = null;
+      }
+      sceneSteady = false;
+      if (root && root.classList) root.classList.remove('glon');
+      syncGroundVar(staticGroundColor());
+      syncMotionBtn();
+    }
+
+    function handleMotionPreferenceChange() {
+      if (reducedMotion.matches) {
+        disableForReducedMotion();
+      } else {
+        if (visible) load();
+        update();
+      }
     }
 
     function load() {
-      if (loading || stopped) return;
+      if (loading || stopped || reducedMotion.matches) return;
       loading = true;
+      sceneFailed = false;
+      var generation = ++loadGeneration;
       var url;
-      try { url = new win.URL(source, win.location.href).href; } catch (error) { return; }
+      try { url = new win.URL(source, win.location.href).href; } catch (error) { loading = false; return; }
       var request;
-      try { request = import(url); } catch (error) { return; }
+      try { request = import(url); } catch (error) { loading = false; return; }
       request.then(function (module) {
-        if (stopped || !module || typeof module.createScene !== 'function') return;
+        if (stopped || generation !== loadGeneration || reducedMotion.matches || !module || typeof module.createScene !== 'function') {
+          if (generation === loadGeneration) loading = false;
+          return;
+        }
         controller = module.createScene(host, {
           theme: currentTheme(),
           scroll: getScrollProgress(),
           onSteady: function (groundHex) {
+            sceneSteady = true;
             if (root && root.classList) root.classList.add('glon');
             syncGroundVar(groundHex);
+            syncMotionBtn();
           },
+          onGroundChange: syncGroundVar,
           onFailure: function () {
+            sceneFailed = true;
+            loading = false;
+            sceneSteady = false;
             if (root && root.classList) root.classList.remove('glon');
             controller = null;
             activeSceneController = null;
+            syncMotionBtn();
           }
         });
+        if (sceneFailed) return;
         activeSceneController = controller;
         update();
-      }).catch(function () { /* Keep the static blueprint drawing. */ });
+      }).catch(function () {
+        if (generation === loadGeneration) loading = false;
+      });
     }
 
     if (typeof win.IntersectionObserver === 'function') {
@@ -275,14 +355,16 @@
     }
 
     doc.addEventListener('visibilitychange', update);
-    listen(reducedMotion, update);
+    listen(reducedMotion, handleMotionPreferenceChange);
     win.addEventListener('pagehide', function (event) {
       if (event && event.persisted) { if (controller) controller.setActive(false); return; }
       stopped = true;
+      sceneSteady = false;
       if (root && root.classList) root.classList.remove('glon');
       if (controller) controller.dispose();
       controller = null;
       activeSceneController = null;
+      syncMotionBtn();
     });
     win.addEventListener('pageshow', function (event) { if (event && event.persisted) update(); });
   }

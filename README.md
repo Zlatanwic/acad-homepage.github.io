@@ -8,12 +8,12 @@ zero-dependency WebGL 3D architectural homepage, five independent directory page
 
 99% cyanotype sky-blue paper ramp + 1% crimson (`#e0304e`) focal accent, with instant
 Light ("Sky-Blue Cyanotype Paper") / Dark ("Midnight Compute Void") and EN/ZH desk toggles.
-The homepage is a continuous 4-act scroll flythrough — from Manchester City's cable-stayed
-Etihad Stadium and the fluted Blue Moon Spire, past staggered Aqua workstation windows,
-through the phase-locked swept blades of a monumental axial GPU intake fan, and into a
-heatsink fin canyon facing a glowing quad-quadrant SM/Tensor Silicon Die. Every page works
-without JavaScript (with an inline cyanotype SVG blueprint fallback), and motion respects
-`prefers-reduced-motion`.
+The homepage is a continuous 4-act scroll flythrough — across Manchester City's cable-stayed
+Etihad Stadium pitch, past a 33 RPM-styled bullet-time turntable and staggered Aqua workstation windows,
+along a Tsinghua Roofline research corridor with a phase-locked 9-blade axial GPU intake fan,
+and into a glowing quad-quadrant 3D Tensor Core. Every page works
+without JavaScript (with an inline cyanotype SVG blueprint fallback); reduced-motion
+visitors keep that static blueprint and never download the WebGL module.
 
 | Path | Purpose |
 | --- | --- |
@@ -22,7 +22,7 @@ without JavaScript (with an inline cyanotype SVG blueprint fallback), and motion
 | `_data/navigation.yml` | Navigation items (`id` matches each page's `nav_id`) |
 | `_sass/` + `assets/css/main.scss` | Tokens, pixel + serif typography, Aqua windows, directory & reading styles |
 | `assets/js/site.js` | Scroll-camera driver, `html.glon` steady gate, theme/lang toggles, card tilt |
-| `assets/js/src/scene.js` → `assets/js/scene.js` | Zero-dependency WebGL 3D engine (~31 KB bundled via `tools/visual-effects/build.mjs`) |
+| `assets/js/src/scene.js` → `assets/js/scene.js` | Zero-dependency WebGL 3D engine (~37 KB bundled via `tools/visual-effects/build.mjs`) |
 | `assets/js/blog.js` | Blog search, tag filter, and article table of contents |
 | `assets/js/legacy-routes.js` | Redirects old homepage `#anchors` to their independent pages |
 
@@ -30,16 +30,20 @@ without JavaScript (with an inline cyanotype SVG blueprint fallback), and motion
 
 See [docs/BLOGGING.md](docs/BLOGGING.md) (in Chinese) for front matter, images,
 drafts, local preview, and the feed. Pushing to `main` runs
-`.github/workflows/pages.yml`, which builds with `actions/jekyll-build-pages` and
-deploys to GitHub Pages.
+`.github/workflows/pages.yml`: JS/Ruby regression tests and a frozen, locked
+`github-pages` / Jekyll 3.9.0 production build must pass before
+`actions/jekyll-build-pages` builds and deploys to GitHub Pages.
 
 ## Local preview and tests
 
 ```bash
-bash run_server.sh                               # bundle exec jekyll serve --livereload
+bash run_server.sh                               # locked bundle exec jekyll serve --livereload
 cd tools/visual-effects && npm ci && npm test   # WebGL scene, controller, blog, routes
-ruby tools/visual-effects/blog-build.test.rb    # full Jekyll build & Atom XML checks
+ruby tools/visual-effects/blog-build.test.rb    # Jekyll integration smoke test & Atom XML checks
 ```
+
+The Ruby integration test uses the locally installed Jekyll and configured plugins;
+CI's `production-parity` job is the authoritative build against `Gemfile.lock`.
 
 ## Acknowledgements
 

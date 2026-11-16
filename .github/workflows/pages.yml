@@ -3,6 +3,8 @@ name: Build and deploy website
 on:
   push:
     branches: [main]
+  pull_request:
+    branches: [main]
   workflow_dispatch:
 
 permissions:
@@ -11,11 +13,70 @@ permissions:
   id-token: write
 
 concurrency:
-  group: "pages"
+  group: "pages-${{ github.ref }}"
   cancel-in-progress: false
 
 jobs:
+  tests:
+    name: Run site regression tests
+    runs-on: ubuntu-22.04
+    timeout-minutes: 20
+    env:
+      RUBYOPT: -W0
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+          cache-dependency-path: tools/visual-effects/package-lock.json
+      - name: Install JS dependencies
+        working-directory: tools/visual-effects
+        run: npm ci
+      - name: Run JS tests
+        working-directory: tools/visual-effects
+        run: npm test
+      - name: Set up Ruby for integration tests
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "3.4"
+          bundler-cache: false
+      - name: Install Jekyll 4 integration-test gems
+        run: gem install jekyll:4.4.1 jekyll-feed:0.18.0 jekyll-sitemap:1.4.0 jekyll-redirect-from:0.17.0 nokogiri:1.19.1 --no-document
+      - name: Run Ruby integration tests
+        run: ruby tools/visual-effects/blog-build.test.rb
+
+  production-parity:
+    name: Build with locked GitHub Pages gems
+    runs-on: ubuntu-22.04
+    timeout-minutes: 20
+    env:
+      BUNDLE_FROZEN: "true"
+      JEKYLL_ENV: production
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "3.0"
+          bundler-cache: true
+      - name: Build with Gemfile.lock
+        run: bundle exec jekyll build --trace
+      - name: Validate locked build outputs
+        run: |
+          test -s _site/index.html
+          test -s _site/feed.xml
+          test -s _site/sitemap.xml
+          test -s _site/redirects.json
+          test -s _site/blog/feed.xml
+          grep -q "<feed" _site/feed.xml
+          grep -q "<urlset" _site/sitemap.xml
+
   build:
+    if: github.event_name != 'pull_request'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -32,11 +93,12 @@ jobs:
         uses: actions/upload-pages-artifact@v4
 
   deploy:
+    if: github.event_name != 'pull_request'
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
-    needs: build
+    needs: [build, production-parity, tests]
     steps:
       - name: Deploy to GitHub Pages
         id: deployment

@@ -32,6 +32,12 @@
   margin-bottom: 12px;
 }
 
+// Explicit display beats the grid rule above when JavaScript or the
+// no-post empty state keeps the nonfunctional controls hidden.
+.blog-controls[hidden] {
+  display: none;
+}
+
 .blog-controls > div {
   min-width: 0;
 }

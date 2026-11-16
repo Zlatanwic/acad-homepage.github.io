@@ -71,7 +71,7 @@ $env:JEKYLL_NO_BUNDLER_REQUIRE='true'
 jekyll serve
 ```
 
-需要本机已装 `jekyll`、`jekyll-feed`、`jekyll-redirect-from`、`jekyll-sitemap`（`gem install <名字>`）。这条路径只用于本地预览，线上始终由 GitHub Actions 构建。
+需要本机已装 `jekyll`、`jekyll-feed`、`jekyll-redirect-from`、`jekyll-sitemap`（`gem install <名字>`）。这条路径只用于本地预览；CI 会先运行 JS/Ruby 回归测试，再用 `Gemfile.lock` 中锁定的 GitHub Pages / Jekyll 3.9.0 依赖做 frozen build 并校验插件产物，全部通过后才部署。
 
 ## 订阅与验证
 
